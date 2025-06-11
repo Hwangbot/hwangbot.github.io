@@ -29,30 +29,39 @@
 <body class="bg-gradient-to-b from-blue-900 to-black text-white min-h-screen flex flex-col items-center justify-center p-6">
   <h1 class="text-3xl font-bold mb-10">Your Shop</h1>
 
-  <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
-    <!-- Card template, repeat this for more cards -->
-    <div class="w-40 h-64 perspective" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
-      <div class="relative w-full h-full preserve-3d flip-card-inner">
-        <!-- Front -->
-        <div class="absolute w-full h-full backface-hidden">
-          <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Evelynn_0.jpg" class="w-full h-full object-cover rounded-xl" />
-        </div>
-        <!-- Back -->
-        <div class="absolute w-full h-full rotate-y-180 backface-hidden bg-blue-800 rounded-xl flex items-center justify-center text-center px-2">
-          <div>
-            <h3 class="text-lg font-bold mb-1">Mystery Skin</h3>
-            <p>-30% Discount</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Copy and paste more of the div above for more cards -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-6" id="card-container">
+    <!-- Cards will be injected here by JS -->
   </div>
 
   <footer class="mt-12 text-sm text-yellow-300 text-center">
     Offers expire June 24 at 13:00 EDT<br />
     <span class="text-white text-xs">Reveal mystery discounts on skins & champions. These discounts are only available here.</span>
   </footer>
+
+  <script>
+    const discounts = [20, 25, 30, 35, 40, 50]; // Customize or randomize if desired
+    const container = document.getElementById("card-container");
+
+    discounts.forEach(discount => {
+      const card = document.createElement("div");
+      card.className = "w-40 h-64 perspective";
+      card.innerHTML = `
+        <div class="relative w-full h-full preserve-3d flip-card-inner" onclick="this.classList.toggle('flipped')">
+          <!-- Front (card-back) -->
+          <div class="absolute w-full h-full backface-hidden">
+            <img src="https://raw.githubusercontent.com/LoL-Assets/UI/main/yourshop-cardback.png" class="w-full h-full object-cover rounded-xl" />
+          </div>
+          <!-- Back (discount reveal) -->
+          <div class="absolute w-full h-full rotate-y-180 backface-hidden bg-blue-800 rounded-xl flex items-center justify-center text-center px-2">
+            <div>
+              <h3 class="text-lg font-bold mb-1">Mystery Skin</h3>
+              <p>-${discount}% Discount</p>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  </script>
 </body>
 </html>
