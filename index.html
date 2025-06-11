@@ -8,7 +8,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
-
+    .hover-glow:hover {
+      text-shadow: 0 0 8px rgba(255, 223, 102, 0.8);
+    }  
     .font-cinzel {
       font-family: 'Cinzel', serif;
     }
@@ -41,7 +43,7 @@
   <!-- Navigation Bar -->
   <nav class="w-full flex items-center justify-between px-6 py-1.5 bg-gradient-to-b from-black/70 to-black/10 backdrop-blur-sm border-b border-yellow-600 shadow-sm">
   <!-- Left: Name -->
-  <div class="font-cinzel text-[#e6d9ac] text-sm font-semibold tracking-normal">
+  <div class="font-cinzel text-[#e6d9ac] text-xl font-bold tracking-widest hover-glow transition duration-300">
     Timothy Hwangbo
   </div>
 
