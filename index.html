@@ -64,32 +64,24 @@
   <!-- Card Grid -->
   <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="card-container"></div>
 
-  <script>
-    const discounts = [20, 25, 30, 35, 40, 50];
-    const container = document.getElementById("card-container");
+<script>
+  const container = document.getElementById("card-container");
 
-    discounts.forEach(discount => {
-      const card = document.createElement("div");
-      card.className = "w-40 h-64 perspective hover:scale-105 transition-transform duration-300";
-      card.innerHTML = `
-        <div class="relative w-full h-full preserve-3d flip-card-inner" onclick="this.classList.toggle('flipped')">
-          <div class="absolute w-full h-full backface-hidden">
-            <img src="yourshop-cardback.png" class="w-full h-full object-fill" />
-          </div>
-          <div class="absolute w-full h-full rotate-y-180 backface-hidden bg-blue-800 rounded-xl flex items-center justify-center text-center px-2">
-            <div>
-              <h3 class="text-lg font-bold mb-1">Mystery Skin</h3>
-              <p class="flex items-center justify-center gap-1">
-                <img src="assets/rp-icon.png" class="w-4 h-4" /> -${discount}% off
-              </p>
-              <p class="text-sm text-gray-200 line-through">1350 RP</p>
-              <p class="text-yellow-300 font-bold">810 RP</p>
-            </div>
-          </div>
+  for (let i = 0; i < 6; i++) {
+    const card = document.createElement("div");
+    card.className = "w-40 h-64 perspective hover:scale-105 transition-transform duration-300";
+    card.innerHTML = `
+      <div class="relative w-full h-full preserve-3d flip-card-inner" onclick="this.classList.toggle('flipped')">
+        <div class="absolute w-full h-full backface-hidden">
+          <img src="assets/card-cropped.png" class="w-full h-full object-fill rounded-xl" />
         </div>
-      `;
-      container.appendChild(card);
-    });
-  </script>
+        <div class="absolute w-full h-full rotate-y-180 backface-hidden rounded-xl overflow-hidden">
+          <img src="https://placedog.net/300/480?id=${i}" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  }
+</script>
 </body>
 </html>
