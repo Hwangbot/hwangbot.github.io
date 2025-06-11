@@ -1,18 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-</head>
-<body class="text-white min-h-screen flex flex-col items-center justify-center p-6">
-  <nav class="w-full flex items-center justify-between px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 border-b-2 border-yellow-700 shadow-md">
-  <div class="flex items-center gap-6">
-    <div class="text-yellow-400 font-bold tracking-widest">HOME</div>
-    <a href="#about" class="text-gray-300 hover:text-white transition">About Me</a>
-    <a href="https://www.linkedin.com/in/timothy-h-98841820a/" target="_blank" class="text-gray-300 hover:text-white transition">LinkedIn</a>
-    <a href="https://github.com/Hwangbot" target="_blank" class="text-gray-300 hover:text-white transition">GitHub</a>
-  </div>
-</nav>
-  <h1 class="text-3xl font-bold mb-10">Timothy Hwangbo</h1>
-  
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: url("yourshop-bg.png") no-repeat center center fixed;
+      background: url("assets/yourshop-bg.png") no-repeat center center fixed;
       background-size: cover;
     }
     .perspective {
@@ -42,10 +29,31 @@
       transform: rotateY(180deg);
     }
   </style>
+</head>
+<body class="text-white min-h-screen flex flex-col items-center justify-start p-6">
 
+  <!-- Navigation Bar -->
+  <nav class="w-full flex items-center justify-between px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 border-b-2 border-yellow-700 shadow-md mb-6">
+    <div class="flex items-center gap-6">
+      <div class="text-yellow-400 font-bold tracking-widest">HOME</div>
+      <a href="#about" class="text-gray-300 hover:text-white transition">About Me</a>
+      <a href="https://www.linkedin.com/in/timothy-h-98841820a/" target="_blank" class="text-gray-300 hover:text-white transition">LinkedIn</a>
+      <a href="https://github.com/Hwangbot" target="_blank" class="text-gray-300 hover:text-white transition">GitHub</a>
+    </div>
+  </nav>
 
-  <div class="grid grid-cols-2 sm:grid-cols-3 gap-6" id="card-container"></div>
+  <!-- About Me Section at the Top -->
+  <div id="about" class="mt-4 text-center text-white max-w-xl">
+    <h2 class="text-2xl font-bold mb-2">About Me</h2>
+    <p>I’m Timothy Hwangbo, a developer recreating awesome interfaces inspired by the League of Legends universe. 
+    This site simulates the Your Shop experience using HTML, TailwindCSS, and JavaScript with real-time animations.</p>
+  </div>
 
+  <!-- Page Title -->
+  <h1 class="text-3xl font-bold mt-10 mb-10">Timothy Hwangbo</h1>
+
+  <!-- Card Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="card-container"></div>
 
   <script>
     const discounts = [20, 25, 30, 35, 40, 50];
@@ -53,16 +61,20 @@
 
     discounts.forEach(discount => {
       const card = document.createElement("div");
-      card.className = "w-40 h-64 perspective";
+      card.className = "w-40 h-64 perspective hover:scale-105 transition-transform duration-300";
       card.innerHTML = `
         <div class="relative w-full h-full preserve-3d flip-card-inner" onclick="this.classList.toggle('flipped')">
           <div class="absolute w-full h-full backface-hidden">
-            <img src="yourshop-cardback.png" class="w-full h-full object-cover rounded-xl" />
+            <img src="assets/card-front.png" class="w-full h-full object-contain" />
           </div>
           <div class="absolute w-full h-full rotate-y-180 backface-hidden bg-blue-800 rounded-xl flex items-center justify-center text-center px-2">
             <div>
               <h3 class="text-lg font-bold mb-1">Mystery Skin</h3>
-              <p>-${discount}% Discount</p>
+              <p class="flex items-center justify-center gap-1">
+                <img src="assets/rp-icon.png" class="w-4 h-4" /> -${discount}% off
+              </p>
+              <p class="text-sm text-gray-200 line-through">1350 RP</p>
+              <p class="text-yellow-300 font-bold">810 RP</p>
             </div>
           </div>
         </div>
