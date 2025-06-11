@@ -1,46 +1,45 @@
-<!DOCTYPE html> 
-<html data-__embeded-gyazo-content-j-s="5.13.0" data-__gyazo-expander-enabled="true"><head>
-    <meta charset="UTF-8">
-    <title>Timothy Hwangbo</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Champions List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-800 to-indigo-900 text-white min-h-screen p-6">
+  <div class="flex gap-6">
+    <!-- Sidebar Filters -->
+    <div class="w-1/4 bg-black bg-opacity-30 backdrop-blur-lg rounded-xl p-4">
+      <h2 class="text-xl font-bold mb-4">Filters</h2>
+      <div class="mb-3">
+        <label class="block font-semibold">Position</label>
+        <select class="w-full mt-1 p-2 bg-gray-800 rounded">
+          <option>Dragon Line</option>
+          <option>Top Line</option>
+          <option>Support</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="block font-semibold">Cost</label>
+        <input type="range" min="480" max="6800" class="w-full mt-1">
+      </div>
+    </div>
 
-    <meta name="viewport" content="width=device-width">
+    <!-- Champions Grid -->
+    <div class="flex-1">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-3xl font-bold">Champions List</h1>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <!-- Card -->
+        <div class="bg-black bg-opacity-30 backdrop-blur-lg rounded-xl p-4">
+          <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Evelynn_0.jpg" alt="Evelynn" class="rounded mb-2">
+          <h3 class="text-lg font-bold">Evelynn</h3>
+          <p class="text-sm text-gray-300">Agony's Embrace</p>
+        </div>
 
-    <style>
-      html, body {
-        position: relative;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      main {
-        position: relative;
-        top: 40%;
-        transform: translateY(-50%);
-        text-align: center;
-      }
-
-      h1 {
-        margin: 0;
-        display: inline;
-      }
-
-      a, a:visited {
-        color: inherit;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
-  </head>
-  <body data-new-gr-c-s-check-loaded="14.1239.0" data-gr-ext-installed="">
-    <main>
-      <h1>Timothy Hwangbo</h1>
-      <br>
-      <a href="mailto:contact@stefanfisk.com" title="contact@stefanfisk.com">contact@stefanfisk.com</a>
-      <br>
-      <a href="tel:+46762052278" title="+46 762 05 22 78">+46 762 05 22 78</a>
-    </main>
-  
-
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
+        <!-- Duplicate for other champions... -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>
