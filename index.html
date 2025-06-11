@@ -67,21 +67,29 @@
 <script>
   const container = document.getElementById("card-container");
 
-  for (let i = 1; i <= 6; i++) {
-    const card = document.createElement("div");
-    card.className = "w-40 h-64 perspective hover:scale-105 transition-transform duration-300";
-    card.innerHTML = `
-      <div class="relative w-full h-full preserve-3d flip-card-inner" onclick="this.classList.toggle('flipped')">
-        <div class="absolute w-full h-full backface-hidden">
-          <img src="yourshop-cardback.png" class="w-full h-full object-fill rounded-xl" />
+  async function loadDogCards(count = 6) {
+    for (let i = 0; i < count; i++) {
+      const res = await fetch("https://dog.ceo/api/breeds/image/random");
+      const data = await res.json();
+      const dogImage = data.message;
+
+      const card = document.createElement("div");
+      card.className = "w-40 h-64 perspective hover:scale-105 transition-transform duration-300";
+      card.innerHTML = `
+        <div class="relative w-full h-full preserve-3d flip-card-inner" onclick="this.classList.toggle('flipped')">
+          <div class="absolute w-full h-full backface-hidden">
+            <img src="yourshop-cardback.png" class="w-full h-full object-fill rounded-xl" />
+          </div>
+          <div class="absolute w-full h-full rotate-y-180 backface-hidden overflow-hidden rounded-xl">
+            <img src="${dogImage}" class="w-full h-full object-cover" />
+          </div>
         </div>
-        <div class="absolute w-full h-full rotate-y-180 backface-hidden rounded-xl overflow-hidden">
-          <img src="https://placedog.net/300/480?id=${i}" class="w-full h-full object-cover" />
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
+      `;
+      container.appendChild(card);
+    }
   }
+
+  loadDogCards();
 </script>
 </body>
 </html>
