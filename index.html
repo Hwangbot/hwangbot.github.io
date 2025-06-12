@@ -1,103 +1,771 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timothy Hwangbo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
-    .hover-glow:hover {
-      text-shadow: 0 0 8px rgba(255, 223, 102, 0.8);
-    }  
-    .font-cinzel {
-      font-family: 'Cinzel', serif;
-    }
-    body {
-      background: url("yourshop-bg.png") no-repeat center center fixed;
-      background-size: cover;
-    }
-    .perspective {
-      perspective: 1000px;
-    }
-    .preserve-3d {
-      transform-style: preserve-3d;
-    }
-    .backface-hidden {
-      backface-visibility: hidden;
-    }
-    .flip-card-inner {
-      transition: transform 0.6s;
-    }
-    .flipped {
-      transform: rotateY(180deg);
-    }
-    .rotate-y-180 {
-      transform: rotateY(180deg);
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- ===== CSS Files ===== -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/skins/color-1.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- ====== Style Switcher ====== -->
+  <link rel="stylesheet" href="css/skins/color-1.css" class="alternate-style" title="color-1" disabled>
+  <link rel="stylesheet" href="css/skins/color-2.css" class="alternate-style" title="color-2" disabled>
+  <link rel="stylesheet" href="css/skins/color-3.css" class="alternate-style" title="color-3" disabled>
+  <link rel="stylesheet" href="css/skins/color-4.css" class="alternate-style" title="color-4" disabled>
+  <link rel="stylesheet" href="css/skins/color-5.css" class="alternate-style" title="color-5" disabled>
+  <link rel="stylesheet" href="css/skins/color-6.css" class="alternate-style" title="color-6" disabled>
+  <link rel="stylesheet" href="css/style-switcher.css">
+  <!-- Font Awesome stylesheet -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+
+
 </head>
-<body class="text-white min-h-screen flex flex-col items-center justify-start p-6">
-
-  <!-- Navigation Bar -->
-  <nav class="w-full flex items-center justify-between px-6 py-1.5 bg-gradient-to-b from-black/70 to-transparent backdrop-blur-sm border-b border-yellow-600 shadow-sm">
-  <!-- Left: Name -->
-  <div class="font-cinzel text-[#e6d9ac] text-xl font-bold tracking-widest hover-glow transition duration-300">
-    Timothy Hwangbo
-  </div>
-
-  <!-- Right: Nav Links -->
-  <div class="flex items-center gap-4">
-    <a href="#about" class="font-cinzel text-[#e6d9ac] hover:text-white hover:underline underline-offset-4 decoration-yellow-600 text-sm font-semibold tracking-normal px-3 transition">About Me</a>
-    <a href="#projects" class="font-cinzel text-[#e6d9ac] hover:text-white hover:underline underline-offset-4 decoration-yellow-600 text-sm font-semibold tracking-normal px-3 transition">Projects</a>
-    <a href="https://www.linkedin.com/in/timothy-h-98841820a/" target="_blank" class="font-cinzel text-[#e6d9ac] hover:text-white text-sm font-semibold tracking-normal transition">LinkedIn</a>
-    <a href="https://github.com/Hwangbot" target="_blank" class="font-cinzel text-[#e6d9ac] hover:text-white text-sm font-semibold tracking-normal transition">GitHub</a>
-    <a href="Timothy Hwangbo Resume.pdf" target="_blank" class="font-cinzel text-[#e6d9ac] hover:text-white text-sm font-semibold tracking-normal transition">Resume</a>
-  </div>
-</nav>
-
-  <!-- About Me Section at the Top -->
-  <section id="about" class="mt-6 text-center text-[#e6d9ac] font-cinzel max-w-xl">
-    <h2 class="text-3xl font-bold tracking-wide mb-2">About Me</h2>
-    <p class="text-base leading-relaxed">
-      Full-Time Yapper, Part-Time LoL Enjoyer. Take these Puppers!
-    </p>
-  </section>
-
-  <!-- Card Grid -->
-  <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="card-container"></div>
-
-<script>
-  const container = document.getElementById("card-container");
-
-  async function loadDogCards(count = 6) {
-    for (let i = 0; i < count; i++) {
-      const res = await fetch("https://dog.ceo/api/breeds/image/random");
-      const data = await res.json();
-      const dogImage = data.message;
-
-      const card = document.createElement("div");
-      card.className = "w-40 h-64 perspective hover:scale-105 transition-transform duration-300";
-      card.innerHTML = `
-        <div class="relative w-full h-full preserve-3d flip-card-inner" onclick="this.classList.toggle('flipped')">
-          <div class="absolute w-full h-full backface-hidden">
-            <img src="yourshop-cardback.png" class="w-full h-full object-fill rounded-xl" />
-          </div>
-          <div class="absolute w-full h-full rotate-y-180 backface-hidden overflow-hidden rounded-xl">
-            <img src="${dogImage}" class="w-full h-full object-cover" />
+  <body>
+  <!-- ===== Main Container Start ===== -->
+  <div class="main-container">
+    <!-- ===== Aside Start ===== -->
+    <div class="aside">
+      <div class="logo">
+        <a href="#"><span>M</span>aximos</a>
+      </div>
+      <div class="nav-toggler">
+        <span></span>
+      </div>
+      <ul class="nav">
+        <li><a href="#home" class="active"><i class="fa fa-home"></i> Home</a></li>
+        <!-- <li><a href="prep.html" class="active"><i class="fa fa-list"></i>Interview Prep</a></li> -->
+        <li><a href="#about"><i class="fa fa-user"></i> About</a></li>
+        <li><a href="#connect"><i class="fa fa-list"></i>Projects</a></li>
+        <li><a href="#portfolio"><i class="fa fa-briefcase"></i>Content</a></li> 
+        <li><a href="#whiskey"><i class="fa fa-user"></i>Whiskey Reviews</a></li> 
+        <li><a href="#contact"><i class="fa fa-comments"></i>Connect</a></li>
+      </ul>
+    </div>
+    <!-- ===== Aside End ===== -->
+    <!-- ===== Main Content Start ===== -->
+    <div class="main-content">
+      <!-- ===== Home Section Start ===== -->
+      <section class="home active section" id="home"> 
+        <div class="container">
+          <div class="row">
+            <div class="home-info padd-15">
+              <h3 class="hello">Hello, my name is <span class="name">Maximos Nolan</span></h3>
+              <h3 class="my-profession">I'm a <span class="typing"> Software Engineer </span></h3>
+              <p>I'm a Software Engineer with experience in operating systems, distributed systems, machine learning, and computer architecture.</p>
+              <a href="https://drive.google.com/file/d/1mVYthRO1jI7xOdoDmPO65RvxXHesZylW/view?usp=sharing" class="btn">Download CV</a>
+            </div>
+            <div class="home-img padd-15">
+              <img src="images/hero.jpg" alt="">
+            </div>
           </div>
         </div>
-      `;
-      container.appendChild(card);
-    }
-  }
+      </section>
+      <!-- ===== Home Section End ===== -->
+      <!-- ===== About Section Start ===== -->
+      <section class="about section" id="about"> 
+        <div class="container">
+          <div class="row">
+            <div class="section-title padd-15">
+              <h2>About Me</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="about-content padd-15">
+              <div class="row">
+                <div class="about-text padd-15">
+                  <h3>I'm Maximos Nolan: <span>Software Engineer</span></h3>
+                  <p>I'm Currently I am working at 
+                    Citadel as a Software Engineer in Fixed Income and Macro. Please reach out if you have any questions! 
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="personal-info padd-15">
+                  <div class="row">
+                    <div class="info-item padd-15">
+                      <p>Email : <span>maximosnolan@gmail.com</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Linkedin : <span> shorturl.at/pNS57 </span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Education : <span>University of Michigan</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Majors : <span>Computer Science and Business Administration</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Phone : <span>269 930 4061</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Citizenship: <span>United States</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Github : <span> github.com/maximosnolan</span></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="buttons padd-15">
+                      <a href="#contact" data-section-index="1" class="btn hire-me">Hire Me</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="skills padd-15">
+                  <div class="row">
+                    <div class="skill-item padd-15">
+                      <h5>Modern C++ (20 onword)</h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 85%;"></div>
+                        <div class="skill-percent">85%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>Golang</h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 80%;"></div>
+                        <div class="skill-percent">80%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>Java </h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 85%;"></div>
+                        <div class="skill-percent">80%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>C</h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 80%;"></div>
+                        <div class="skill-percent">80%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>Python</h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 75%;"></div>
+                        <div class="skill-percent">75%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>Verilog HDL</h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 75%;"></div>
+                        <div class="skill-percent">75%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>CUDA C & C++</h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 75%;"></div>
+                        <div class="skill-percent">75%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>Rust</h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 60%;"></div>
+                        <div class="skill-percent">60%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>Javascript/Typescript </h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 60%;"></div>
+                        <div class="skill-percent">60%</div>
+                      </div>
+                    </div>
+                    <div class="skill-item padd-15">
+                      <h5>CMake </h5>
+                      <div class="progress">
+                        <div class="progress-in" style="width: 60%;"></div>
+                        <div class="skill-percent">60%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="education padd-15">
+                  <h3 class="title">Education</h3>
+                  <div class="row">
+                    <div class="timeline-box padd-15">
+                      <div class="timeline shadow-dark">
+                        <!-- ===== timeline item ===== -->
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <h3 class="timeline-date">
+                            <i class="fa fa-calendar"></i> 2019 - 2023
+                          </h3>
+                          <h4 class="timeline-title">Bachelor's of Science in Engineering: Computer Science    </h4>
+                          &emsp; &emsp; &emsp; &emsp;
+                          &emsp;
+                          &emsp;
+                          &emsp;
+                          <!--<img src = "images/eecs.jpg" alt = "umich_eecs", style="width:100px;height:100px"> -->
+                     
+                          <h4 class="timeline-title">University of Michigan College of Engineering </h4>
+                          <p class="timeline-text">Relivant Course work: </p>
+                          <p class ="timeline-text"><b>&#8226 Distributed Systems </b></p>  
+                          <p class ="timeline-text"><b>&#8226 Operating Systems </b> </p>  
+                          <p class ="timeline-text"><b>&#8226 Advanced Operating Systems   </b></p>
+                          <p class ="timeline-text"><b>&#8226 Machine Learning</p>  </b> 
+                          <p class ="timeline-text"><b>&#8226 GPU arch and programming   </b>  </p>
+                          <p class ="timeline-text"><b>&#8226 Computer Organization </b></p>  
+                          <p class ="timeline-text"><b>&#8226 Data Structures and Algorithms </b></p>  
+                          <p class ="timeline-text"><b>&#8226 Foundations of Comp Sci   </b></p>
+                          <p class ="timeline-text"><b>&#8226 Linear Algebra </b></p> 
+                          <p class ="timeline-text"><b>&#8226 Calculus I - IV </b></p>  
+                          <p class ="timeline-text"><b>&#8226 Discrete Statistics and analysis </b></p>   
 
-  loadDogCards();
-</script>
-  <!-- Email -->
-  <footer class="mt-16 text-center text-[#e6d9ac] font-cinzel text-sm border-t border-yellow-600 pt-4">
-    <p>Contact me: <a href="mailto:timothyhwangbo@gmail.com" class="hover:underline hover:text-white transition">timothyhwangbo@gmail.com</a></p>
-  </footer>
+                        </div>
+                             <!-- ===== timeline item ===== -->
+                             <div class="timeline-item">
+                              <div class="circle-dot"></div>
+                              <h3 class="timeline-date">
+                                <i class="fa fa-calendar"></i> 2019 - 2023
+                              </h3>
+                              <h4 class="timeline-title">Bachelor's of Business Administration</h4>
+                              <h4 class="timeline-title">University of Michigan Ross School of Business</h4>
+                              <p class="timeline-text">Relivant Course work:</p>
+                              <p class ="timeline-text"><b>&#8226 Financial Accounting </b></p>  
+                              <p class ="timeline-text"><b>&#8226 Managerial Accounting </b> </p>  
+                              <p class ="timeline-text"><b>&#8226 Business Law and Ethics </b></p>  
+                              <p class ="timeline-text"><b>&#8226 Operations Management </b></p>  
+                              <p class ="timeline-text"><b>&#8226 Revenue Management </b> </p>  
+                              <p class ="timeline-text"><b>&#8226 Behavioral Economics </b> </p>  
+                              <p class ="timeline-text"><b>&#8226 Micro & Macro Econ </b></p>  
+                            </div>
+                      </div>
+                    </div> 
+                  </div> 
+                </div>
+                <div class="experience padd-15">
+                  <h3 class="title">Experience</h3>
+                  <div class="row">
+                    <div class="timeline-box padd-15">
+                      <div class="timeline shadow-dark">
+                        <!-- ===== timeline item ===== -->
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <h3 class="timeline-date">
+                            <i class="fa fa-calendar"></i> 2025 - Current
+                          </h3>
+                          <h4 class="timeline-title">Citadel</h4>
+                          <h4 class="timeline-text">Software Engineer</h4> <br>
+                          <p class="timeline-text"> <b>&#8226 Software Engineer; supporting Citadels Fixed Income and Macro trading desks
+                            </p>
+                        </div>
+                          <!-- ===== timeline item ===== -->
+                          <div class="timeline-item">
+                            <div class="circle-dot"></div>
+                            <h3 class="timeline-date">
+                              <i class="fa fa-calendar"></i> 2023 - 2025
+                            </h3>
+                            <h4 class="timeline-title">Bloomberg</h4>
+                            <h4 class="timeline-text">Software Engineer</h4> <br>
+                            <p class="timeline-text"> <b>&#8226 Dynamic Trade Flow Management System: </b> <br>Engineered and deployed a rate limiter at Bloomberg, preventing system slowdowns by strategically 
+                              managing trade floods and ensuring optimal client performance. 
+                              </p> <br>
+                            <p class="timeline-text"> <b>&#8226 Pipeline Enhancement with RabbitMQ Integration: </b><br> Spearheaded modifications to the trading pipeline, integrating RabbitMQ for streamlined communication and dynamic trade routing based on firm-specific metrics. This initiative facilitated essential metric 
+                              gathering, supporting the establishment of Service Level Agreements (SLAs) for enhanced performance. <br>
+                              </p>
+                          </div>
+                          <!-- ===== timeline item ===== -->
+                          <div class="timeline-item">
+                            <div class="circle-dot"></div>
+                            <h3 class="timeline-date">
+                              <i class="fa fa-calendar"></i> 2023 - 2023
+                            </h3>
+                            <h4 class="timeline-title">Riot Games </h4>
+                            <h4 class="timeline-text">Software Engineer Intern</h4> <br>
+                            <p class="timeline-text"> <b>&#8226 Content Management System Development: </b><br> Engineered a dynamic content management system that significantly boosted player engagement by
+                               efficiently notifying users about new in-game content, store offerings, and game modes
+                              </p> <br>
+                            <p class="timeline-text"> <b>&#8226 Thematic Backgrounds: </b><br> Designed an artist-friendly system enabling parameter definition for activating thematic backgrounds, 
+                              coupled with a seamless integration of parallaxing technology.
+                              </p> <br>
+                          </div>
+                        <!-- ===== timeline item ===== -->
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <h3 class="timeline-date">
+                            <i class="fa fa-calendar"></i> 2022 - 2022
+                          </h3>
+                          <h4 class="timeline-title">Aamazon Web Services</h4>
+                          <h4 class="timeline-text">Software Engineer Intern</h4> <br>
+                          <p class="timeline-text"> <b>&#8226 IAM Execution Role Generator: </b><br>Engineered a role permission generator in Amazon Cloud Formation, optimizing role creation with accurate permissions for third-party extensions. 
+                            Significantly decreased on-boarding time and boosted adoption rate.
+                            </p> <br>
+                          <p class="timeline-text"> <b>&#8226 Permission Validation: </b><br>Developed and implemented a robust simulation to validate customer permissions for third-party extensions within Cloud Formation. The simulation effectively informed customers of their
+                             eligibility to use the extensions, streamlining the decision-making process and enhancing user experience.
+                            </p> <br>
+                            <p class="timeline-text"> <b>&#8226 Contract Tests: </b><br> Implemented publisher extension validation in CloudFormation, improving customer transparency and understanding of extension functionality.
+                              </p> <br>
+                        </div>
+                             <!-- ===== timeline item ===== -->
+                             <div class="timeline-item">
+                              <div class="circle-dot"></div>
+                              <h3 class="timeline-date">
+                                <i class="fa fa-calendar"></i> 2021 - 2023
+                              </h3>
+                              <h4 class="timeline-title">University of Michigan</h4>
+                              <h4 class="timeline-text">Computer Organization Instructional assistant</h4> <br>
+                              <p class="timeline-text"> <b>&#8226 Exam Creation: </b><br> Led the design team for the EECS 370 midterm and final exam taken by over 800 students.
+                                Routinely assessed current learning objectives and integrated questions and feedback from other course staff.
+                                </p> <br>
+                                <p class="timeline-text"> <b>&#8226 Discussion Leader: </b><br> Led weekly discussions of 30+ Students. Created various online resources to reinforce project
+                                  development knowledge (ARM Assembly Guides, C workshops).
+                                  </p> <br>
+                            </div>
+                                 <!-- ===== timeline item ===== -->
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <h3 class="timeline-date">
+                            <i class="fa fa-calendar"></i> 2021 - 2021
+                          </h3>
+                          <h4 class="timeline-title">IBM</h4>
+                          <h4 class="timeline-text">Software Engineer Intern</h4> <br>
+                          <p class="timeline-text"> <b>&#8226 Machine Learning Storage Vulnerability System: </b><br>Developed python-based collaborative
+                            filtering algorithm to compare various organizations in order to determine proper solutions to increase their storage
+                            resiliency, security, and operational efficiency within the scope of HPA/HPC software.</p><br>
+                          <p class="timeline-text"> <b>&#8226 Storage Resiliency Assessment: </b><br> Lead the development of an automated flash storage resiliency assessment by
+                            utilizing past organizations resiliency vulnerabilities and developing an internal ranking alongside a recommendation
+                            of an IBM solution to eliminate the persisting problem</p><br>
+                          <p class="timeline-text"> <b>&#8226 RDMA InfiniBand (IB) Documentation: </b><br> Developed material and taught several full-time solutions specialists
+                            about IB RDMA capabilities. Developed technical documentation for IBM storage solutions which incorporate IB
+                            </p><br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ===== About Section End ===== -->
+      <!-- ===== Services Section Start ===== -->
+      <section class="service section" id="connect">
+        <div class="container">
+          <div class="row">
+            <div class="section-title padd-15">
+              <h2>Projects</h2>
+            </div>
+          </div>
+          <div class="row">
+            <!-- ===== Service item Start ====== -->
+            <div class="service-item padd-15">
+              <div class="service-item-inner">
+                <div class="icon">
+                  <i class="fa fa-mobile-alt"></i>
+                </div>
+                <h4>Paxos Based RSM</h4>
+                <p>Designed a replicated key value service that is replicated using Paxos. Implementation included designing a fully functional
+                  paxos algorithm to gain consensus on a generic operation. Additionally, I designed the interface for clients and a Paxos RSM to communicate with
+                  these services. The paxos Key Value RSM communicates with paxos itself to propose client operations and gain a quorum on sed operation. 
+               </p>
+                <p>&#8226  Designed in Golang</p>
+              </div>
+            </div>
+            <!-- ===== Service item End ====== -->
+             <!-- ===== Service item Start ====== -->
+             <div class="service-item padd-15">
+              <div class="service-item-inner">
+                <div class="icon">
+                  <i class="fa fa-laptop-code"></i>
+                </div>
+                <h4>Primary Backup Replication</h4>
+                <p>Designed a key value service that is replicated over a primary and backup. Implementation included designing a fully functional view
+                  service that keeps the absolute state of the current primary and backup as well as the abstractions for a client to communicate with the view service.
+                  Implemented a replicated key value service using the view service.
+                </p>
+                <p>&#8226 Designed in Golang </p>
+              </div>
+            </div>
+            <!-- ===== Service item End ====== -->
+             <!-- ===== Service item Start ====== -->
+             <div class="service-item padd-15">
+              <div class="service-item-inner">
+                <div class="icon">
+                  <i class="fa fa-palette"></i>
+                </div>
+                <h4>Virtual Memory Manager</h4>
+                <p>Created a virtual memory manager which supports both file backed and swap backed pages. Processes address spaces are maintained by the pager and
+                  syscalls are administered through the pager interface. Processes may fork child processes with a non-empty virtual arena as well as create their own address spaces.
+                  A customizable memory size allows for pages to be evicted by the kernel using a clock queue to control eviction orders. Enable bits are also controlled by the
+                  kernel to dictate read and write permissions as well as the residency of a given physical page.
+                </p>
+                <p>&#8226 Designed in C++ 17</p>
+              </div>
+            </div>
+            <!-- ===== Service item End ====== -->
+             <!-- ===== Service item Start ====== -->
+             <div class="service-item padd-15">
+              <div class="service-item-inner">
+                <div class="icon">
+                  <i class="fa fa-code"></i>
+                </div>
+                <h4>Thread Manager</h4>
+                <p>Created a thread manager to administer the creation, lifetime, and execution of various thread bodies on a multi-core system.
+                  Thread Library has support for conditional variables, mutexes, as well as generic threads. Inner process interrupts are also supported by the library, alongside
+                  various thread lifetime management operations, such as yield and join.
+                </p>
+                <p>&#8226 Designed in C++ 17</p>
+              </div>
+            </div>
+            <!-- ===== Service item End ====== -->
+             <!-- ===== Service item Start ====== -->
+             <div class="service-item padd-15">
+              <div class="service-item-inner">
+                <div class="icon">
+                  <i class="fa fa-search"></i>
+                </div>
+                <h4>Pipelined RISC-V CPU</h4>
+                <p>Designed a pipelined RISC-V CPU compatable with data hazards in verilog HDL. RAW, WAR and WAW hazards are all avoided by this pipelined implementation.
+                  Branch predictions are static and assumed not taken to allow for optimizations to CPI and runtime.
+                </p>
+                <p>&#8226 Designed in Verilog HDL</p>
+              </div>
+            </div>
+            <!-- ===== Service item End ====== -->
+             <!-- ===== Service item Start ====== -->
+             <div class="service-item padd-15">
+              <div class="service-item-inner">
+                <div class="icon">
+                  <i class="fa fa-bullhorn"></i>
+                </div>
+                <h4>Support Vector Machine Multiclass Classifier</h4>
+                <p>Developed a python algorithm to train a polynomial kernel
+                  Support Vector Machine to map sample text reviews to a label map consisting of positive and negative attributes while
+                  optimizing the hyperparameters. Calculated and developed multiple different models which maximized different metrics for
+                  a multiclass SVM using a one vs one approach in order to correctly classify reviews on a rating scale of 1 to 5.</p>
+                  <p>&#8226 Designed in Python 3</p>
+              </div>
+            </div>
+            <div class="service-item padd-15">
+              <div class="service-item-inner">
+                <div class="icon">
+                  <i class="fa fa-bullhorn"></i>
+                </div>
+                <h4>Neural Network multiclass classifier</h4>
+                <p>Developed a python algorithm to train a 7 layer Convolutional Neural Network with 2 pooling layers. The classifier was trained on a subset of 2000 images of 
+                  10 various dogbreeds and validated on 500 images with an accuracy of 89.5%. For training, I used greyscale images of the dogs as well as distorted/rotated images
+                  to generate various training material to ensure a high accuracy score. 
+                 </p>
+                  <p>&#8226 Designed in Python 3</p>
+              </div>
+            </div>
+            <!-- ===== Service item End ====== -->
+              <!-- ===== Service item Start ====== -->
+              <div class="service-item padd-15">
+                <div class="service-item-inner">
+                  <div class="icon">
+                    <i class="fa fa-bullhorn"></i>
+                  </div>
+                  <h4>Custom optional Library</h4>
+                  <p>Designed an 'optional' class in C++ to support optional data types [an extention of std::optional]
+                   Supporting generic optional type wrapping and unwrapping with overloaded operators,
+                 portability with many std::algorithm functions such as a optional safe std::accumulate, and
+                Container safe and typesafe operations with optional generic data </p>
+                <p>&#8226 Designed in C++ 20</p>
+                </div>
+              </div>
+              <!-- ===== Service item End ====== -->
+          </div>
+        </div>
+      </section>
+      <!-- ===== Services Section End ===== -->
+      <!-- ===== Portfolio Section Start ===== -->
+      <section class="portfolio section" id="portfolio">
+        <div class="container">
+          <div class="row">
+            <div class="section-title padd-15">
+              <h2>Misc Content</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="portfolio-heading padd-15">
+              <h2>Here is a collection of some of the things I'm interested in/proud of!</h2>
+            </div>
+          </div>
+          <div class="row">
+            <!-- ====== portfolio item start ====== -->
+            <div class="portfolio-item padd-15">
+              <div class="portfolio-item-inner shadow-dark">
+                <div class="portfolio-img">
+                  <a href = "https://www.youtube.com/watch?v=3eOLuJ5TDSA&t=2s"> 
+                  <img src="images/portfolio/portfolio-1.jpg" alt="">
+                </a>
+                </div>
+              </div>
+              <div class="portfolio-heading padd-15">
+              <h2 style = "text-align: center;">I teach computer organization!</h2>
+            </div>
+            </div>
+            <!-- ====== portfolio item End ====== -->
+             <!-- ====== portfolio item start ====== -->
+             <div class="portfolio-item padd-15">
+              <div class="portfolio-item-inner shadow-dark">
+                <div class="portfolio-img">
+                  <a href = "https://eecs370.github.io/"> 
+                  <img src="images/portfolio/portfolio-2.jpg" alt="">  
+                </a>
+                </div>
+              </div>
+              <div class="portfolio-heading padd-15">
+              <h2 style = "text-align: center;">I made the EECS 370 Website!</h2>
+              </div>
+            </div>
+            <!-- ====== portfolio item End ====== -->
+             <!-- ====== portfolio item start ====== -->
+             <div class="portfolio-item padd-15">
+              <div class="portfolio-item-inner shadow-dark">
+                <div class="portfolio-img">
+                  <a href = "https://na.op.gg/summoners/na/maximos">
+                  <img src="images/portfolio/portfolio-3.jpg" alt="" title = "hello!">
+                </a>
+                </div>
+              </div>
+              <div class="portfolio-heading padd-15">
+              <h2 style = "text-align: center;">I'm a Challenger League player!</h2>
+              </div>
+            </div>
+            <!-- ====== portfolio item End ====== -->
+             <!-- ====== portfolio item start ====== -->
+             <div class="portfolio-item padd-15">
+              <div class="portfolio-item-inner shadow-dark">
+                <div class="portfolio-img">
+                  <img src="images/portfolio/portfolio-4.jpg" alt="">
+                </div>
+              </div>
+              <div class="portfolio-heading padd-15">
+              <h2 style = "text-align: center;">I built my own electric skateboard!</h2>
+              </div>
+            </div>
+            <!-- ====== portfolio item End ====== -->
+          </div>
+        </div>
+      </section>
+      <!-- ===== Portfolio Section End ===== -->
+
+ <!-- ===== Whiskey Review Section Start ===== -->
+<section class="portfolio section" id="whiskey">
+  <div class="container">
+    <div class="row">
+      <div class="section-title padd-15">
+        <h2>Whiskey Reviews</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="portfolio-heading padd-15">
+        <h2>Welcome to my whiskey haven! Here, you'll find a collection of my passion project—whiskey reviews. Embarking on this journey a few years ago, my fascination with the intricacies of various distillations led me to dive deep into the art of analyzing the unique notes that distillers expertly infuse into their creations.</h2>
+        <br>
+        <h2> Hover over each bottle for more information 🥂 </h2>
+      </div>
+    </div>
+    <div class="dividing-line"></div>
+    <div class="row">
+      <!-- ====== Whiskey item start ====== -->
+      <div class="portfolio-item padd-15">
+        <div class="portfolio-item-inner shadow-dark">
+          <div class="portfolio-img" onmouseover="showWhiskeyFactsPanel(this)" onmouseout="hideWhiskeyFactsPanel(this)">
+            <img src="images/Whiskey/eagle-rare-desktop-bottle.png" alt="">
+          </div>
+        </div>
+        <div class="portfolio-heading padd-15">
+          <h2 class="review-name section-title-heading" style="text-align: center;">Eagle Rare 10 Year</h2>
+          <div class="dividing-line"></div>
+          <!-- Description -->
+          <h2 class="review-category sub-section-title-heading" style="font-size: smaller; text-align: center;">Histroy</h2>
+          <p class="section-title-heading" style="font-size: smaller; text-align: center;">Eagle Rare, initially a 101-proof ten-year-old Kentucky straight bourbon whiskey crafted by master distiller Charles L. Beam under Seagram, made its debut in 1975 as one of the last bourbon brands before the rise of 'small-batch bourbons.' Over the years, various companies, including the Old Prentice Distillery in Frankfort, KY, have been involved in the production and marketing of Eagle Rare. In March 1989, the Sazerac Company, a family-owned American producer based in New Orleans and the parent company of five distilleries, acquired Eagle Rare from Seagram. The distillery, originally named the George T. Stagg Distillery and later renamed the Buffalo Trace Distillery, is now under the ownership of Sazerac.</p>
+          <!-- Nose -->
+          <h2 class="review-category sub-section-title-heading" style="font-size: smaller; text-align: center;">Nose</h2>
+          <p class="section-title-heading" style="font-size: smaller; text-align: center;">Initially, I didn't get much on the nose. I'm more biased towards higher ABV whiskeys that tend to have more pronounced noses. Eagle Rare, unfortunately, isn't an exception to this rule. There are hints of toasted marshmallow, citrus, molasses, and vanilla, but they are pretty muted.</p>
+          <!-- Description -->
+          <!-- Rating Scale -->
+          <div class="rating" id="rating">
+            <span class="star" data-rating="1">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+          </div>
+          <h2 class="review-category sub-section-title-heading" style="font-size: smaller; text-align: center;">Mid Palete</h2>
+          <p class="section-title-heading" style="font-size: smaller; text-align: center;">Being a Sazerac product, the mash bill has that distinct buttery, corny mid-palate. This is extremely similar to Buffalo Trace; however, the mid-palate is more eventful, and there is less of an aggressive cornish taste to it. In fact, the mash bill for Eagle Rare uses 5% less corn than Buffalo Trace. Minor notes of cinnamon, citrus, and honey stand out.</p>
+          <!-- Description -->
+          <!-- Rating Scale -->
+          <div class="rating" id="rating">
+            <span class="star" data-rating="1">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+          </div>
+          <h2 class="review-category sub-section-title-heading" style="font-size: smaller; text-align: center;">Finish</h2>
+          <p class="section-title-heading" style="font-size: smaller; text-align: center;">The finish hugs your mouth with a strong lingering presence. Extremely dry and pronounced almond notes.</p>
+          <!-- Description -->
+          <!-- Rating Scale -->
+          <div class="rating" id="rating">
+            <span class="star" data-rating="1">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+          </div>
+          <h2 class="review-category sub-section-title-heading" style="font-size: smaller; text-align: center;">Value</h2>
+          <p class="section-title-heading" style="font-size: smaller; text-align: center;">For $90, there are far better whiskies out there. While this is a staple that I had to try, and given the fact that it's relatively hard to come by, I had to give it a shot. I'd say if you're at a bar, order a tasting. Only buy this if you really enjoy Buffalo Trace.</p>
+          <!-- Description -->
+          <!-- Rating Scale -->
+          <div class="rating" id="rating">
+            <span class="star" data-rating="1">&#9733;</span>
+          </div>
+          <h2 class="review-category sub-section-title-heading" style="font-size: smaller; text-align: center;">Overall Thoughts</h2>
+          <p class="section-title-heading" style="font-size: smaller; text-align: center;">I wouldn't say I'm disappointed, but I am unimpressed. This feels like a slightly better version of Buffalo Trace, but for $50 more than Buffalo Trace's MSRP. Try this if you're at a bar or if a friend offers you a taste.</p>
+          <!-- Rating Scale -->
+          <div class="rating" id="rating">
+            <span class="star" data-rating="1">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+          </div>
+        </div>
+        
+        <!-- Whiskey Facts Panel -->
+        <div class="whiskey-facts-panel" onmouseout="hideWhiskeyFactsPanel(this)">
+          <div class="whiskey-facts-content">
+            <!-- Remove the close button -->
+            <h2 class="section-title">Eagle Rare</h2>
+            <div class="dividing-line"></div>
+            
+            <ul class="facts-list">
+              <li>⏰ Aged 10 years</li>
+              <li>🍾 90 Proof</li>
+              <li>💰 MSRP $89.99</li> 
+              <li>🌾 Buffalo Trace Mashbill #1</li> 
+              <li>🍶 Sazerac Company Product</li> 
+              <!-- Add more items as needed -->
+            </ul>
+            <!-- Other content goes here -->
+          </div>
+        </div>
+      </div>
+      <!-- ====== portfolio item End ====== -->
+    </div>
+    <div class="dividing-line"></div>
+  </div>
+</section>
+<!-- ===== Whiskey Review Section End ===== -->
+
+
+
+      <!-- ===== Contact Section Start ===== -->
+      <section class="contact section" id="contact">
+        <div class="container">
+          <div class="row">
+            <div class="section-title padd-15">
+              <h2>Contact Me</h2>
+            </div>
+          </div>
+          <h3 class="contact-title padd-15">Have any questions or want to connect?</h3>
+          <h4 class="contact-sub-title padd-15">Please reach out!</h4>
+          <div class="row">
+            <!-- ===== Contact info item start ====== -->
+            <div class="contact-info-item padd-15">
+              <div class="icon"><i class="fa fa-phone"></i></div>
+              <h4>Call me!</h4>
+              <p>269 930 4061</p>
+            </div>
+            <!-- ===== Contact info item end ====== -->
+             <!-- ===== Contact info item start ====== -->
+             <div class="contact-info-item padd-15">
+              <div class="icon"><i class="fa fa-map-marker-alt"></i></div>
+              <h4>Location</h4>
+              <p>United States</p>
+            </div>
+            <!-- ===== Contact info item end ====== -->
+             <!-- ===== Contact info item start ====== -->
+             <div class="contact-info-item padd-15">
+              <div class="icon"><i class="fa fa-envelope"></i></div>
+              <h4>Email</h4>
+              <p>maximosnolan@gmail.com</p>
+            </div>
+            <!-- ===== Contact info item end ====== -->
+             <!-- ===== Contact info item start ====== -->
+             <div class="contact-info-item padd-15">
+              <div class="icon"><i class="fa fa-globe-europe"></i></div>
+              <h4>Website</h4>
+              <p>www.maximosnolan.com</p>
+            </div>
+            <div class="contact-info-item padd-15">
+              <div class="icon"><i class="fa fa-globe-europe"></i></div>
+              <h4>Linkedin</h4>
+              <p>shorturl.at/pNS57</p>
+            </div>
+            <!-- ===== Contact info item end ====== -->
+          </div>
+          <h3 class="contact-title padd-15">Contact me</h3>
+          <h4 class="contact-sub-title padd-15">I'll get back to you very soon!</h4>
+          <!-- ====== Contact Form ====== -->
+          <div class="row">
+            <div class="contact-form padd-15">
+              <div class="row">
+                <div class="form-item col-6 padd-15">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Name">
+                  </div>
+                </div>
+                <div class="form-item col-6 padd-15">
+                  <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-item col-12 padd-15">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Subject">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-item col-12 padd-15">
+                  <div class="form-group">
+                    <textarea name="" class="form-control" id=""  placeholder="Message"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-item col-12 padd-15">
+                  <button type="submit" class="btn">Send Message</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ===== Contact Section End ===== -->
+    </div>
+    <!-- ===== Main Content End ===== -->
+  </div>
+  <!-- ===== Main Container End ===== -->
+  <!-- ===== Style Switcher Start ===== -->
+  <div class="style-switcher">
+    <div class="style-switcher-toggler s-icon">
+      <i class="fas fa-cog fa-spin"></i>
+    </div>
+    <div class="day-night s-icon">
+      <i class="fas "></i>
+    </div>
+    <h4>Theme Colors</h4>
+    <div class="colors">
+      <span class="color-1" onclick="setActiveStyle('color-1')"></span>
+      <span class="color-2" onclick="setActiveStyle('color-2')"></span>
+      <span class="color-3" onclick="setActiveStyle('color-3')"></span>
+      <span class="color-4" onclick="setActiveStyle('color-4')"></span>
+      <span class="color-5" onclick="setActiveStyle('color-5')"></span>
+      <span class="color-6" onclick="setActiveStyle('color-6')"></span>
+    </div>
+  </div>
+  <!-- ===== Style Switcher End ===== -->
+  <!-- ===== JS Files ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/script.js" defer></script>
+  <script src="js/style-switcher.js" defer></script>
 </body>
 </html>
