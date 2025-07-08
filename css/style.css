@@ -844,3 +844,51 @@ h3.default
         max-width: 100%;
     }
 }
+.skills ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding: 0;
+  color: #fff;
+}
+
+.skills h4 {
+  color: #ffd700; /* Gold title for section headers */
+  margin-bottom: 10px;
+}
+.contact-section {
+  width: 100%;
+  padding: 20px 40px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.col {
+  flex: 1 1 48%;
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+  .col {
+    flex: 1 1 100%;
+  }
+}
+.section-title {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-icon {
+  color: #ffd700;
+  font-size: 1.3rem;
+}
+.timeline-content p {
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
