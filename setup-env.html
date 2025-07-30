@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment Setup - Portfolio Chatbot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e2328, #0f1419);
+            color: #f0e6d2;
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(30, 35, 40, 0.9);
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        h1 {
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #a09f8d;
+            font-weight: 600;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: #0f1419;
+            border: 1px solid #5b5a56;
+            border-radius: 8px;
+            color: #f0e6d2;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        button {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: #1e2328;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            color: #ff0000;
+        }
+        .info {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+        }
+        .instructions {
+            background: rgba(10, 200, 185, 0.1);
+            border: 1px solid #0ac8b9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Chatbot Environment Setup</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ol>
+                <li>Get your OpenAI API key from <a href="https://platform.openai.com/" target="_blank" style="color: #0ac8b9;">OpenAI Platform</a></li>
+                <li>Fill in the form below with your API key</li>
+                <li>Click "Save Configuration" to store it securely</li>
+                <li>Return to your portfolio website to test the chatbot</li>
+            </ol>
+        </div>
+
+        <form id="envForm">
+            <div class="form-group">
+                <label for="openaiKey">OpenAI API Key</label>
+                <input type="password" id="openaiKey" name="OPENAI_API_KEY" placeholder="sk-..." value="" required>
+                <small>Get your API key from <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a></small>
+            </div>
+
+            <div class="form-group">
+                <label for="model">ChatGPT Model:</label>
+                <input type="text" id="model" name="CHATBOT_MODEL" value="gpt-4o-mini">
+            </div>
+
+            <div class="form-group">
+                <label for="maxTokens">Max Tokens:</label>
+                <input type="number" id="maxTokens" name="CHATBOT_MAX_TOKENS" value="200" min="50" max="500">
+            </div>
+
+            <div class="form-group">
+                <label for="temperature">Temperature:</label>
+                <input type="number" id="temperature" name="CHATBOT_TEMPERATURE" value="0.7" min="0" max="2" step="0.1">
+            </div>
+
+            <button type="submit">💾 Save Configuration</button>
+        </form>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // Load existing configuration
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                const storedConfig = localStorage.getItem('envConfig');
+                if (storedConfig) {
+                    const config = JSON.parse(storedConfig);
+                    document.getElementById('openaiKey').value = config.OPENAI_API_KEY || '';
+                    document.getElementById('model').value = config.CHATBOT_MODEL || 'gpt-3.5-turbo';
+                    document.getElementById('maxTokens').value = config.CHATBOT_MAX_TOKENS || 200;
+                    document.getElementById('temperature').value = config.CHATBOT_TEMPERATURE || 0.7;
+                    
+                    showStatus('Configuration loaded from browser storage', 'info');
+                }
+            } catch (error) {
+                console.error('Error loading config:', error);
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('envForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const config = {};
+            
+            for (let [key, value] of formData.entries()) {
+                config[key] = value;
+            }
+            
+            try {
+                localStorage.setItem('envConfig', JSON.stringify(config));
+                showStatus('✅ Configuration saved successfully! You can now return to your portfolio website.', 'success');
+            } catch (error) {
+                showStatus('❌ Error saving configuration: ' + error.message, 'error');
+            }
+        });
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+    </script>
+</body>
+</html> 

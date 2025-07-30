@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Proxy Solution</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1e2328; color: #f0e6d2; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #d4af37; border-radius: 8px; }
+        .log { background: #0f1419; padding: 10px; border-radius: 4px; margin: 10px 0; font-family: monospace; }
+        button { background: #d4af37; color: #1e2328; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        input { background: #0f1419; color: #f0e6d2; border: 1px solid #5b5a56; padding: 10px; border-radius: 4px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>🌐 Chatbot Proxy Solution</h1>
+    
+    <div class="section">
+        <h3>🔧 Option 1: Use a Public Proxy</h3>
+        <p>If CORS is the issue, we can use a public proxy service to bypass it.</p>
+        <input type="text" id="proxyMessage" placeholder="Enter test message" value="Hello">
+        <button onclick="testProxy()">Test Proxy</button>
+        <div id="proxyLog" class="log"></div>
+    </div>
+    
+    <div class="section">
+        <h3>📝 Option 2: Update Your Chatbot Code</h3>
+        <p>If the proxy works, we can update your main chatbot to use it.</p>
+        <button onclick="updateChatbotCode()">Show Updated Code</button>
+        <div id="codeLog" class="log"></div>
+    </div>
+
+    <script>
+        function log(elementId, message) {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            element.innerHTML += `[${timestamp}] ${message}\n`;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        async function testProxy() {
+            const proxyLog = document.getElementById('proxyLog');
+            proxyLog.innerHTML = '';
+            
+            const message = document.getElementById('proxyMessage').value;
+            log('proxyLog', `🚀 Testing proxy with message: "${message}"`);
+            
+            try {
+                // Try using a public CORS proxy
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/https://api.openai.com/v1/chat/completions';
+                
+                // Get API key from localStorage
+                const storedConfig = localStorage.getItem('envConfig');
+                if (!storedConfig) {
+                    log('proxyLog', '❌ No configuration found');
+                    return;
+                }
+                
+                const envConfig = JSON.parse(storedConfig);
+                const apiKey = envConfig.OPENAI_API_KEY;
+                
+                if (!apiKey || apiKey === 'your-openai-api-key-here') {
+                    log('proxyLog', '❌ No valid API key found');
+                    return;
+                }
+                
+                log('proxyLog', '🔑 API Key found, attempting proxy call...');
+                
+                const response = await fetch(proxyUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Origin': window.location.origin
+                    },
+                    body: JSON.stringify({
+                        model: envConfig.CHATBOT_MODEL || 'gpt-4o-mini',
+                        messages: [
+                            { 
+                                role: 'system', 
+                                content: 'You are a helpful AI assistant for Timothy\'s portfolio website. Keep responses concise and friendly.' 
+                            },
+                            { role: 'user', content: message }
+                        ],
+                        max_tokens: parseInt(envConfig.CHATBOT_MAX_TOKENS) || 200,
+                        temperature: parseFloat(envConfig.CHATBOT_TEMPERATURE) || 0.7
+                    })
+                });
+                
+                log('proxyLog', `📥 Response status: ${response.status}`);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    log('proxyLog', `❌ Proxy call failed: ${response.status} - ${errorText}`);
+                } else {
+                    const data = await response.json();
+                    log('proxyLog', `✅ Proxy call successful!`);
+                    log('proxyLog', `📝 Response: ${data.choices[0].message.content}`);
+                }
+                
+            } catch (error) {
+                log('proxyLog', `❌ Proxy error: ${error.message}`);
+                log('proxyLog', '💡 The proxy service might be down. Try the manual solution below.');
+            }
+        }
+
+        function updateChatbotCode() {
+            const codeLog = document.getElementById('codeLog');
+            codeLog.innerHTML = '';
+            
+            log('codeLog', '📝 Here\'s the updated chatbot code to use a proxy:');
+            log('codeLog', '');
+            log('codeLog', '// Replace the callChatGPT function in js/script.js with this:');
+            log('codeLog', '');
+            log('codeLog', 'async function callChatGPT(userMessage) {');
+            log('codeLog', '    console.log(\'🤖 Attempting ChatGPT API call via proxy...\');');
+            log('codeLog', '    ');
+            log('codeLog', '    if (API_CONFIG.OPENAI_API_KEY !== \'your-openai-api-key-here\') {');
+            log('codeLog', '        try {');
+            log('codeLog', '            // Use a public CORS proxy');
+            log('codeLog', '            const proxyUrl = \'https://cors-anywhere.herokuapp.com/https://api.openai.com/v1/chat/completions\';');
+            log('codeLog', '            ');
+            log('codeLog', '            const response = await fetch(proxyUrl, {');
+            log('codeLog', '                method: \'POST\',');
+            log('codeLog', '                headers: {');
+            log('codeLog', '                    \'Content-Type\': \'application/json\',');
+            log('codeLog', '                    \'Authorization\': `Bearer ${API_CONFIG.OPENAI_API_KEY}`');
+            log('codeLog', '                },');
+            log('codeLog', '                body: JSON.stringify({');
+            log('codeLog', '                    model: API_CONFIG.MODEL,');
+            log('codeLog', '                    messages: [');
+            log('codeLog', '                        { role: \'system\', content: \'You are a helpful AI assistant for Timothy\\\'s portfolio website.\' },');
+            log('codeLog', '                        { role: \'user\', content: userMessage }');
+            log('codeLog', '                    ],');
+            log('codeLog', '                    max_tokens: API_CONFIG.MAX_TOKENS,');
+            log('codeLog', '                    temperature: API_CONFIG.TEMPERATURE');
+            log('codeLog', '                })');
+            log('codeLog', '            });');
+            log('codeLog', '            ');
+            log('codeLog', '            if (!response.ok) {');
+            log('codeLog', '                throw new Error(`API call failed: ${response.status}`);');
+            log('codeLog', '            }');
+            log('codeLog', '            ');
+            log('codeLog', '            const data = await response.json();');
+            log('codeLog', '            return data.choices[0].message.content;');
+            log('codeLog', '        } catch (error) {');
+            log('codeLog', '            console.error(\'Proxy API error:\', error);');
+            log('codeLog', '            throw error;');
+            log('codeLog', '        }');
+            log('codeLog', '    } else {');
+            log('codeLog', '        throw new Error(\'API key not configured\');');
+            log('codeLog', '    }');
+            log('codeLog', '}');
+        }
+    </script>
+</body>
+</html> 

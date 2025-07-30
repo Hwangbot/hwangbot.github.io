@@ -1,114 +1,63 @@
-// import $ from 'jquery';
+// ===== LEAGUE OF LEGENDS THEMED PORTFOLIO JAVASCRIPT =====
 
-/* ============================== Aside ============================ */
-const nav = document.querySelector(".nav"),
-      navList = nav.querySelectorAll("li"),
-      totalNavList = navList.length,
-      allSection = document.querySelectorAll(".section"),
-      totalSection = allSection.length;
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all functionality
+    initNavigation();
+    initScrollEffects();
+    initAnimations();
+    initContactForm();
+    initScrollToTop();
+    initCounterAnimation();
+    initChatWidget(); // Initialize chat widget
+});
 
-// Initialize navigation
-for(let i=0; i<totalNavList; i++) {
-    const a = navList[i].querySelector("a");
-    a.addEventListener("click", function() {
-        removeBackSection();
-        for(let j=0; j<totalNavList; j++) {
-            if(navList[j].querySelector("a").classList.contains("active")) {
-                addBackSection(j);
+// ===== NAVIGATION =====
+function initNavigation() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+
+    // Mobile menu toggle
+    if (navToggle) {
+        navToggle.addEventListener('click', function() {
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // Navigation link clicks
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove active class from all links
+            navLinks.forEach(l => l.classList.remove('active'));
+            
+            // Add active class to clicked link
+            this.classList.add('active');
+            
+            // Get target section
+            const targetId = this.getAttribute('data-section');
+            const targetSection = document.getElementById(targetId);
+            
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            if (targetSection) {
+                targetSection.classList.add('active');
             }
-            navList[j].querySelector("a").classList.remove("active");
-        }
-        this.classList.add("active");
-        showSection(this);
-        
-        // Close mobile menu after navigation
-        if(window.innerWidth < 1200) {
-            asideSectionTogglerBtn();
-        }
+            
+            // Close mobile menu if open
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        });
     });
-}
-
-function removeBackSection() {
-    for(let i=0; i<totalSection; i++) {
-        allSection[i].classList.remove("back-section");
-    }   
-}
-
-function addBackSection(num) {
-    allSection[num].classList.add("back-section");
-}
-
-function showSection(element) {
-    for(let i=0; i<totalSection; i++) {
-        allSection[i].classList.remove("active");
-    }
-    const target = element.getAttribute("href").split("#")[1];
-    document.querySelector("#" + target).classList.add("active");
-}
-
-function updateNav(element) {
-    for(let i=0; i<totalNavList; i++) {
-        navList[i].querySelector("a").classList.remove("active");
-        const target = element.getAttribute("href").split("#")[1];
-        if(target === navList[i].querySelector("a").getAttribute("href").split("#")[1]) {
-            navList[i].querySelector("a").classList.add("active");
-        }
-    }
-}
-
-// Mobile navigation toggler
-const navTogglerBtn = document.querySelector(".nav-toggler"),
-      aside = document.querySelector(".aside");
-
-navTogglerBtn.addEventListener("click", () => {
-    asideSectionTogglerBtn();
-});
-
-function asideSectionTogglerBtn() {
-    aside.classList.toggle("open");
-    navTogglerBtn.classList.toggle("open");
-    for(let i=0; i<totalSection; i++) {
-        allSection[i].classList.toggle("open");
-    }
-}
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', function(event) {
-    const isClickInsideAside = aside.contains(event.target);
-    const isClickOnToggler = navTogglerBtn.contains(event.target);
-    
-    if (!isClickInsideAside && !isClickOnToggler && aside.classList.contains('open')) {
-        asideSectionTogglerBtn();
-    }
-});
-
-// Handle window resize
-window.addEventListener('resize', function() {
-    if (window.innerWidth >= 1200 && aside.classList.contains('open')) {
-        asideSectionTogglerBtn();
-    }
-});
-
-/* ============================== typing animation ============================ */
-document.addEventListener("DOMContentLoaded", function() {
-    // Initialize typing animations
-    if (typeof Typed !== 'undefined') {
-        var typed = new Typed(".typing", {
-            strings: ["Data Analyst", "Financial Analyst", "Python Developer", "SQL Expert"],
-            typeSpeed: 80,
-            backSpeed: 50,
-            loop: true,
-            backDelay: 2000
-        });
-
-        var typed2 = new Typed(".typing2", {
-            strings: ["Modern C++", "Technical Interview Basics", "Data Structures and Algorithms", "Computer Architecture"],
-            typeSpeed: 80,
-            backSpeed: 50,
-            loop: true,
-            backDelay: 2000
-        });
-    }
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -123,14 +72,35 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+}
 
-    // Add loading animation to sections
+// ===== SCROLL EFFECTS =====
+function initScrollEffects() {
+    const navbar = document.querySelector('.navbar');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Navbar background effect
+        if (scrollTop > 100) {
+            navbar.style.background = 'rgba(15, 20, 25, 0.98)';
+            navbar.style.backdropFilter = 'blur(15px)';
+        } else {
+            navbar.style.background = 'rgba(15, 20, 25, 0.95)';
+            navbar.style.backdropFilter = 'blur(10px)';
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+
+    // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -139,139 +109,524 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }, observerOptions);
 
-    // Observe all sections
-    document.querySelectorAll('.section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
+    // Observe elements for animation
+    document.querySelectorAll('.service-card, .project-card, .stat-card, .contact-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease-out';
+        observer.observe(el);
+    });
+}
+
+// ===== ANIMATIONS =====
+function initAnimations() {
+    // Hero section animations
+    const heroElements = document.querySelectorAll('.hero-title, .hero-description, .hero-stats, .hero-actions');
+    
+    heroElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            element.style.transition = 'all 0.8s ease-out';
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }, index * 200);
     });
 
-    // Form handling
-    const contactForm = document.querySelector('.contact-form form');
+    // Parallax effect for hero background
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelector('#home');
+        if (parallax) {
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        }
+    });
+
+    // Hover animations for cards
+    document.querySelectorAll('.service-card, .project-card, .stat-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+}
+
+// ===== COUNTER ANIMATION =====
+function initCounterAnimation() {
+    const counters = document.querySelectorAll('.stat-number');
+    console.log('🔢 Found counters:', counters.length);
+    
+    const animateCounter = (counter) => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        console.log('🎯 Animating counter to:', target);
+        const duration = 2000; // 2 seconds
+        const step = target / (duration / 16); // 60fps
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            counter.textContent = Math.floor(current);
+        }, 16);
+    };
+
+    // Intersection Observer for counters
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log('👁️ Counter visible, starting animation');
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => {
+        console.log('👀 Observing counter:', counter.textContent);
+        counterObserver.observe(counter);
+    });
+}
+
+// ===== CONTACT FORM =====
+function initContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Get form data
             const formData = new FormData(this);
-            const name = this.querySelector('input[type="text"]').value;
-            const email = this.querySelector('input[type="email"]').value;
-            const subject = this.querySelectorAll('input[type="text"]')[1].value;
-            const message = this.querySelector('textarea').value;
+            const data = Object.fromEntries(formData);
             
-            // Basic validation
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all fields');
+            // Simple validation
+            if (!data.name || !data.email || !data.message) {
+                showNotification('Please fill in all required fields.', 'error');
                 return;
             }
             
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address');
+            if (!emailRegex.test(data.email)) {
+                showNotification('Please enter a valid email address.', 'error');
                 return;
             }
             
-            // Here you would typically send the form data to a server
-            // For now, we'll just show a success message
-            alert('Thank you for your message! I\'ll get back to you soon.');
+            // Simulate form submission
+            showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
             this.reset();
         });
     }
+}
 
-    // Add hover effects to service items
-    document.querySelectorAll('.service-item-inner').forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
+// ===== NOTIFICATION SYSTEM =====
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? 'var(--lol-green)' : type === 'error' ? 'var(--lol-red)' : 'var(--lol-blue)'};
+        color: var(--lol-white);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow-dark);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 5000);
+}
+
+// ===== SCROLL TO TOP =====
+function initScrollToTop() {
+    const scrollTopBtn = document.getElementById('scrollTop');
+    
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
         });
         
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
-    });
-
-    // Add click effects to buttons
-    document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            // Create ripple effect
-            const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.classList.add('ripple');
-            
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-});
-
-/* ============================== search ============================ */
-//function that searches for a company in the JSON data
-function search() {
-    // Get the company name from the input field
-    let companyName = document.getElementById("company-name").value;
-
-    // Fetch the JSON data from the server
-    fetch('path/to/data.json')
-    .then(response => response.json())
-    .then(data => {
-        // Filter the JSON data based on the company name
-        let searchResults = data.jobs.filter(job => job.title.toLowerCase() === companyName.toLowerCase());
-        // Clear the search results div
-        document.getElementById("results").innerHTML = "";
-        // Loop through the search results and display the job details
-        searchResults.forEach(job => {
-            document.getElementById("results").innerHTML += `
-                <div class="job">
-                    <h3>${job.title}</h3>
-                    <p>Location: ${job.location}</p>
-                    <p>Role Type: ${job.roleType}</p>
-                    <p>TC: ${job.tc}</p>
-                    <p>Difficulty Rating: ${job.difficultyRating}</p>
-                    <p>Experience: ${job.experience}</p>
-                </div>
-            `;
-        });
-    });
+    }
 }
 
-function redirect() {
-    window.location.hash = "#CompanyInfo";
+// ===== UTILITY FUNCTIONS =====
+
+// Debounce function for performance
+function debounce(func, wait, immediate) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            timeout = null;
+            if (!immediate) func(...args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func(...args);
+    };
 }
 
-// Add CSS for ripple effect
-const style = document.createElement('style');
-style.textContent = `
-    .btn {
-        position: relative;
-        overflow: hidden;
+// Throttle function for scroll events
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// Chat Widget Functionality
+function initChatWidget() {
+    console.log('🤖 Initializing GPT-powered chat widget...');
+    const chatWidget = document.getElementById('chat-widget');
+    const chatMinimize = document.getElementById('chatMinimize');
+    const chatInput = document.getElementById('chatInput');
+    const sendButton = document.getElementById('sendMessage');
+    const chatMessages = document.getElementById('chatMessages');
+
+    console.log('📋 Chat widget elements found:', {
+        chatWidget: !!chatWidget,
+        chatMinimize: !!chatMinimize,
+        chatInput: !!chatInput,
+        sendButton: !!sendButton,
+        chatMessages: !!chatMessages
+    });
+
+    if (!chatWidget) {
+        console.error('❌ Chat widget not found!');
+        return;
     }
-    
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
-        pointer-events: none;
+
+    console.log('✅ Chat widget initialized successfully');
+
+    // Load environment variables
+    let envConfig = {};
+    console.log('🔍 Starting to load environment config...');
+    try {
+        // Try to load from localStorage (set by user)
+        const storedConfig = localStorage.getItem('envConfig');
+        console.log('📦 Raw localStorage data:', storedConfig ? 'Found' : 'Not found');
+        
+        if (storedConfig) {
+            envConfig = JSON.parse(storedConfig);
+            console.log('✅ Environment config loaded:', { 
+                hasApiKey: !!envConfig.OPENAI_API_KEY,
+                model: envConfig.CHATBOT_MODEL,
+                maxTokens: envConfig.CHATBOT_MAX_TOKENS,
+                apiKeyLength: envConfig.OPENAI_API_KEY ? envConfig.OPENAI_API_KEY.length : 0
+            });
+        } else {
+            console.log('❌ No environment config found in localStorage');
+            console.log('💡 Please go to setup-env.html and save your configuration');
+        }
+    } catch (error) {
+        console.error('❌ Error loading environment config:', error);
     }
-    
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
+
+    // API Configuration
+    const API_CONFIG = {
+        // Load from environment or use defaults
+        OPENAI_API_KEY: envConfig.OPENAI_API_KEY || 'your-openai-api-key-here',
+        PROXY_URL: envConfig.PROXY_URL || 'https://your-proxy-service.com/api/chat',
+        MODEL: envConfig.CHATBOT_MODEL || 'gpt-3.5-turbo',
+        MAX_TOKENS: parseInt(envConfig.CHATBOT_MAX_TOKENS) || 200,
+        TEMPERATURE: parseFloat(envConfig.CHATBOT_TEMPERATURE) || 0.7,
+        // Fallback responses if API fails
+        FALLBACK_RESPONSES: {
+            'hello': 'Hello! How can I help you today?',
+            'hi': 'Hi there! What can I assist you with?',
+            'help': 'I\'m here to help! What would you like to know?',
+            'portfolio': 'This is Timothy\'s portfolio showcasing his data analysis skills and projects.',
+            'contact': 'You can reach Timothy through the contact section above.',
+            'projects': 'Check out the Projects section to see Timothy\'s work!',
+            'experience': 'Timothy has experience in data analysis, SQL, Python, and BI tools.',
+            'about': 'Timothy is a Data Analyst, Storyteller, and People Builder.'
+        }
+    };
+
+    console.log('⚙️ API Configuration loaded:', {
+        hasApiKey: API_CONFIG.OPENAI_API_KEY !== 'your-openai-api-key-here',
+        apiKeyLength: API_CONFIG.OPENAI_API_KEY.length,
+        model: API_CONFIG.MODEL,
+        maxTokens: API_CONFIG.MAX_TOKENS,
+        temperature: API_CONFIG.TEMPERATURE
+    });
+
+    // Minimize chat widget (make it a small circle)
+    chatMinimize.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent the widget click handler from firing
+        chatWidget.classList.add('minimized');
+    });
+
+    // Click anywhere on minimized widget to reopen
+    chatWidget.addEventListener('click', (e) => {
+        if (chatWidget.classList.contains('minimized')) {
+            // Only reopen if clicking on the minimized widget itself, not on child elements
+            if (e.target === chatWidget || e.target.closest('.chat-header')) {
+                chatWidget.classList.remove('minimized');
+            }
+        }
+    });
+
+    // Send message function
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message) {
+            // Add user message
+            addMessage(message, 'user');
+            chatInput.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                console.log('🚀 Starting API call for message:', message);
+                // Try real API call first
+                const response = await callChatGPT(message);
+                console.log('✅ API call successful, response:', response);
+                hideTypingIndicator();
+                addMessage(response, 'bot');
+            } catch (error) {
+                console.error('❌ API call failed with error:', error);
+                console.error('❌ Error message:', error.message);
+                console.error('❌ Error stack:', error.stack);
+                hideTypingIndicator();
+                // Fallback to local responses
+                console.log('🔄 Using fallback response...');
+                const fallbackResponse = generateFallbackResponse(message);
+                console.log('📝 Fallback response:', fallbackResponse);
+                addMessage(fallbackResponse, 'bot');
+            }
         }
     }
-`;
-document.head.appendChild(style);
+
+    // Real ChatGPT API call
+    async function callChatGPT(userMessage) {
+        console.log('🤖 Attempting ChatGPT API call...');
+        console.log('📋 API Config:', {
+            hasApiKey: API_CONFIG.OPENAI_API_KEY !== 'your-openai-api-key-here',
+            apiKeyLength: API_CONFIG.OPENAI_API_KEY.length,
+            model: API_CONFIG.MODEL,
+            maxTokens: API_CONFIG.MAX_TOKENS,
+            temperature: API_CONFIG.TEMPERATURE
+        });
+        
+        // Try multiple approaches to handle CORS issues
+        if (API_CONFIG.OPENAI_API_KEY !== 'your-openai-api-key-here') {
+            try {
+                console.log('🔑 Using direct API call...');
+                
+                const requestBody = {
+                    model: API_CONFIG.MODEL,
+                    messages: [
+                        { 
+                            role: 'system', 
+                            content: 'You are a helpful AI assistant for Timothy\'s portfolio website. You help visitors learn about Timothy\'s skills, experience, and projects. Keep responses concise, friendly, and professional. Focus on data analysis, portfolio information, and Timothy\'s background.' 
+                        },
+                        { role: 'user', content: userMessage }
+                    ],
+                    max_tokens: API_CONFIG.MAX_TOKENS,
+                    temperature: API_CONFIG.TEMPERATURE
+                };
+                
+                // Try direct API call first
+                try {
+                    console.log('📤 Attempting direct API call...');
+                    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${API_CONFIG.OPENAI_API_KEY}`
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+
+                    console.log('📥 Response status:', response.status);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('❌ Direct API call failed:', response.status, errorText);
+                        throw new Error(`Direct API failed: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('✅ Direct API call successful!');
+                    return data.choices[0].message.content;
+                    
+                } catch (directError) {
+                    console.log('🔄 Direct API failed, trying proxy...');
+                    
+                    // Try multiple proxy services as fallback
+                    const proxyUrls = [
+                        'https://api.allorigins.win/raw?url=https://api.openai.com/v1/chat/completions',
+                        'https://thingproxy.freeboard.io/fetch/https://api.openai.com/v1/chat/completions',
+                        'https://cors-anywhere.herokuapp.com/https://api.openai.com/v1/chat/completions',
+                        'https://api.codetabs.com/v1/proxy?quest=https://api.openai.com/v1/chat/completions'
+                    ];
+                    
+                    for (let i = 0; i < proxyUrls.length; i++) {
+                        try {
+                            console.log(`🔄 Trying proxy ${i + 1}: ${proxyUrls[i]}`);
+                            
+                            const proxyResponse = await fetch(proxyUrls[i], {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${API_CONFIG.OPENAI_API_KEY}`,
+                                    'Origin': window.location.origin
+                                },
+                                body: JSON.stringify(requestBody)
+                            });
+
+                            console.log('📥 Proxy response status:', proxyResponse.status);
+
+                            if (!proxyResponse.ok) {
+                                const errorText = await proxyResponse.text();
+                                console.error(`❌ Proxy ${i + 1} failed:`, proxyResponse.status, errorText);
+                                continue; // Try next proxy
+                            }
+
+                            const proxyData = await proxyResponse.json();
+                            console.log(`✅ Proxy ${i + 1} successful!`);
+                            return proxyData.choices[0].message.content;
+                            
+                        } catch (proxyError) {
+                            console.error(`❌ Proxy ${i + 1} error:`, proxyError.message);
+                            if (i === proxyUrls.length - 1) {
+                                throw new Error('All proxies failed');
+                            }
+                        }
+                    }
+                    
+                    throw new Error('All proxy attempts failed');
+                }
+                
+            } catch (error) {
+                console.error('❌ All API attempts failed:', error);
+                throw error;
+            }
+        } else {
+            console.log('❌ No API key configured');
+            throw new Error('API key not configured. Please add your OpenAI API key.');
+        }
+    }
+
+    // Fallback response generator
+    function generateFallbackResponse(userMessage) {
+        const lowerMessage = userMessage.toLowerCase();
+        
+        for (const [key, response] of Object.entries(API_CONFIG.FALLBACK_RESPONSES)) {
+            if (lowerMessage.includes(key)) {
+                return response;
+            }
+        }
+        
+        return 'Thanks for your message! I\'m here to help with any questions about this portfolio.';
+    }
+
+    // Add message to chat
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        contentDiv.textContent = text;
+        
+        messageDiv.appendChild(contentDiv);
+        chatMessages.appendChild(messageDiv);
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Typing indicator
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot-message typing-indicator';
+        typingDiv.id = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <div class="message-content">
+                <span class="typing-dots">
+                    <span></span><span></span><span></span>
+                </span>
+            </div>
+        `;
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    // Event listeners
+    sendButton.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+}
+
+console.log('🎮 League of Legends Portfolio loaded successfully!');
 
