@@ -97,6 +97,27 @@
     box-sizing: border-box;
 }
 
+/* Ensure consistent rendering across browsers */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Ensure consistent flex behavior */
+.flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
 html {
     scroll-behavior: smooth;
     height: 100%;
@@ -371,6 +392,8 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== LOL PROFILE CARD ===== */
 .lol-profile-card {
     background: linear-gradient(135deg, #1e2328, #0f1419);
+    background: -webkit-linear-gradient(135deg, #1e2328, #0f1419);
+    background: -moz-linear-gradient(135deg, #1e2328, #0f1419);
     border: 3px solid var(--lol-gold);
     border-radius: 25px;
     padding: 3rem 2rem;
@@ -380,9 +403,22 @@ h1, h2, h3, h4, h5, h6 {
         0 0 20px rgba(212, 175, 55, 0.3),
         0 0 40px rgba(212, 175, 55, 0.1),
         inset 0 0 20px rgba(212, 175, 55, 0.05);
+    -webkit-box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.3),
+        0 0 40px rgba(212, 175, 55, 0.1),
+        inset 0 0 20px rgba(212, 175, 55, 0.05);
+    -moz-box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.3),
+        0 0 40px rgba(212, 175, 55, 0.1),
+        inset 0 0 20px rgba(212, 175, 55, 0.05);
     min-width: 300px;
     max-width: 400px;
     overflow: hidden;
+    /* Ensure consistent flex behavior */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .lol-profile-card::before {
@@ -398,8 +434,22 @@ h1, h2, h3, h4, h5, h6 {
         var(--lol-gold-light) 50%, 
         var(--lol-gold) 80%, 
         transparent 100%);
+    background: -webkit-linear-gradient(90deg, 
+        transparent 0%, 
+        var(--lol-gold) 20%, 
+        var(--lol-gold-light) 50%, 
+        var(--lol-gold) 80%, 
+        transparent 100%);
+    background: -moz-linear-gradient(90deg, 
+        transparent 0%, 
+        var(--lol-gold) 20%, 
+        var(--lol-gold-light) 50%, 
+        var(--lol-gold) 80%, 
+        transparent 100%);
     border-radius: 25px 25px 0 0;
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    -webkit-box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    -moz-box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 .lol-profile-card::after {
@@ -418,11 +468,28 @@ h1, h2, h3, h4, h5, h6 {
         transparent 50%, 
         rgba(212, 175, 55, 0.02) 75%, 
         transparent 100%);
+    background: -webkit-linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(212, 175, 55, 0.02) 25%, 
+        transparent 50%, 
+        rgba(212, 175, 55, 0.02) 75%, 
+        transparent 100%);
+    background: -moz-linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(212, 175, 55, 0.02) 25%, 
+        transparent 50%, 
+        rgba(212, 175, 55, 0.02) 75%, 
+        transparent 100%);
 }
 
 .profile-portrait {
     position: relative;
     margin-bottom: 1.5rem;
+    /* Ensure consistent sizing */
+    width: 150px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .portrait-frame {
@@ -433,7 +500,13 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 50%;
     padding: 8px;
     background: linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
+    background: -webkit-linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
+    background: -moz-linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    -moz-box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    /* Ensure consistent sizing */
+    box-sizing: border-box;
 }
 
 .profile-image {
@@ -443,6 +516,11 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 50%;
     border: 3px solid var(--lol-dark);
     transition: transform 0.3s ease;
+    -webkit-transition: transform 0.3s ease;
+    -moz-transition: transform 0.3s ease;
+    /* Ensure consistent sizing */
+    display: block;
+    box-sizing: border-box;
 }
 
 .profile-title {
@@ -455,6 +533,10 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.5);
     position: relative;
+    /* Ensure consistent text rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 
@@ -464,6 +546,9 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
+    /* Ensure consistent flex behavior */
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .skill-slot {
@@ -476,21 +561,33 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid var(--lol-gray);
     border-radius: 50%;
     transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
     min-width: 80px;
     min-height: 80px;
     justify-content: center;
+    /* Ensure consistent sizing */
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .skill-slot:hover {
     border-color: var(--lol-gold);
     box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    -webkit-box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    -moz-box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
     transform: translateY(-3px);
+    -webkit-transform: translateY(-3px);
+    -moz-transform: translateY(-3px);
 }
 
 .skill-slot i {
     font-size: 1.5rem;
     color: var(--lol-gold);
     margin-bottom: 0.5rem;
+    /* Ensure consistent icon rendering */
+    display: block;
+    text-align: center;
 }
 
 .skill-slot span {
@@ -498,8 +595,11 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.8rem;
     color: var(--lol-text-secondary);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 500;
+    /* Ensure consistent text rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    display: block;
 }
 
 /* ===== BUTTONS ===== */
@@ -1800,6 +1900,12 @@ h1, h2, h3, h4, h5, h6 {
         max-width: 320px;
         padding: 2rem 1.5rem;
         border-radius: 20px;
+        /* Ensure consistent flex behavior across browsers */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
     }
     
     .portrait-frame {
@@ -1822,6 +1928,9 @@ h1, h2, h3, h4, h5, h6 {
         min-width: 70px;
         min-height: 70px;
         padding: 0.75rem;
+        /* Ensure consistent sizing across browsers */
+        box-sizing: border-box;
+        flex-shrink: 0;
     }
     
     .skill-slot i {
@@ -1890,6 +1999,12 @@ h1, h2, h3, h4, h5, h6 {
         max-width: 280px;
         padding: 1.5rem 1rem;
         border-radius: 18px;
+        /* Ensure consistent flex behavior across browsers */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
     }
     
     .portrait-frame {
@@ -1913,6 +2028,9 @@ h1, h2, h3, h4, h5, h6 {
         min-width: 60px;
         min-height: 60px;
         padding: 0.5rem;
+        /* Ensure consistent sizing across browsers */
+        box-sizing: border-box;
+        flex-shrink: 0;
     }
     
     .skill-slot i {
