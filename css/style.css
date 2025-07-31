@@ -596,37 +596,339 @@ h1, h2, h3, h4, h5, h6 {
     scroll-padding-top: 0;
 }
 
+/* About Section Styles */
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
     padding: 2rem 0;
-    scroll-margin-top: 0;
 }
 
-.about-text h3 {
+/* Hobbies Hub */
+.hobbies-hub {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 2rem auto;
+}
+
+.hub-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-gold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.hub-center:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+}
+
+.hub-center.expanded {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.7;
+}
+
+.hub-icon {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
+    color: var(--lol-white);
+    margin-bottom: 0.5rem;
+}
+
+.hub-center h3 {
+    color: var(--lol-white);
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
+}
+
+/* Show All Button */
+.show-all-btn {
+    position: absolute;
+    bottom: -130px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.hobbies-hub.expanded .show-all-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.show-all-button {
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
+    color: var(--lol-dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.show-all-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, var(--lol-gold-dark), var(--lol-gold));
+}
+
+.show-all-button i {
+    font-size: 1rem;
+}
+
+.show-all-button span {
+    font-weight: 700;
+}
+
+/* Interests Orbit */
+.interests-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.interests-orbit.expanded {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.interest-satellite {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--lol-blue), var(--lol-dark-blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-blue);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0) translateX(-50%);
+    cursor: pointer;
+}
+
+.interests-orbit.expanded .interest-satellite {
+    opacity: 1;
+    transform: scale(1) translateX(-50%);
+}
+
+.interest-satellite:nth-child(1) {
+    top: 0;
+    left: 50%;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.1s;
+}
+
+.interest-satellite:nth-child(2) {
+    top: 20%;
+    right: 0;
+    transform: scale(0) translateX(50%);
+    transition-delay: 0.2s;
+}
+
+.interest-satellite:nth-child(3) {
+    bottom: 20%;
+    right: 0;
+    transform: scale(0) translateX(50%);
+    transition-delay: 0.3s;
+}
+
+.interest-satellite:nth-child(4) {
+    bottom: 0;
+    left: 50%;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.4s;
+}
+
+.interest-satellite:nth-child(5) {
+    bottom: 20%;
+    left: 0;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.5s;
+}
+
+.interest-satellite:nth-child(6) {
+    top: 20%;
+    left: 0;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.6s;
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(1) {
+    transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(2) {
+    transform: scale(1) translateX(50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(3) {
+    transform: scale(1) translateX(50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(4) {
+    transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(5) {
+    transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(6) {
+    transform: scale(1) translateX(-50%);
+}
+
+.satellite-icon {
+    font-size: 1.5rem;
+    color: var(--lol-white);
+}
+
+.satellite-tooltip {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--lol-dark);
+    color: var(--lol-white);
+    padding: 0.75rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-dark);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.satellite-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--lol-dark);
+}
+
+.interest-satellite:hover .satellite-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.satellite-tooltip h5 {
+    margin: 0 0 0.25rem 0;
     color: var(--lol-gold);
+    font-size: 0.9rem;
 }
 
-.about-text p {
-    font-size: 1.1rem;
-    color: var(--lol-text-secondary);
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
+.satellite-tooltip p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--lol-light-gray);
 }
 
-.about-stats {
+/* Satellite Labels - Visible when hub is expanded */
+.satellite-label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    color: var(--lol-gold);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.interests-orbit.expanded .satellite-label {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.8s; /* Show labels after satellites are in position */
+}
+
+/* Content Sections */
+.interests-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 80px; /* Add space for the Show All button */
+}
+
+.interest-section {
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.interest-section.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.interest-section .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.interest-section .section-header h4 {
+    color: var(--lol-gold);
+    font-size: 2rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.interest-section .section-header i {
+    font-size: 1.5rem;
+}
+
+.content-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
 }
 
-.stat-card {
-    background: var(--gradient-dark);
-    border: 1px solid var(--lol-gray);
-    border-radius: 15px;
+.content-card {
+    background: linear-gradient(135deg, var(--lol-dark), var(--lol-darker));
+    border: 1px solid var(--lol-blue);
+    border-radius: 12px;
     padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
@@ -634,45 +936,278 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
-.stat-card::before {
+.content-card::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--gradient-gold-blue);
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transition: left 0.5s ease;
 }
 
-.stat-card:hover {
+.content-card:hover::before {
+    left: 100%;
+}
+
+.content-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     border-color: var(--lol-gold);
-    box-shadow: var(--shadow-gold);
 }
 
-.stat-icon {
+.card-icon {
     width: 60px;
     height: 60px;
-    background: var(--gradient-gold);
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1rem;
     font-size: 1.5rem;
-    color: var(--lol-dark);
+    color: var(--lol-white);
 }
 
-.stat-card h4 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
+.content-card h5 {
+    color: var(--lol-gold);
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+}
+
+.content-card p {
+    color: var(--lol-light-gray);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Content Card Images */
+.card-image {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid var(--lol-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.card-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+}
+
+.content-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-image:hover .content-image {
+    transform: scale(1.1);
+}
+
+/* Artist Profile Cards */
+.artist-card {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.artist-profile {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--lol-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.artist-profile:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+}
+
+.artist-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.artist-profile:hover .artist-image {
+    transform: scale(1.1);
+}
+
+.artist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.artist-profile:hover .artist-overlay {
+    opacity: 1;
+}
+
+.artist-overlay i {
+    color: var(--lol-gold);
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+}
+
+.artist-card h5 {
+    color: var(--lol-gold);
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+}
+
+.artist-card p {
+    color: var(--lol-light-gray);
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+/* Interactive Elements */
+.about-interactions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.interaction-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--lol-light-gray);
+    font-size: 0.9rem;
+}
+
+.interaction-hint i {
     color: var(--lol-gold);
 }
 
-.stat-card p {
-    color: var(--lol-text-secondary);
-    font-size: 0.9rem;
+/* Hub Click Animation */
+.hub-center.clicked {
+    animation: hubPulse 0.3s ease;
 }
+
+@keyframes hubPulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(0.9); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hobbies-hub {
+        width: 320px;
+        height: 320px;
+    }
+
+    .hub-center {
+        width: 120px;
+        height: 120px;
+    }
+
+    .interests-content {
+        margin-top: 60px; /* Less space on mobile */
+    }
+    
+    .hub-icon {
+        font-size: 1.5rem;
+    }
+    
+    .hub-center h3 {
+        font-size: 0.9rem;
+    }
+    
+    .show-all-btn {
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+    
+    .show-all-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+    }
+    
+    .interest-satellite {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .satellite-icon {
+        font-size: 1.2rem;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .content-card {
+        padding: 1.5rem;
+    }
+    
+    .interest-section .section-header h4 {
+        font-size: 1.5rem;
+    }
+    
+    .satellite-tooltip {
+        display: none;
+    }
+    
+    .interest-satellite {
+        cursor: pointer;
+    }
+    
+    .artist-profile {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .artist-overlay i {
+        font-size: 1.5rem;
+    }
+    
+    .artist-card h5 {
+        font-size: 1.1rem;
+    }
+    
+    .artist-card p {
+        font-size: 0.85rem;
+    }
+    
+    .card-image {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+
+.interaction-hint i {
+    color: var(--lol-gold);
+}
+
+/* Responsive Design */
+
 
 /* ===== EDUCATION SECTION ===== */
 .education-content {
@@ -1146,7 +1681,7 @@ h1, h2, h3, h4, h5, h6 {
 .scroll-top {
     position: fixed;
     bottom: 2rem;
-    right: 2rem;
+    left: 2rem;
     width: 50px;
     height: 50px;
     background: var(--gradient-gold);
@@ -1186,8 +1721,11 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .about-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
+    }
+    
+    .about-box {
+        max-width: 350px;
     }
     
     .education-content {
@@ -1256,6 +1794,54 @@ h1, h2, h3, h4, h5, h6 {
         align-items: center;
     }
     
+    /* Profile Card Mobile Responsive */
+    .lol-profile-card {
+        min-width: 280px;
+        max-width: 320px;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+    
+    .portrait-frame {
+        width: 120px;
+        height: 120px;
+        padding: 6px;
+    }
+    
+    .profile-title {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .skill-slots {
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+    }
+    
+    .skill-slot {
+        min-width: 70px;
+        min-height: 70px;
+        padding: 0.75rem;
+    }
+    
+    .skill-slot i {
+        font-size: 1.25rem;
+    }
+    
+    .skill-slot span {
+        font-size: 0.7rem;
+    }
+    
+    /* Home Content Mobile Layout */
+    .home-content {
+        gap: 2rem;
+    }
+    
+    .home-image {
+        order: -1;
+        margin-bottom: 1rem;
+    }
+    
     .services-grid {
         grid-template-columns: 1fr;
     }
@@ -1296,6 +1882,46 @@ h1, h2, h3, h4, h5, h6 {
     
     .section-title {
         font-size: 2rem;
+    }
+    
+    /* Profile Card Extra Small Screen Responsive */
+    .lol-profile-card {
+        min-width: 250px;
+        max-width: 280px;
+        padding: 1.5rem 1rem;
+        border-radius: 18px;
+    }
+    
+    .portrait-frame {
+        width: 100px;
+        height: 100px;
+        padding: 5px;
+    }
+    
+    .profile-title {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+    }
+    
+    .skill-slots {
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .skill-slot {
+        min-width: 60px;
+        min-height: 60px;
+        padding: 0.5rem;
+    }
+    
+    .skill-slot i {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .skill-slot span {
+        font-size: 0.6rem;
     }
     
     .profile-image {

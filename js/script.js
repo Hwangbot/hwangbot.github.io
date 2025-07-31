@@ -17,7 +17,242 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollToTop();
     initCounterAnimation();
     initChatWidget(); // Initialize chat widget
+    initAboutInteractions(); // Initialize About section interactions
 });
+
+// ===== ABOUT SECTION INTERACTIONS =====
+function initAboutInteractions() {
+    initHobbiesHub();
+    initInterestSections();
+}
+
+function initHobbiesHub() {
+    const interestSatellites = document.querySelectorAll('.interest-satellite');
+    const hubCenter = document.querySelector('.hub-center');
+    const interestsOrbit = document.querySelector('.interests-orbit');
+    
+    // Initialize hub center click functionality
+    if (hubCenter && interestsOrbit) {
+        hubCenter.addEventListener('click', function() {
+            const isExpanded = interestsOrbit.classList.contains('expanded');
+            
+            // Toggle expanded state
+            if (isExpanded) {
+                // Collapse
+                interestsOrbit.classList.remove('expanded');
+                hubCenter.classList.remove('expanded');
+                hubCenter.closest('.hobbies-hub').classList.remove('expanded');
+                hideAllSections();
+            } else {
+                // Expand
+                interestsOrbit.classList.add('expanded');
+                hubCenter.classList.add('expanded');
+                hubCenter.closest('.hobbies-hub').classList.add('expanded');
+                
+                // Add click animation
+                hubCenter.classList.add('clicked');
+                setTimeout(() => {
+                    hubCenter.classList.remove('clicked');
+                }, 300);
+            }
+        });
+        
+        // Add hover effect to show it's clickable
+        hubCenter.addEventListener('mouseenter', function() {
+            if (!interestsOrbit.classList.contains('expanded')) {
+                this.style.transform = 'translate(-50%, -50%) scale(1.1)';
+                this.style.boxShadow = 'var(--shadow-gold)';
+            }
+        });
+        
+        hubCenter.addEventListener('mouseleave', function() {
+            if (!interestsOrbit.classList.contains('expanded')) {
+                this.style.transform = 'translate(-50%, -50%) scale(1)';
+                this.style.boxShadow = '';
+            }
+        });
+    }
+    
+    interestSatellites.forEach(satellite => {
+        // Add hover effects
+        satellite.addEventListener('mouseenter', function() {
+            // Add a subtle glow effect
+            this.style.boxShadow = '0 0 20px rgba(0, 123, 255, 0.6)';
+        });
+        
+        satellite.addEventListener('mouseleave', function() {
+            this.style.boxShadow = '';
+        });
+        
+        // Add click interaction to show specific section
+        satellite.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent triggering hub center click
+            
+            const category = this.getAttribute('data-category');
+            showSection(category);
+            
+            // Add click animation
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+    
+    // Remove the document click listener that closes hub when clicking outside
+    // Now the hub will only close when clicking the hub center itself
+    
+    // Add Show All button functionality
+    const showAllBtn = document.querySelector('.show-all-button');
+    console.log('🔍 Show All button found:', !!showAllBtn);
+    if (showAllBtn) {
+        showAllBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent triggering hub center click
+            console.log('🖱️ Show All button clicked');
+            
+            // Get current button text to determine action
+            const buttonText = this.querySelector('span');
+            console.log('📝 Button text element found:', !!buttonText);
+            
+            if (buttonText) {
+                const currentText = buttonText.textContent;
+                console.log('📝 Current button text:', currentText);
+                
+                // Execute the action based on current button text
+                const sectionsNowActive = showAllSections();
+                console.log('📊 Sections now active:', sectionsNowActive);
+                
+                // Update button text to the opposite action
+                const newText = currentText === 'Show All' ? 'Close All' : 'Show All';
+                buttonText.textContent = newText;
+                console.log('✅ Button text updated to:', newText);
+            }
+            
+            // Add click animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    }
+}
+
+function initInterestSections() {
+    const sections = document.querySelectorAll('.interest-section');
+    
+    // Initially hide all sections
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Set up intersection observer for animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.target.classList.contains('active')) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            } else if (!entry.target.classList.contains('active')) {
+                // Ensure sections are hidden when not active
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateY(30px)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+}
+
+function showSection(category) {
+    // Hide all sections first
+    hideAllSections();
+    
+    // Show the selected section
+    const targetSection = document.querySelector(`.interest-section[data-category="${category}"]`);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        
+        // Scroll to the section
+        setTimeout(() => {
+            targetSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 300);
+    }
+}
+
+function hideAllSections() {
+    const sections = document.querySelectorAll('.interest-section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+}
+
+function showAllSections() {
+    const sections = document.querySelectorAll('.interest-section');
+    console.log('🔍 showAllSections called');
+    console.log('📊 Number of sections found:', sections.length);
+    
+    // Log each section and its current state
+    sections.forEach((section, index) => {
+        const category = section.getAttribute('data-category');
+        const isActive = section.classList.contains('active');
+        console.log(`📋 Section ${index + 1}: ${category} - Active: ${isActive}`);
+    });
+    
+    // Check current button text to determine action
+    const showAllBtn = document.querySelector('.show-all-button');
+    const buttonText = showAllBtn ? showAllBtn.querySelector('span') : null;
+    const currentText = buttonText ? buttonText.textContent : 'Show All';
+    
+    console.log('📝 Current button text:', currentText);
+    
+    if (currentText === 'Show All') {
+        // Show All action - open all sections
+        console.log('✅ Opening all sections');
+        sections.forEach((section, index) => {
+            const category = section.getAttribute('data-category');
+            section.classList.add('active');
+            // Force opacity and transform changes immediately
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+            console.log(`✅ Opened section ${index + 1}: ${category}`);
+        });
+        
+        // Scroll to the first section
+        setTimeout(() => {
+            const firstSection = document.querySelector('.interest-section');
+            if (firstSection) {
+                firstSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }, 300);
+        
+        return true; // Sections are now active
+    } else {
+        // Close All action - close all sections
+        console.log('❌ Closing all sections');
+        sections.forEach((section, index) => {
+            const category = section.getAttribute('data-category');
+            section.classList.remove('active');
+            // Force opacity and transform changes immediately
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            console.log(`❌ Closed section ${index + 1}: ${category}`);
+        });
+        
+        return false; // Sections are now inactive
+    }
+}
+
+
 
 // ===== NAVIGATION =====
 function initNavigation() {
@@ -323,7 +558,8 @@ function initScrollToTop() {
             }
         });
         
-        scrollTopBtn.addEventListener('click', function() {
+        scrollTopBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent event from bubbling up to document click listener
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
