@@ -769,6 +769,8 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     margin-top: 2rem;
     text-align: center;
+    display: flex;
+    justify-content: center;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -1245,10 +1247,10 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .show-all-btn {
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-}
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+    }
     
     .show-all-button {
         padding: 0.7rem 1.4rem;
@@ -2010,6 +2012,8 @@ h1, h2, h3, h4, h5, h6 {
     
     .show-all-btn {
         margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
     }
     
     .show-all-button {
@@ -2208,6 +2212,8 @@ h1, h2, h3, h4, h5, h6 {
     
     .show-all-btn {
         margin-top: 1rem;
+        display: flex;
+        justify-content: center;
     }
     
     .show-all-button {
