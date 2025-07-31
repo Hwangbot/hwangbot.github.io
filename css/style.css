@@ -121,6 +121,9 @@ body {
 html {
     scroll-behavior: smooth;
     height: 100%;
+    /* Fix mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
 }
 
 body {
@@ -133,6 +136,9 @@ body {
     font-weight: 400;
     letter-spacing: 0.5px;
     position: relative;
+    /* Fix mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    min-height: 100vh;
 }
 
 /* Typography */
@@ -309,6 +315,9 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.5s ease;
+    /* Ensure proper scrolling */
+    position: relative;
+    overflow: visible;
 }
 
 .section.active {
@@ -1847,6 +1856,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+    /* Fix mobile scrolling */
+    html, body {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    .main-content {
+        margin-top: 80px;
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+    }
+    
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -2081,6 +2102,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 480px) {
+    /* Fix mobile scrolling */
+    html, body {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    .main-content {
+        margin-top: 80px;
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+    }
+    
     .container {
         padding: 0 15px;
     }
@@ -2566,6 +2599,8 @@ h1, h2, h3, h4, h5, h6 {
     height: 100%;
     z-index: -1;
     overflow: hidden;
+    /* Prevent interference with scrolling */
+    pointer-events: none;
 }
 
 /* League of Legends Ability Particles */
