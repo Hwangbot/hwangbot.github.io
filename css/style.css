@@ -767,7 +767,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Show All Button */
 .show-all-btn {
     position: relative;
-    margin-top: 2rem;
+    margin-top: 3rem;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -1247,7 +1247,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .show-all-btn {
-        margin-top: 1.5rem;
+        margin-top: 2.5rem;
         display: flex;
         justify-content: center;
     }
@@ -2011,7 +2011,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .show-all-btn {
-        margin-top: 1.5rem;
+        margin-top: 2.5rem;
         display: flex;
         justify-content: center;
     }
@@ -2211,7 +2211,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .show-all-btn {
-        margin-top: 1rem;
+        margin-top: 2rem;
         display: flex;
         justify-content: center;
     }
