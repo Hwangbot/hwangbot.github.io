@@ -99,9 +99,11 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
+    height: 100%;
     font-family: var(--font-body);
     background: var(--lol-darkest);
     color: var(--lol-text-primary);
@@ -109,6 +111,7 @@ body {
     overflow-x: hidden;
     font-weight: 400;
     letter-spacing: 0.5px;
+    position: relative;
 }
 
 /* Typography */
@@ -202,7 +205,7 @@ h1, h2, h3, h4, h5, h6 {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
     margin-left: auto;
 }
 
@@ -213,14 +216,14 @@ h1, h2, h3, h4, h5, h6 {
 .nav-link {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     color: var(--lol-text-secondary);
     text-decoration: none;
     font-family: var(--font-secondary);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 8px;
     transition: all 0.3s ease;
     position: relative;
@@ -253,7 +256,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-link i {
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .nav-toggle {
@@ -274,11 +277,13 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== MAIN CONTENT ===== */
 .main-content {
     margin-top: 80px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 0;
 }
 
 .section {
-    min-height: 100vh;
-    padding: 4rem 0;
+    min-height: calc(100vh - 80px);
+    padding: 0;
     display: none;
     opacity: 0;
     transform: translateY(50px);
@@ -293,58 +298,39 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== HERO SECTION ===== */
 #home {
-    background: var(--gradient-dark);
     position: relative;
     overflow: hidden;
 }
 
-#home::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="graphGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%23d4af37;stop-opacity:0.1"/><stop offset="100%" style="stop-color:%23d4af37;stop-opacity:0.3"/></linearGradient></defs><path d="M 0 700 L 100 680 L 200 650 L 300 620 L 400 580 L 500 540 L 600 500 L 700 450 L 800 400 L 900 350 L 1000 300 L 1100 250 L 1200 200" stroke="url(%23graphGradient)" stroke-width="3" fill="none" opacity="0.6"/><path d="M 0 700 L 100 680 L 200 650 L 300 620 L 400 580 L 500 540 L 600 500 L 700 450 L 800 400 L 900 350 L 1000 300 L 1100 250 L 1200 200 L 1200 800 L 0 800 Z" fill="url(%23graphGradient)" opacity="0.1"/><circle cx="100" cy="680" r="4" fill="%23d4af37" opacity="0.8"/><circle cx="300" cy="620" r="4" fill="%23d4af37" opacity="0.8"/><circle cx="500" cy="540" r="4" fill="%23d4af37" opacity="0.8"/><circle cx="700" cy="450" r="4" fill="%23d4af37" opacity="0.8"/><circle cx="900" cy="350" r="4" fill="%23d4af37" opacity="0.8"/><circle cx="1100" cy="250" r="4" fill="%23d4af37" opacity="0.8"/></svg>');
-    opacity: 0.4;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+/* Removed home-specific background elements to match other sections */
 
-.hero-content {
+/* ===== HOME SECTION ===== */
+.home-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    align-items: center;
+    align-items: start;
     min-height: calc(100vh - 80px);
+    padding-top: 1rem;
 }
 
-.hero-title {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    color: var(--lol-white);
+.home-text h3 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--lol-gold);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     font-weight: 600;
     letter-spacing: 1px;
 }
 
-.hero-subtitle {
-    display: block;
-    font-size: 1.5rem;
-    color: var(--lol-blue);
-    margin-top: 0.5rem;
-    text-shadow: 0 0 10px rgba(10, 200, 185, 0.5);
-}
-
-.hero-description {
+.home-text p {
     font-size: 1.1rem;
     color: var(--lol-text-secondary);
     margin-bottom: 2rem;
     line-height: 1.8;
 }
 
-.hero-stats {
+.home-stats {
     display: flex;
     gap: 2rem;
     margin-bottom: 2rem;
@@ -371,12 +357,12 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 1px;
 }
 
-.hero-actions {
+.home-actions {
     display: flex;
     gap: 1rem;
 }
 
-.hero-image {
+.home-image {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -578,7 +564,8 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== SECTION HEADERS ===== */
 .section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
+    margin-top: 0;
 }
 
 .section-title {
@@ -590,6 +577,11 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 1px;
 }
 
+/* Make the name white on the home page */
+#home .section-title {
+    color: var(--lol-white);
+}
+
 .section-subtitle {
     font-family: var(--font-secondary);
     font-size: 1.1rem;
@@ -599,11 +591,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ===== ABOUT SECTION ===== */
+#about {
+    scroll-margin-top: 0;
+    scroll-padding-top: 0;
+}
+
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: start;
+    padding: 2rem 0;
+    scroll-margin-top: 0;
 }
 
 .about-text h3 {
@@ -675,11 +674,106 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9rem;
 }
 
+/* ===== EDUCATION SECTION ===== */
+.education-content {
+    display: grid;
+    gap: 3rem;
+    padding: 2rem 0;
+}
+
+.education-item {
+    background: var(--gradient-dark);
+    border: 1px solid var(--lol-gray);
+    border-radius: 15px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.education-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-gold-blue);
+}
+
+.education-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--lol-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.education-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--lol-dark);
+    flex-shrink: 0;
+}
+
+.education-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--lol-gold);
+}
+
+.education-degree {
+    font-size: 1.1rem;
+    color: var(--lol-blue);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.education-period {
+    font-size: 0.9rem;
+    color: var(--lol-text-muted);
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.education-description {
+    color: var(--lol-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.education-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.highlight {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--lol-gold);
+    color: var(--lol-gold);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+
+
 /* ===== SERVICES SECTION ===== */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    padding: 2rem 0;
 }
 
 .service-card {
@@ -723,6 +817,23 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.3s ease;
 }
 
+.service-icon a {
+    color: var(--lol-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.service-icon a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
 .service-card:hover .service-icon {
     transform: scale(1.1);
     box-shadow: var(--shadow-gold);
@@ -764,6 +875,7 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
+    padding: 2rem 0;
 }
 
 .project-card {
@@ -808,7 +920,8 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--lol-gold);
 }
 
-.project-overlay {
+/* Project overlay removed for classified content */
+/* .project-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -847,7 +960,7 @@ h1, h2, h3, h4, h5, h6 {
 .project-link:hover {
     transform: scale(1.1);
     box-shadow: var(--shadow-gold);
-}
+} */
 
 .project-content {
     padding: 2rem;
@@ -872,8 +985,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .tag {
-    background: var(--lol-blue);
-    color: var(--lol-white);
+    background: var(--lol-gold);
+    color: var(--lol-dark);
     padding: 0.3rem 0.8rem;
     border-radius: 15px;
     font-size: 0.8rem;
@@ -887,6 +1000,7 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
+    padding: 2rem 0;
 }
 
 .contact-info {
@@ -903,12 +1017,17 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 15px;
     padding: 2rem;
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .contact-item:hover {
     border-color: var(--lol-gold);
     box-shadow: var(--shadow-gold);
     transform: translateX(10px);
+    text-decoration: none;
+    color: inherit;
 }
 
 .contact-icon {
@@ -1056,13 +1175,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1024px) {
-    .hero-content {
+    .home-content {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 2rem;
     }
     
-    .hero-stats {
+    .home-stats {
         justify-content: center;
     }
     
@@ -1070,6 +1189,18 @@ h1, h2, h3, h4, h5, h6 {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+    
+    .education-content {
+        gap: 2rem;
+    }
+    
+    .education-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+
     
     .contact-content {
         grid-template-columns: 1fr;
@@ -1111,16 +1242,16 @@ h1, h2, h3, h4, h5, h6 {
         transform: translateY(-7px) rotate(-45deg);
     }
     
-    .hero-title {
-        font-size: 2.5rem;
+    .home-text h3 {
+        font-size: 2rem;
     }
     
-    .hero-stats {
+    .home-stats {
         flex-direction: column;
         gap: 1rem;
     }
     
-    .hero-actions {
+    .home-actions {
         flex-direction: column;
         align-items: center;
     }
@@ -1132,6 +1263,18 @@ h1, h2, h3, h4, h5, h6 {
     .projects-grid {
         grid-template-columns: 1fr;
     }
+    
+    .education-item {
+        padding: 2rem;
+    }
+    
+    .education-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+
     
     .footer-content {
         flex-direction: column;
@@ -1147,8 +1290,8 @@ h1, h2, h3, h4, h5, h6 {
         padding: 0 15px;
     }
     
-    .hero-title {
-        font-size: 2rem;
+    .home-text h3 {
+        font-size: 1.8rem;
     }
     
     .section-title {
@@ -1198,11 +1341,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Apply animations to elements */
-.hero-text {
+.home-text {
     animation: slideInLeft 1s ease-out;
 }
 
-.hero-image {
+.home-image {
     animation: slideInRight 1s ease-out;
 }
 
@@ -1455,5 +1598,306 @@ h1, h2, h3, h4, h5, h6 {
     40% {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+/* Missing Ping Effect */
+.missing-ping {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+}
+
+/* ===== DYNAMIC BACKGROUND ELEMENTS ===== */
+
+/* Animated Background Container */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* League of Legends Ability Particles */
+.ability-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: abilityFloat 15s infinite linear;
+    pointer-events: none;
+    box-shadow: 0 0 10px var(--lol-gold);
+}
+
+.ability-particle:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 20s; }
+.ability-particle:nth-child(2) { left: 15%; animation-delay: 3s; animation-duration: 25s; }
+.ability-particle:nth-child(3) { left: 25%; animation-delay: 6s; animation-duration: 18s; }
+.ability-particle:nth-child(4) { left: 35%; animation-delay: 9s; animation-duration: 22s; }
+.ability-particle:nth-child(5) { left: 45%; animation-delay: 12s; animation-duration: 28s; }
+.ability-particle:nth-child(6) { left: 55%; animation-delay: 15s; animation-duration: 24s; }
+.ability-particle:nth-child(7) { left: 65%; animation-delay: 18s; animation-duration: 26s; }
+.ability-particle:nth-child(8) { left: 75%; animation-delay: 21s; animation-duration: 19s; }
+.ability-particle:nth-child(9) { left: 85%; animation-delay: 24s; animation-duration: 30s; }
+.ability-particle:nth-child(10) { left: 95%; animation-delay: 27s; animation-duration: 23s; }
+
+/* Blue Ability Particles */
+.ability-particle.blue {
+    background: var(--lol-blue);
+    box-shadow: 0 0 10px var(--lol-blue);
+}
+
+.ability-particle.blue:nth-child(11) { left: 10%; animation-delay: 2s; animation-duration: 21s; }
+.ability-particle.blue:nth-child(12) { left: 20%; animation-delay: 5s; animation-duration: 27s; }
+.ability-particle.blue:nth-child(13) { left: 30%; animation-delay: 8s; animation-duration: 24s; }
+.ability-particle.blue:nth-child(14) { left: 40%; animation-delay: 11s; animation-duration: 29s; }
+.ability-particle.blue:nth-child(15) { left: 50%; animation-delay: 14s; animation-duration: 26s; }
+.ability-particle.blue:nth-child(16) { left: 60%; animation-delay: 17s; animation-duration: 22s; }
+.ability-particle.blue:nth-child(17) { left: 70%; animation-delay: 20s; animation-duration: 25s; }
+.ability-particle.blue:nth-child(18) { left: 80%; animation-delay: 23s; animation-duration: 28s; }
+.ability-particle.blue:nth-child(19) { left: 90%; animation-delay: 26s; animation-duration: 20s; }
+.ability-particle.blue:nth-child(20) { left: 3%; animation-delay: 29s; animation-duration: 31s; }
+
+/* Champion Silhouettes */
+.champion-silhouette {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    background: linear-gradient(180deg, transparent 0%, var(--lol-gold) 50%, transparent 100%);
+    opacity: 0.1;
+    animation: championWalk 40s infinite linear;
+    pointer-events: none;
+}
+
+.champion-silhouette::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, var(--lol-gold) 30%, var(--lol-gold) 70%, transparent 100%);
+    clip-path: polygon(20% 0%, 80% 0%, 60% 100%, 40% 100%);
+}
+
+.champion-silhouette:nth-child(21) { left: -100px; animation-delay: 0s; }
+.champion-silhouette:nth-child(22) { left: -100px; animation-delay: 20s; }
+.champion-silhouette:nth-child(23) { left: -100px; animation-delay: 40s; }
+
+/* Ability Effect Rings */
+.ability-ring {
+    position: absolute;
+    border: 2px solid var(--lol-gold);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: abilityExpand 8s infinite ease-out;
+    pointer-events: none;
+}
+
+.ability-ring:nth-child(24) {
+    width: 100px;
+    height: 100px;
+    left: 20%;
+    top: 30%;
+    animation-delay: 0s;
+}
+
+.ability-ring:nth-child(25) {
+    width: 150px;
+    height: 150px;
+    left: 70%;
+    top: 60%;
+    animation-delay: 4s;
+}
+
+.ability-ring:nth-child(26) {
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    top: 20%;
+    animation-delay: 8s;
+}
+
+/* Blue Ability Rings */
+.ability-ring.blue {
+    border-color: var(--lol-blue);
+}
+
+.ability-ring.blue:nth-child(27) {
+    width: 120px;
+    height: 120px;
+    left: 10%;
+    top: 70%;
+    animation-delay: 2s;
+}
+
+.ability-ring.blue:nth-child(28) {
+    width: 90px;
+    height: 90px;
+    left: 80%;
+    top: 10%;
+    animation-delay: 6s;
+}
+
+/* Summoner's Rift Terrain */
+.terrain-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--lol-gold), transparent);
+    opacity: 0.15;
+    animation: terrainGlow 10s infinite ease-in-out;
+}
+
+.terrain-line.horizontal {
+    width: 100%;
+    height: 2px;
+    top: 0;
+}
+
+.terrain-line.vertical {
+    width: 2px;
+    height: 100%;
+    left: 0;
+}
+
+.terrain-line:nth-child(29) { top: 25%; animation-delay: 0s; }
+.terrain-line:nth-child(30) { top: 50%; animation-delay: 2s; }
+.terrain-line:nth-child(31) { top: 75%; animation-delay: 4s; }
+.terrain-line:nth-child(32) { left: 25%; animation-delay: 1s; }
+.terrain-line:nth-child(33) { left: 50%; animation-delay: 3s; }
+.terrain-line:nth-child(34) { left: 75%; animation-delay: 5s; }
+
+/* Animated Gradient Background */
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(10, 200, 185, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    animation: summonerRift 20s infinite ease-in-out;
+    pointer-events: none;
+}
+
+/* ===== LEAGUE OF LEGENDS ANIMATIONS ===== */
+
+@keyframes abilityFloat {
+    0% {
+        transform: translateY(100vh) translateX(0px) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateY(90vh) translateX(20px) scale(1);
+    }
+    90% {
+        opacity: 0.8;
+        transform: translateY(10vh) translateX(-20px) scale(1);
+    }
+    100% {
+        transform: translateY(-100px) translateX(0px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes championWalk {
+    0% {
+        transform: translateX(-100px) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.1;
+        transform: translateX(0px) scale(1);
+    }
+    90% {
+        opacity: 0.1;
+        transform: translateX(calc(100vw - 100px)) scale(1);
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px)) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes abilityExpand {
+    0% {
+        transform: scale(0);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes terrainGlow {
+    0%, 100% {
+        opacity: 0.15;
+        transform: scaleX(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scaleX(1.1);
+    }
+}
+
+@keyframes summonerRift {
+    0%, 100% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+}
+
+/* ===== RESPONSIVE BACKGROUND ===== */
+@media (max-width: 768px) {
+    .ability-particle {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .champion-silhouette {
+        width: 60px;
+        height: 90px;
+    }
+    
+    .ability-ring {
+        transform: scale(0.7);
+    }
+}
+
+@media (max-width: 480px) {
+    .ability-particle {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .champion-silhouette {
+        width: 40px;
+        height: 60px;
+    }
+    
+    .ability-ring {
+        transform: scale(0.5);
     }
 }

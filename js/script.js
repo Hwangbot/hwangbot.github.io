@@ -1,6 +1,14 @@
 // ===== LEAGUE OF LEGENDS THEMED PORTFOLIO JAVASCRIPT =====
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Ensure page starts at top immediately
+    window.scrollTo(0, 0);
+    
+    // Force scroll to top after a brief delay to ensure it takes effect
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 100);
+    
     // Initialize all functionality
     initNavigation();
     initScrollEffects();
@@ -49,6 +57,24 @@ function initNavigation() {
             // Show target section
             if (targetSection) {
                 targetSection.classList.add('active');
+                
+                // Reset scroll position to top when switching sections
+                // Use immediate scroll for better reliability
+                window.scrollTo(0, 0);
+                
+                // Force scroll to top after a brief delay to ensure it takes effect
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                }, 50);
+                
+                // Additional scroll reset for About section specifically
+                if (targetId === 'about') {
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                        document.documentElement.scrollTop = 0;
+                        document.body.scrollTop = 0;
+                    }, 100);
+                }
             }
             
             // Close mobile menu if open
@@ -162,8 +188,11 @@ function initCounterAnimation() {
     console.log('🔢 Found counters:', counters.length);
     
     const animateCounter = (counter) => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        console.log('🎯 Animating counter to:', target);
+        const targetText = counter.getAttribute('data-target');
+        const target = parseInt(targetText);
+        const hasPercent = targetText.includes('%');
+        const hasPlus = targetText.includes('+');
+        console.log('🎯 Animating counter to:', target, hasPercent ? 'with %' : '', hasPlus ? 'with +' : '');
         const duration = 2000; // 2 seconds
         const step = target / (duration / 16); // 60fps
         let current = 0;
@@ -174,7 +203,10 @@ function initCounterAnimation() {
                 current = target;
                 clearInterval(timer);
             }
-            counter.textContent = Math.floor(current);
+            let suffix = '';
+            if (hasPercent) suffix += '%';
+            if (hasPlus) suffix += '+';
+            counter.textContent = Math.floor(current) + suffix;
         }, 16);
     };
 
@@ -627,6 +659,35 @@ function initChatWidget() {
         }
     });
 }
+
+// Missing ping effect for non-interactive clicks
+function createMissingPing(x, y) {
+    // Create ping element with GIF
+    const ping = document.createElement('img');
+    ping.className = 'missing-ping';
+    ping.src = 'Gifs/MISSING.gif'; // Use the GIF from your folder
+    ping.style.left = x + 'px';
+    ping.style.top = y + 'px';
+    document.body.appendChild(ping);
+    
+    // Remove ping after animation
+    setTimeout(() => {
+        if (ping.parentNode) {
+            ping.parentNode.removeChild(ping);
+        }
+    }, 1000);
+}
+
+// Global click listener for missing ping
+document.addEventListener('click', function(e) {
+    // Check if clicked element is interactive
+    const isInteractive = e.target.closest('a, button, input, textarea, select, [tabindex], .nav-link, .service-card, .project-card, .contact-item, .chat-widget, .chat-toggle, .chat-minimize, .chat-input, .chat-send');
+    
+    // If not interactive, create missing ping
+    if (!isInteractive) {
+        createMissingPing(e.clientX, e.clientY);
+    }
+});
 
 console.log('🎮 League of Legends Portfolio loaded successfully!');
 
