@@ -1,1920 +1,3645 @@
-// ===== LEAGUE OF LEGENDS THEMED PORTFOLIO JAVASCRIPT =====
+/* ===== LEAGUE OF LEGENDS THEMED PORTFOLIO ===== */
 
-// ===== COMPREHENSIVE SCROLL TO TOP FUNCTION =====
-function forceScrollToTopComprehensive() {
-    // Method 1: Direct property setting (most reliable)
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+/* ===== FONT FACE DECLARATIONS ===== */
+@font-face {
+    font-family: 'Beaufort for LOL';
+    src: url('../BeaufortForLoL-OTF/BeaufortforLOL-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Beaufort for LOL';
+    src: url('../BeaufortForLoL-OTF/BeaufortforLOL-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Beaufort for LOL';
+    src: url('../BeaufortForLoL-OTF/BeaufortforLOL-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Beaufort for LOL';
+    src: url('../BeaufortForLoL-OTF/BeaufortforLOL-Heavy.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Beaufort for LOL';
+    src: url('../BeaufortForLoL-OTF/BeaufortforLOL-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Custom Cursor */
+* {
+    cursor: url('https://cur.cursors-4u.net/games/gam-14/gam1340.cur'), auto !important;
+}
+
+/* CSS Variables - LoL Color Palette */
+:root {
+    /* Primary Colors */
+    --lol-gold: #d4af37;
+    --lol-gold-dark: #b8941f;
+    --lol-gold-light: #f4e4a6;
+    --lol-blue: #0ac8b9;
+    --lol-blue-dark: #0a8a8a;
+    --lol-blue-light: #4dd4c8;
     
-    // Method 2: window.scrollTo with different approaches
-    window.scrollTo(0, 0);
+    /* Background Colors */
+    --lol-dark: #1e2328;
+    --lol-darker: #0f1419;
+    --lol-darkest: #0a0d10;
+    --lol-gray: #5b5a56;
+    --lol-light-gray: #a09f8d;
     
-    // Method 3: Try with options
-    try {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'instant'
-        });
-    } catch (e) {
-        // Fallback for older browsers
-        window.scrollTo(0, 0);
+    /* Text Colors */
+    --lol-white: #f0e6d2;
+    --lol-text-primary: #f0e6d2;
+    --lol-text-secondary: #a09f8d;
+    --lol-text-muted: #5b5a56;
+    
+    /* Accent Colors */
+    --lol-red: #c41e3a;
+    --lol-green: #00ff00;
+    
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
+    --gradient-blue: linear-gradient(135deg, var(--lol-blue), var(--lol-blue-dark));
+    --gradient-dark: linear-gradient(135deg, var(--lol-dark), var(--lol-darker));
+    --gradient-gold-blue: linear-gradient(45deg, var(--lol-gold), var(--lol-gold-light));
+    
+    /* Shadows */
+    --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.3);
+    --shadow-blue: 0 0 20px rgba(10, 200, 185, 0.3);
+    --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.5);
+    
+    /* Typography */
+    --font-primary: 'Beaufort for LOL', 'Times New Roman', serif;
+    --font-secondary: 'Spiegel', 'Segoe UI', sans-serif;
+    --font-body: 'Spiegel', 'Segoe UI', sans-serif;
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure consistent rendering across browsers */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Ensure consistent flex behavior */
+.flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+html {
+    scroll-behavior: auto;
+    height: 100%;
+    /* Fix mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    /* Ensure scroll position starts at top */
+    scroll-snap-type: none;
+    /* Remove any scroll padding that might offset the position */
+    scroll-padding: 0;
+    scroll-margin: 0;
+}
+
+body {
+    height: 100%;
+    font-family: var(--font-body);
+    background: var(--lol-darkest);
+    color: var(--lol-text-primary);
+    line-height: 1.5;
+    overflow-x: hidden;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    position: relative;
+    /* Fix mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    min-height: 100vh;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-feature-settings: "liga" 1, "kern" 1;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===== NAVIGATION ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 20, 25, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #5b5a56;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 3rem;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e2328;
+    border: 2px solid var(--lol-blue);
+    padding: 0.6rem 1.5rem;
+    position: relative;
+    box-shadow: 0 0 10px rgba(10, 200, 185, 0.3);
+    margin-right: auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    min-width: 140px;
+    height: 36px;
+}
+
+.nav-logo:hover {
+    background: #2a2f35;
+    box-shadow: 0 0 15px rgba(10, 200, 185, 0.5);
+    transform: translateY(-1px);
+}
+
+.logo-text {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-subtitle {
+    font-family: var(--font-secondary);
+    font-size: 0.8rem;
+    color: var(--lol-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(10, 200, 185, 0.5);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin-left: auto;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--lol-text-secondary);
+    text-decoration: none;
+    font-family: var(--font-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-gold-blue);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+    left: 0;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--lol-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+    font-weight: 600;
+}
+
+.nav-link i {
+    font-size: 1rem;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background: var(--lol-gold);
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    margin-top: 80px;
+    scroll-behavior: auto;
+    /* Remove scroll padding that might interfere with absolute positioning */
+    scroll-padding: 0;
+    scroll-margin: 0;
+    /* Ensure content has proper background */
+    position: relative;
+}
+
+.section {
+    min-height: calc(100vh - 80px);
+    padding: 0;
+    display: none;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease;
+    /* Ensure proper scrolling */
+    position: relative;
+    overflow: visible;
+    /* Force scroll position reset */
+    scroll-padding: 0;
+    scroll-margin: 0;
+}
+
+.section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== HERO SECTION ===== */
+#home {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Removed home-specific background elements to match other sections */
+
+/* ===== HOME SECTION ===== */
+.home-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    min-height: calc(100vh - 80px);
+    padding-top: 1rem;
+}
+
+.home-text h3 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--lol-gold);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.home-text p {
+    font-size: 1.1rem;
+    color: var(--lol-text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.home-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--lol-gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.stat-label {
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    color: var(--lol-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.home-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.home-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== LOL PROFILE CARD ===== */
+.lol-profile-card {
+    background: linear-gradient(135deg, #1e2328, #0f1419);
+    background: -webkit-linear-gradient(135deg, #1e2328, #0f1419);
+    background: -moz-linear-gradient(135deg, #1e2328, #0f1419);
+    border: 3px solid var(--lol-gold);
+    border-radius: 25px;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.3),
+        0 0 40px rgba(212, 175, 55, 0.1),
+        inset 0 0 20px rgba(212, 175, 55, 0.05);
+    -webkit-box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.3),
+        0 0 40px rgba(212, 175, 55, 0.1),
+        inset 0 0 20px rgba(212, 175, 55, 0.05);
+    -moz-box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.3),
+        0 0 40px rgba(212, 175, 55, 0.1),
+        inset 0 0 20px rgba(212, 175, 55, 0.05);
+    min-width: 300px;
+    max-width: 400px;
+    overflow: hidden;
+    /* Ensure consistent flex behavior */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.lol-profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--lol-gold) 20%, 
+        var(--lol-gold-light) 50%, 
+        var(--lol-gold) 80%, 
+        transparent 100%);
+    background: -webkit-linear-gradient(90deg, 
+        transparent 0%, 
+        var(--lol-gold) 20%, 
+        var(--lol-gold-light) 50%, 
+        var(--lol-gold) 80%, 
+        transparent 100%);
+    background: -moz-linear-gradient(90deg, 
+        transparent 0%, 
+        var(--lol-gold) 20%, 
+        var(--lol-gold-light) 50%, 
+        var(--lol-gold) 80%, 
+        transparent 100%);
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    -webkit-box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    -moz-box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.lol-profile-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 25px;
+    pointer-events: none;
+    background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(212, 175, 55, 0.02) 25%, 
+        transparent 50%, 
+        rgba(212, 175, 55, 0.02) 75%, 
+        transparent 100%);
+    background: -webkit-linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(212, 175, 55, 0.02) 25%, 
+        transparent 50%, 
+        rgba(212, 175, 55, 0.02) 75%, 
+        transparent 100%);
+    background: -moz-linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(212, 175, 55, 0.02) 25%, 
+        transparent 50%, 
+        rgba(212, 175, 55, 0.02) 75%, 
+        transparent 100%);
+}
+
+.profile-portrait {
+    position: relative;
+    margin-bottom: 1.5rem;
+    /* Ensure consistent sizing */
+    width: 150px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portrait-frame {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    padding: 8px;
+    background: linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
+    background: -webkit-linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
+    background: -moz-linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    -moz-box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    /* Ensure consistent sizing */
+    box-sizing: border-box;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--lol-dark);
+    transition: transform 0.3s ease;
+    -webkit-transition: transform 0.3s ease;
+    -moz-transition: transform 0.3s ease;
+    /* Ensure consistent sizing */
+    display: block;
+    box-sizing: border-box;
+}
+
+.profile-title {
+    font-family: 'Beaufort for LOL', 'Times New Roman', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--lol-white);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.5);
+    position: relative;
+    /* Ensure consistent text rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+
+
+.skill-slots {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    /* Ensure consistent flex behavior */
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.skill-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--lol-darker);
+    border: 1px solid var(--lol-gray);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    min-width: 80px;
+    min-height: 80px;
+    justify-content: center;
+    /* Ensure consistent sizing */
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.skill-slot:hover {
+    border-color: var(--lol-gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    -webkit-box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    -moz-box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    transform: translateY(-3px);
+    -webkit-transform: translateY(-3px);
+    -moz-transform: translateY(-3px);
+}
+
+.skill-slot i {
+    font-size: 1.5rem;
+    color: var(--lol-gold);
+    margin-bottom: 0.5rem;
+    /* Ensure consistent icon rendering */
+    display: block;
+    text-align: center;
+}
+
+.skill-slot span {
+    font-family: var(--font-secondary);
+    font-size: 0.8rem;
+    color: var(--lol-text-secondary);
+    text-transform: uppercase;
+    /* Ensure consistent text rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    display: block;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: var(--gradient-gold);
+    color: var(--lol-dark);
+    box-shadow: var(--shadow-gold);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--lol-blue);
+    border: 2px solid var(--lol-blue);
+    box-shadow: var(--shadow-blue);
+}
+
+.btn-secondary:hover {
+    background: var(--lol-blue);
+    color: var(--lol-white);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(10, 200, 185, 0.4);
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 0;
+}
+
+.section-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--lol-white);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Make the name white on the home page */
+#home .section-title {
+    color: var(--lol-white);
+}
+
+.section-subtitle {
+    font-family: var(--font-secondary);
+    font-size: 1.1rem;
+    color: var(--lol-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ===== ABOUT SECTION ===== */
+#about {
+    scroll-margin-top: 0;
+    scroll-padding-top: 0;
+}
+
+/* About Section Styles */
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+/* Hobbies Hub */
+.hobbies-hub {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 2rem auto;
+}
+
+.hub-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-gold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.hub-center:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+}
+
+.hub-center.expanded {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.7;
+}
+
+.hub-icon {
+    font-size: 2rem;
+    color: var(--lol-white);
+    margin-bottom: 0.5rem;
+}
+
+/* Red heart for My Interests hub */
+.hub-icon .fa-heart {
+    color: #e74c3c; /* Red heart */
+}
+
+/* ===== AUDIO PLAYER STYLES ===== */
+.artist-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.artist-card.playing {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(233, 30, 99, 0.4);
+}
+
+.artist-profile {
+    position: relative;
+    overflow: hidden;
+}
+
+.artist-image {
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.artist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.artist-card:hover .artist-overlay {
+    opacity: 1;
+}
+
+.artist-overlay.playing {
+    opacity: 1;
+    background: rgba(233, 30, 99, 0.8);
+}
+
+.artist-overlay i {
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.artist-overlay.playing i {
+    animation: pulse 1.5s infinite;
+    color: #fff;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Spinning artist image when playing */
+.artist-card.playing .artist-image {
+    animation: spin 3s linear infinite;
+    transform-origin: center;
+}
+
+/* ===== MASTER VOLUME CONTROL ===== */
+.master-volume-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 16px;
+    border-radius: 25px;
+    border: 1px solid rgba(233, 30, 99, 0.3);
+}
+
+/* Show volume control when any music is playing */
+.interest-section[data-category="music"].has-playing .master-volume-control {
+    opacity: 1;
+    visibility: visible;
+}
+
+.volume-icon {
+    color: var(--lol-white);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.volume-slider {
+    width: 120px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    background: var(--lol-gold-light);
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-moz-range-thumb:hover {
+    background: var(--lol-gold-light);
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.volume-percentage {
+    color: var(--lol-white);
+    font-size: 0.85rem;
+    font-weight: 500;
+    min-width: 35px;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ===== SPOTIFY-STYLE MUSIC PLAYER ===== */
+.music-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-top: 2px solid var(--lol-gold);
+    z-index: 10000;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.music-player.active {
+    transform: translateY(0);
+}
+
+.music-player-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Track Info */
+.track-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.track-image {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.album-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.track-details {
+    min-width: 0;
+    flex: 1;
+}
+
+.track-title {
+    color: var(--lol-white);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    color: #b3b3b3;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Player Controls */
+.player-controls {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-width: 500px;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--lol-white);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    color: var(--lol-gold);
+    transform: scale(1.1);
+}
+
+.prev-btn, .next-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+}
+
+.play-pause-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+    background: var(--lol-white);
+    color: var(--lol-dark);
+}
+
+.play-pause-btn:hover {
+    background: var(--lol-gold);
+    transform: scale(1.05);
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.time-current,
+.time-total {
+    color: #b3b3b3;
+    font-size: 0.75rem;
+    min-width: 40px;
+    text-align: center;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #404040;
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--lol-gold);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+.progress-bar:hover .progress-fill {
+    background: var(--lol-gold-light);
+}
+
+/* Volume Controls */
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.volume-icon-player {
+    color: var(--lol-white);
+    font-size: 0.9rem;
+    min-width: 16px;
+}
+
+.volume-slider-player {
+    width: 100px;
+    height: 4px;
+    background: #404040;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.volume-slider-player::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.volume-slider-player::-webkit-slider-thumb:hover {
+    background: var(--lol-gold-light);
+    transform: scale(1.2);
+}
+
+.volume-percentage-player {
+    color: #b3b3b3;
+    font-size: 0.75rem;
+    min-width: 35px;
+    text-align: center;
+}
+
+.close-player-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    margin-left: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .music-player-content {
+        padding: 0 12px;
     }
     
-    // Method 4: Force with requestAnimationFrame
-    requestAnimationFrame(() => {
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        window.scrollTo(0, 0);
-    });
-    
-    // Method 5: Also scroll any potential scrollable containers
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-        mainContent.scrollTop = 0;
+    .track-info {
+        flex: 0 0 auto;
+        max-width: 120px;
     }
     
-    const containers = document.querySelectorAll('.section, .container');
-    containers.forEach(container => {
-        if (container.scrollTop !== undefined) {
-            container.scrollTop = 0;
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Ensure page starts at top immediately using comprehensive method
-    forceScrollToTopComprehensive();
-    
-    // Force scroll to top after a brief delay to ensure it takes effect
-    setTimeout(() => {
-        forceScrollToTopComprehensive();
-    }, 100);
-    
-    // Additional safeguard
-    setTimeout(() => {
-        forceScrollToTopComprehensive();
-    }, 300);
-    
-    // Initialize all functionality
-    initNavigation();
-    initScrollEffects();
-    initAnimations();
-    initContactForm();
-    initScrollToTop();
-    initCounterAnimation();
-    initChatWidget(); // Initialize chat widget
-    initAboutInteractions(); // Initialize About section interactions
-    initContactAnimations(); // Initialize Contact section animations
-    initAudioPlayer(); // Initialize audio player for artists
-});
-
-// ===== ABOUT SECTION INTERACTIONS =====
-function initAboutInteractions() {
-    initHobbiesHub();
-    initInterestSections();
-}
-
-function initHobbiesHub() {
-    const interestSatellites = document.querySelectorAll('.interest-satellite');
-    const hubCenter = document.querySelector('.hub-center');
-    const interestsOrbit = document.querySelector('.interests-orbit');
-    
-    // Initialize hub center click functionality
-    if (hubCenter && interestsOrbit) {
-        hubCenter.addEventListener('click', function() {
-            const isExpanded = interestsOrbit.classList.contains('expanded');
-            
-            // Toggle expanded state
-            if (isExpanded) {
-                // Collapse
-                interestsOrbit.classList.remove('expanded');
-                hubCenter.classList.remove('expanded');
-                hubCenter.closest('.hobbies-hub').classList.remove('expanded');
-                hideAllSections();
-            } else {
-                // Expand
-                interestsOrbit.classList.add('expanded');
-                hubCenter.classList.add('expanded');
-                hubCenter.closest('.hobbies-hub').classList.add('expanded');
-                
-                // Add click animation
-                hubCenter.classList.add('clicked');
-                setTimeout(() => {
-                    hubCenter.classList.remove('clicked');
-                }, 300);
-            }
-        });
-        
-        // Add hover effect to show it's clickable
-        hubCenter.addEventListener('mouseenter', function() {
-            if (!interestsOrbit.classList.contains('expanded')) {
-                this.style.transform = 'translate(-50%, -50%) scale(1.1)';
-                this.style.boxShadow = 'var(--shadow-gold)';
-            }
-        });
-        
-        hubCenter.addEventListener('mouseleave', function() {
-            if (!interestsOrbit.classList.contains('expanded')) {
-                this.style.transform = 'translate(-50%, -50%) scale(1)';
-                this.style.boxShadow = '';
-            }
-        });
+    .track-details {
+        display: none;
     }
     
-    interestSatellites.forEach(satellite => {
-        // Add hover effects
-        satellite.addEventListener('mouseenter', function() {
-            // Add a subtle glow effect
-            this.style.boxShadow = '0 0 20px rgba(0, 123, 255, 0.6)';
-        });
-        
-        satellite.addEventListener('mouseleave', function() {
-            this.style.boxShadow = '';
-        });
-        
-        // Add click interaction to show specific section
-        satellite.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent triggering hub center click
-            
-            const category = this.getAttribute('data-category');
-            showSection(category);
-            
-            // Add shake animation (moves right and back to center)
-            console.log('🎯 Satellite clicked:', category, 'Starting shake animation');
-            
-            // Check satellite position more reliably
-            const satelliteRect = this.getBoundingClientRect();
-            const orbitRect = this.parentElement.getBoundingClientRect();
-            const isRightSide = satelliteRect.left > orbitRect.left + (orbitRect.width / 2);
-            
-            console.log('📍 Satellite position:', {
-                category,
-                isRightSide,
-                satelliteLeft: satelliteRect.left,
-                orbitCenter: orbitRect.left + (orbitRect.width / 2)
-            });
-            
-            // Force the correct base transform
-            const baseTransform = isRightSide ? 'translateX(50%)' : 'translateX(-50%)';
-            const shakeOffset = isRightSide ? '50% - 10px' : '-50% + 10px';
-            
-            // Shake animation: scale down, move right, then back to center
-            this.style.transition = 'transform 0.15s ease-out';
-            this.style.transform = `scale(0.9) translateX(calc(${shakeOffset}))`;
-            
-            setTimeout(() => {
-                this.style.transform = `scale(1) ${baseTransform}`;
-                console.log('✨ Satellite shake complete for:', category);
-            }, 150);
-        });
-    });
+    .volume-container {
+        flex: 0 0 auto;
+    }
     
-    // Remove the document click listener that closes hub when clicking outside
-    // Now the hub will only close when clicking the hub center itself
+    .volume-slider-player {
+        width: 60px;
+    }
     
-    // Add Show All button functionality
-    const showAllBtn = document.querySelector('.show-all-button');
-    console.log('🔍 Show All button found:', !!showAllBtn);
-    if (showAllBtn) {
-        showAllBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent triggering hub center click
-            console.log('🖱️ Show All button clicked');
-            
-            // Get current button text to determine action
-            const buttonText = this.querySelector('span');
-            console.log('📝 Button text element found:', !!buttonText);
-            
-            if (buttonText) {
-                const currentText = buttonText.textContent;
-                console.log('📝 Current button text:', currentText);
-                
-                // Execute the action based on current button text
-                const sectionsNowActive = showAllSections();
-                console.log('📊 Sections now active:', sectionsNowActive);
-                
-                // Update button text to the opposite action
-                const newText = currentText === 'Show All' ? 'Close All' : 'Show All';
-                buttonText.textContent = newText;
-                console.log('✅ Button text updated to:', newText);
-            }
-            
-            // Add click animation
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-        });
+    .volume-percentage-player {
+        display: none;
     }
 }
 
-function initInterestSections() {
-    const sections = document.querySelectorAll('.interest-section');
+@media (max-width: 480px) {
+    .music-player {
+        height: 80px;
+    }
     
-    // Initially hide all sections
-    sections.forEach(section => {
-        section.classList.remove('active');
-    });
+    .track-image {
+        width: 48px;
+        height: 48px;
+    }
     
-    // Set up intersection observer for animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && entry.target.classList.contains('active')) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            } else if (!entry.target.classList.contains('active')) {
-                // Ensure sections are hidden when not active
-                entry.target.style.opacity = '0';
-                entry.target.style.transform = 'translateY(30px)';
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
+    .control-buttons {
+        gap: 12px;
+    }
     
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-}
-
-function showSection(category, moveToTop = true) {
-    // Hide all sections first
-    hideAllSections();
+    .play-pause-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
     
-    // Show the selected section
-    const targetSection = document.querySelector(`.interest-section[data-category="${category}"]`);
-    if (targetSection) {
-        if (moveToTop) {
-            // Move the selected section to the top position (where TV shows section is)
-            moveSelectedSectionToTop(targetSection);
-        }
-        
-        // Hide ONLY the tiles immediately (keep header visible)
-        const contentCards = targetSection.querySelectorAll('.content-card');
-        
-        // Force hide only the content cards immediately
-        contentCards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(60px) scale(0.7) rotate(3deg)';
-            card.style.transition = 'none'; // No transition yet
-        });
-        
-        // Force a repaint to ensure hidden state takes effect
-        targetSection.offsetHeight;
-        
-        // NOW add the active class (header will be visible immediately)
-        targetSection.classList.add('active');
-        
-        // Show scroll-to-top button when content is expanded in About section
-        const scrollTopBtn = document.getElementById('scrollTop');
-        if (scrollTopBtn) {
-            scrollTopBtn.classList.add('visible');
-            console.log('🔼 Scroll-to-top button shown due to content expansion in About section');
-        }
-        
-        // Start the bouncy animations for tiles only
-        setTimeout(() => {
-            animateSectionContent(targetSection);
-        }, 50);
-        
-        // Scroll to the section header with extra space above
-        setTimeout(() => {
-            const sectionHeader = targetSection.querySelector('.section-header');
-            console.log('🔍 Section header found:', !!sectionHeader);
-            
-            if (sectionHeader) {
-                // Use manual scroll calculation for better control
-                const rect = sectionHeader.getBoundingClientRect();
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const targetY = Math.max(0, rect.top + scrollTop - 100); // Ensure not negative
-                
-                console.log('📊 Scroll calculation:', {
-                    rectTop: rect.top,
-                    scrollTop: scrollTop,
-                    targetY: targetY,
-                    currentY: window.pageYOffset
-                });
-                
-                // Try multiple scroll methods - faster scrolling
-                window.scrollTo({
-                    top: targetY,
-                    behavior: 'auto'
-                });
-                
-                // Fallback after a delay if first doesn't work
-                setTimeout(() => {
-                    if (Math.abs(window.pageYOffset - targetY) > 50) {
-                        console.log('🔄 First scroll failed, trying fallback');
-                        sectionHeader.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                }, 1000);
-                
-                console.log('🎯 Scrolling to header with 100px space above');
-            } else {
-                console.log('⚠️ No header found, using section fallback');
-                // Fallback to section scroll
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        }, 50);
+    .prev-btn, .next-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
     }
 }
 
-function moveSelectedSectionToTop(selectedSection) {
-    const interestsContent = document.querySelector('.interests-content');
-    if (!interestsContent || !selectedSection) return;
-    
-    // Remove the selected section from its current position
-    selectedSection.remove();
-    
-    // Insert it as the first child (top position)
-    interestsContent.insertBefore(selectedSection, interestsContent.firstChild);
+.hub-center h3 {
+    color: var(--lol-white);
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
 }
 
-function hideAllSections() {
-    const sections = document.querySelectorAll('.interest-section');
-    sections.forEach(section => {
-        section.classList.remove('active');
-        
-        // Reset only animation states for content cards (keep headers normal)
-        const contentCards = section.querySelectorAll('.content-card');
-        contentCards.forEach(card => {
-            card.style.opacity = '';
-            card.style.transform = '';
-            card.style.transition = '';
-        });
-        
-        section.style.transform = '';
-        section.style.transition = '';
-    });
+/* Show All Button */
+.show-all-btn {
+    position: relative;
+    margin-top: 3rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
 }
 
-function showAllSections() {
-    const sections = document.querySelectorAll('.interest-section');
-    console.log('🔍 showAllSections called');
-    console.log('📊 Number of sections found:', sections.length);
+.hobbies-hub.expanded + .show-all-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.show-all-button {
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
+    color: var(--lol-dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.show-all-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, var(--lol-gold-dark), var(--lol-gold));
+}
+
+.show-all-button i {
+    font-size: 1rem;
+}
+
+.show-all-button span {
+    font-weight: 700;
+}
+
+/* Interests Orbit */
+.interests-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.interests-orbit.expanded {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.interest-satellite {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--lol-blue), var(--lol-dark-blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-blue);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0) translateX(-50%);
+    cursor: pointer;
+}
+
+.interest-satellite:hover {
+    transform: scale(1.02);
+}
+
+.interest-satellite:active {
+    transform: scale(0.98);
+}
+
+.interests-orbit.expanded .interest-satellite {
+    opacity: 1;
+    transform: scale(1) translateX(-50%);
+}
+
+.interest-satellite:nth-child(1) {
+    top: 0;
+    left: 50%;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.1s;
+}
+
+.interest-satellite:nth-child(2) {
+    top: 20%;
+    right: 0;
+    transform: scale(0) translateX(50%);
+    transition-delay: 0.2s;
+}
+
+.interest-satellite:nth-child(3) {
+    bottom: 20%;
+    right: 0;
+    transform: scale(0) translateX(50%);
+    transition-delay: 0.3s;
+}
+
+.interest-satellite:nth-child(4) {
+    bottom: 0;
+    left: 50%;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.4s;
+}
+
+.interest-satellite:nth-child(5) {
+    bottom: 20%;
+    left: 0;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.5s;
+}
+
+.interest-satellite:nth-child(6) {
+    top: 20%;
+    left: 0;
+    transform: scale(0) translateX(-50%);
+    transition-delay: 0.6s;
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(1) {
+    transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(1):hover {
+    transform: scale(1.02) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(2) {
+    transform: scale(1) translateX(50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(2):hover {
+    transform: scale(1.02) translateX(50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(3) {
+    transform: scale(1) translateX(50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(3):hover {
+    transform: scale(1.02) translateX(50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(4) {
+    transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(4):hover {
+    transform: scale(1.02) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(5) {
+    transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(5):hover {
+    transform: scale(1.02) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(6) {
+    transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(6):hover {
+    transform: scale(1.02) translateX(-50%);
+}
+
+.satellite-icon {
+    font-size: 1.5rem;
+    color: var(--lol-white);
+}
+
+/* Satellite-specific colors to match section headers */
+.interest-satellite[data-category="tv"] .satellite-icon i {
+    color: #4a90e2; /* Blue for TV */
+}
+
+.interest-satellite[data-category="travel"] .satellite-icon i {
+    color: #27ae60; /* Green for Travel */
+}
+
+.interest-satellite[data-category="games"] .satellite-icon i {
+    color: #9b59b6; /* Purple for Gaming */
+}
+
+.interest-satellite[data-category="sports"] .satellite-icon i {
+    color: #27ae60; /* Green for Sports */
+}
+
+.interest-satellite[data-category="anime"] .satellite-icon i {
+    color: #f39c12; /* Orange for Anime */
+}
+
+.interest-satellite[data-category="music"] .satellite-icon i {
+    color: #e91e63; /* Pink for Music */
+}
+
+.satellite-tooltip {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--lol-dark);
+    color: var(--lol-white);
+    padding: 0.75rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-dark);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.satellite-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--lol-dark);
+}
+
+.interest-satellite:hover .satellite-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.satellite-tooltip h5 {
+    margin: 0 0 0.25rem 0;
+    color: var(--lol-gold);
+    font-size: 0.9rem;
+}
+
+.satellite-tooltip p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--lol-light-gray);
+}
+
+/* Satellite Labels - Visible when hub is expanded */
+.satellite-label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    color: var(--lol-gold);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.interests-orbit.expanded .satellite-label {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.8s; /* Show labels after satellites are in position */
+}
+
+/* Content Sections */
+.interests-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 80px; /* Add space for the Show All button */
+}
+
+.interest-section {
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.interest-section.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.interest-section .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    scroll-margin-top: 100px;
+    padding-top: 1rem;
+}
+
+.interest-section .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    position: relative;
+}
+
+.interest-section .section-header h4 {
+    color: var(--lol-white);
+    font-size: 2rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.interest-section .section-header i {
+    font-size: 2rem;
+    color: var(--lol-gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    transform-origin: center;
+}
+
+.interest-section .section-header:hover i {
+    transform: scale(1.2) rotate(10deg);
+    color: var(--lol-gold-light);
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+}
+
+/* Category-specific icon styling */
+.interest-section[data-category="tv"] .section-header i {
+    color: #4a90e2; /* Blue for TV */
+}
+
+.interest-section[data-category="travel"] .section-header i {
+    color: #27ae60; /* Green for Travel */
+}
+
+.interest-section[data-category="games"] .section-header i {
+    color: #9b59b6; /* Purple for Gaming */
+}
+
+.interest-section[data-category="sports"] .section-header i {
+    color: #27ae60; /* Green for Sports */
+}
+
+.interest-section[data-category="anime"] .section-header i {
+    color: #f39c12; /* Orange for Anime dragon */
+}
+
+.interest-section[data-category="music"] .section-header i {
+    color: #e91e63; /* Pink for Music */
+}
+
+/* Specific volleyball icon styling */
+.fa-volleyball-ball {
+    color: #f1c40f !important; /* Yellow for volleyball */
+}
+
+.fa-volleyball-ball:hover {
+    color: #f7dc6f !important; /* Lighter yellow on hover */
+    text-shadow: 0 0 15px rgba(241, 196, 15, 0.8) !important;
+}
+
+/* Enhanced hover effects for each category */
+.interest-section[data-category="tv"] .section-header:hover i {
+    color: #5ba3f5;
+    text-shadow: 0 0 15px rgba(74, 144, 226, 0.8);
+}
+
+.interest-section[data-category="travel"] .section-header:hover i {
+    color: #36c26e;
+    text-shadow: 0 0 15px rgba(39, 174, 96, 0.8);
+}
+
+.interest-section[data-category="games"] .section-header:hover i {
+    color: #b569d1;
+    text-shadow: 0 0 15px rgba(155, 89, 182, 0.8);
+}
+
+.interest-section[data-category="sports"] .section-header:hover i {
+    color: #36c26e;
+    text-shadow: 0 0 15px rgba(39, 174, 96, 0.8);
+}
+
+.interest-section[data-category="anime"] .section-header:hover i {
+    color: #ffb84d;
+    text-shadow: 0 0 15px rgba(243, 156, 18, 0.8);
+}
+
+.interest-section[data-category="music"] .section-header:hover i {
+    color: #ff4081;
+    text-shadow: 0 0 15px rgba(233, 30, 99, 0.8);
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.content-card {
+    background: linear-gradient(135deg, var(--lol-dark), var(--lol-darker));
+    border: 1px solid var(--lol-blue);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    transition: none; /* Start with no transition */
+    position: relative;
+    overflow: hidden;
+    /* Start in normal visible state for Show All */
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+    will-change: opacity, transform;
+}
+
+.content-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    border-color: var(--lol-gold);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.content-card:hover::before {
+    left: 100%;
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: var(--lol-gold);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+    color: var(--lol-white);
+}
+
+.content-card h5 {
+    color: var(--lol-gold);
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+}
+
+.content-card p {
+    color: var(--lol-light-gray);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Content Card Images */
+.card-image {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid var(--lol-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.card-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+}
+
+.content-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-image:hover .content-image {
+    transform: scale(1.1);
+}
+
+/* Artist Profile Cards */
+.artist-card {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.artist-profile {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--lol-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.artist-profile:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+}
+
+.artist-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.artist-profile:hover .artist-image {
+    transform: scale(1.1);
+}
+
+.artist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.artist-profile:hover .artist-overlay {
+    opacity: 1;
+}
+
+.artist-overlay i {
+    color: var(--lol-gold);
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+}
+
+.artist-card h5 {
+    color: var(--lol-gold);
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+}
+
+.artist-card p {
+    color: var(--lol-light-gray);
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+/* Interactive Elements */
+.about-interactions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.interaction-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--lol-light-gray);
+    font-size: 0.9rem;
+}
+
+.interaction-hint i {
+    color: var(--lol-gold);
+}
+
+/* Hub Click Animation */
+.hub-center.clicked {
+    animation: hubPulse 0.3s ease;
+}
+
+@keyframes hubPulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(0.9); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hobbies-hub {
+        width: 320px;
+        height: 320px;
+    }
+
+    .hub-center {
+        width: 120px;
+        height: 120px;
+    }
+
+    .interests-content {
+        margin-top: 60px; /* Less space on mobile */
+    }
     
-    // Log each section and its current state
-    sections.forEach((section, index) => {
-        const category = section.getAttribute('data-category');
-        const isActive = section.classList.contains('active');
-        console.log(`📋 Section ${index + 1}: ${category} - Active: ${isActive}`);
-    });
+    .hub-icon {
+        font-size: 1.5rem;
+    }
     
-    // Check current button text to determine action
-    const showAllBtn = document.querySelector('.show-all-button');
-    const buttonText = showAllBtn ? showAllBtn.querySelector('span') : null;
-    const currentText = buttonText ? buttonText.textContent : 'Show All';
+    .hub-center h3 {
+        font-size: 0.9rem;
+    }
     
-    console.log('📝 Current button text:', currentText);
+    .show-all-btn {
+        margin-top: 2.5rem;
+        display: flex;
+        justify-content: center;
+    }
     
-    if (currentText === 'Show All') {
-        // Show All action - open all sections in their original order
-        console.log('✅ Opening all sections');
-        
-        // First, restore original order of sections
-        restoreOriginalSectionOrder();
-        
-        // Show scroll-to-top button when showing all sections
-        const scrollTopBtn = document.getElementById('scrollTop');
-        if (scrollTopBtn) {
-            scrollTopBtn.classList.add('visible');
-            console.log('🔼 Scroll-to-top button shown due to Show All expansion in About section');
-        }
-        
-        sections.forEach((section, index) => {
-            const category = section.getAttribute('data-category');
-            section.classList.add('active');
-            // Force opacity and transform changes immediately
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-            
-            // Add bouncy animations to Show All sections too
-            setTimeout(() => {
-                animateSectionContent(section);
-            }, index * 300); // Stagger each section
-            
-            console.log(`✅ Opened section ${index + 1}: ${category}`);
-        });
-        
-        // Scroll to the first section header with extra space above
-        setTimeout(() => {
-            const firstSection = document.querySelector('.interest-section');
-            if (firstSection) {
-                const sectionHeader = firstSection.querySelector('.section-header');
-                console.log('🔍 Show All - Section header found:', !!sectionHeader);
-                
-                if (sectionHeader) {
-                    // Use manual scroll calculation for better control
-                    const rect = sectionHeader.getBoundingClientRect();
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    const targetY = Math.max(0, rect.top + scrollTop - 100); // Ensure not negative
-                    
-                    console.log('📊 Show All - Scroll calculation:', {
-                        rectTop: rect.top,
-                        scrollTop: scrollTop,
-                        targetY: targetY,
-                        currentY: window.pageYOffset
-                    });
-                    
-                    console.log('🔥 Show All - Scrolling to position:', targetY);
-                    
-                    window.scrollTo({
-                        top: targetY,
-                        behavior: 'auto'
-                    });
-                    
-                    // Fallback after a delay if first doesn't work
-                    setTimeout(() => {
-                        if (Math.abs(window.pageYOffset - targetY) > 50) {
-                            console.log('🔄 Show All - First scroll failed, trying fallback');
-                            sectionHeader.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
-                    }, 1000);
-                    
-                    console.log('🎯 Show All: Scrolling to first header with 100px space above');
-                } else {
-                    console.log('⚠️ Show All - No header found, using section fallback');
-                    // Fallback to section scroll
-                    firstSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        }, 50);
-        
-        return true; // Sections are now active
-    } else {
-        // Close All action - close all sections
-        console.log('❌ Closing all sections');
-        sections.forEach((section, index) => {
-            const category = section.getAttribute('data-category');
-            section.classList.remove('active');
-            // Force opacity and transform changes immediately
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            console.log(`❌ Closed section ${index + 1}: ${category}`);
-        });
-        
-        return false; // Sections are now inactive
+    .show-all-button {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.8rem;
+    }
+    
+    .interest-satellite {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .satellite-icon {
+        font-size: 1.2rem;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .content-card {
+        padding: 1.5rem;
+    }
+    
+    .interest-section .section-header h4 {
+        font-size: 1.5rem;
+    }
+    
+    .interest-section .section-header i {
+        font-size: 1.8rem;
+        margin-right: 0.8rem;
+    }
+    
+    .satellite-tooltip {
+        display: none;
+    }
+    
+    .interest-satellite {
+        cursor: pointer;
+    }
+    
+    .artist-profile {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .artist-overlay i {
+        font-size: 1.5rem;
+    }
+    
+    .artist-card h5 {
+        font-size: 1.1rem;
+    }
+    
+    .artist-card p {
+        font-size: 0.85rem;
+    }
+    
+    .card-image {
+        width: 100px;
+        height: 100px;
     }
 }
 
-function animateSectionContent(section) {
-    const category = section.getAttribute('data-category');
-    console.log('🎬 Starting SMOOTH tile animations for:', category);
-    
-    // Get the content cards (header is already visible)
-    const contentCards = section.querySelectorAll('.content-card');
-    
-    console.log('📊 Found elements:', {
-        category,
-        cardCount: contentCards.length
-    });
-    
-    // Enable transitions for cards and animate them in
-    contentCards.forEach((card, index) => {
-        card.style.transition = 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-            console.log(`🎾 Card ${index + 1} BOUNCED in for:`, category);
-        }, 200 + (index * 200)); // 200ms delay between each card
-    });
-    
-    // Add final dramatic bounce to the whole section
-    setTimeout(() => {
-        console.log('🎪 Starting FINAL section bounce for:', category);
-        section.style.transition = 'transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        
-        // Big bounce up
-        section.style.transform = 'translateY(-15px) scale(1.03)';
-        
-        setTimeout(() => {
-            // Bounce down past normal
-            section.style.transform = 'translateY(5px) scale(0.99)';
-            
-            setTimeout(() => {
-                // Small bounce up
-                section.style.transform = 'translateY(-2px) scale(1.01)';
-                
-                setTimeout(() => {
-                    // Final settle
-                    section.style.transform = 'translateY(0) scale(1)';
-                    console.log('🎉 FINAL bounce complete for:', category);
-                }, 200);
-            }, 250);
-        }, 400);
-    }, 400 + (contentCards.length * 200)); // Wait for all cards + extra time
+
+
+.interaction-hint i {
+    color: var(--lol-gold);
 }
 
-function restoreOriginalSectionOrder() {
-    const interestsContent = document.querySelector('.interests-content');
-    if (!interestsContent) return;
-    
-    // Define the original order of sections
-    const originalOrder = ['tv', 'travel', 'games', 'sports', 'anime', 'music'];
-    
-    // Get all sections
-    const sections = Array.from(document.querySelectorAll('.interest-section'));
-    
-    // Sort sections according to original order
-    sections.sort((a, b) => {
-        const categoryA = a.getAttribute('data-category');
-        const categoryB = b.getAttribute('data-category');
-        const indexA = originalOrder.indexOf(categoryA);
-        const indexB = originalOrder.indexOf(categoryB);
-        return indexA - indexB;
-    });
-    
-    // Clear the container and re-append sections in correct order
-    interestsContent.innerHTML = '';
-    sections.forEach(section => {
-        interestsContent.appendChild(section);
-    });
+/* Responsive Design */
+
+
+/* ===== EDUCATION SECTION ===== */
+.education-content {
+    display: grid;
+    gap: 3rem;
+    padding: 2rem 0;
+}
+
+.education-item {
+    background: var(--gradient-dark);
+    border: 1px solid var(--lol-gray);
+    border-radius: 15px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.education-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-gold-blue);
+}
+
+.education-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--lol-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.education-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--lol-dark);
+    flex-shrink: 0;
+}
+
+.education-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--lol-gold);
+}
+
+.education-degree {
+    font-size: 1.1rem;
+    color: var(--lol-blue);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.education-period {
+    font-size: 0.9rem;
+    color: var(--lol-text-muted);
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.education-description {
+    color: var(--lol-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.education-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.highlight {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--lol-gold);
+    color: var(--lol-gold);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
 
 
-// ===== NAVIGATION =====
-function initNavigation() {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.section');
+/* ===== SERVICES SECTION ===== */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
 
-    // Mobile menu toggle
-    if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+.service-card {
+    background: var(--gradient-dark);
+    border: 1px solid var(--lol-gray);
+    border-radius: 15px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-gold-blue);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--lol-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: var(--lol-dark);
+    transition: all 0.3s ease;
+}
+
+.service-icon a {
+    color: var(--lol-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.service-icon a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-gold);
+}
+
+.service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--lol-gold);
+}
+
+.service-card p {
+    color: var(--lol-text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.service-features {
+    list-style: none;
+    text-align: left;
+}
+
+.service-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--lol-text-secondary);
+    font-size: 0.9rem;
+}
+
+.service-features i {
+    color: var(--lol-gold);
+    font-size: 0.8rem;
+}
+
+/* ===== PROJECTS SECTION ===== */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.project-card {
+    background: var(--gradient-dark);
+    border: 1px solid var(--lol-gray);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--lol-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.project-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.1);
+}
+
+.project-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--lol-gold);
+}
+
+/* Project overlay removed for classified content */
+/* .project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 20, 25, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.project-link {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lol-dark);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.project-link:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-gold);
+} */
+
+.project-content {
+    padding: 2rem;
+}
+
+.project-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--lol-gold);
+}
+
+.project-content p {
+    color: var(--lol-text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: var(--lol-gold);
+    color: var(--lol-dark);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    padding: 2rem 0;
+}
+
+.contact-info {
+    display: grid;
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--gradient-dark);
+    border: 1px solid var(--lol-gray);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.contact-item:hover {
+    border-color: var(--lol-gold);
+    box-shadow: var(--shadow-gold);
+    transform: translateX(10px);
+    text-decoration: none;
+    color: inherit;
+}
+
+.contact-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--lol-dark);
+}
+
+.contact-details h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--lol-gold);
+}
+
+.contact-details p {
+    color: var(--lol-text-secondary);
+}
+
+.contact-form {
+    background: var(--gradient-dark);
+    border: 1px solid var(--lol-gray);
+    border-radius: 15px;
+    padding: 2.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    background: var(--lol-darker);
+    border: 1px solid var(--lol-gray);
+    border-radius: 8px;
+    color: var(--lol-text-primary);
+    font-family: var(--font-body);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--lol-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--lol-text-muted);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: var(--lol-darker);
+    border-top: 2px solid var(--lol-gold);
+    padding: 3rem 0 1rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.footer-logo .logo-text {
+    font-size: 1.3rem;
+}
+
+.footer-logo p {
+    color: var(--lol-text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lol-dark);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-gold);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--lol-gray);
+    color: var(--lol-text-muted);
+    font-size: 0.9rem;
+}
+
+/* ===== SCROLL TO TOP ===== */
+.scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;  /* Changed from right to left */
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-gold);
+    border: 2px solid var(--lol-gold-light);
+    border-radius: 50%;
+    color: var(--lol-dark);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+}
+
+.scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+    animation: scrollTopPulse 2s infinite;  /* Added pulse animation to draw attention */
+}
+
+.scroll-top:hover {
+    transform: translateY(-5px) scale(1.1);  /* Enhanced hover effect */
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.8);
+    background: var(--lol-gold-light);
+}
+
+/* Pulse animation for scroll to top button */
+@keyframes scrollTopPulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
     }
-
-    // Navigation link clicks
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active class from all links
-            navLinks.forEach(l => l.classList.remove('active'));
-            
-            // Add active class to clicked link
-            this.classList.add('active');
-            
-            // Get target section
-            const targetId = this.getAttribute('data-section');
-            const targetSection = document.getElementById(targetId);
-            
-            // Hide all sections and reset contact animations if leaving contact
-            const currentActiveSection = document.querySelector('.section.active');
-            if (currentActiveSection && currentActiveSection.id === 'contact' && targetId !== 'contact') {
-                resetContactAnimations();
-                console.log('🔄 Leaving contact section, resetting animations');
-            }
-            
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show target section first
-            if (targetSection) {
-                targetSection.classList.add('active');
-                
-                // Trigger specific animations for contact section
-                if (targetId === 'contact') {
-                    triggerContactAnimations();
-                }
-            }
-            
-            // AGGRESSIVE scroll to top - override any other scroll behavior
-            console.log('🔄 Tab navigation clicked, forcing scroll to top');
-            
-            // Method 1: Direct property setting
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-            
-            // Method 2: Window scroll
-            window.scrollTo(0, 0);
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'instant'
-            });
-            
-            // Method 3: Force with timing to override any other scrolls
-            setTimeout(() => {
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                window.scrollTo(0, 0);
-                console.log('🔄 Tab navigation: Force scroll attempt 1');
-            }, 10);
-            
-            setTimeout(() => {
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                window.scrollTo(0, 0);
-                console.log('🔄 Tab navigation: Force scroll attempt 2');
-            }, 50);
-            
-            setTimeout(() => {
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                window.scrollTo(0, 0);
-                console.log('🔄 Tab navigation: Force scroll attempt 3');
-            }, 100);
-            
-            setTimeout(() => {
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                window.scrollTo(0, 0);
-                console.log('🔄 Tab navigation: Final force scroll');
-            }, 200);
-            
-            // Close mobile menu if open
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            }
-        });
-    });
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
-
-// ===== SCROLL EFFECTS =====
-function initScrollEffects() {
-    const navbar = document.querySelector('.navbar');
-    let lastScrollTop = 0;
-
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Navbar background effect
-        if (scrollTop > 100) {
-            navbar.style.background = 'rgba(15, 20, 25, 0.98)';
-            navbar.style.backdropFilter = 'blur(15px)';
-        } else {
-            navbar.style.background = 'rgba(15, 20, 25, 0.95)';
-            navbar.style.backdropFilter = 'blur(10px)';
-        }
-        
-        lastScrollTop = scrollTop;
-    });
-
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements for animation (excluding contact items - they have their own system)
-    document.querySelectorAll('.service-card, .project-card, .stat-card, .education-item').forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s ease-out';
-        
-        // Add staggered delay for education items
-        if (el.classList.contains('education-item')) {
-            const educationItems = document.querySelectorAll('.education-item');
-            const educationIndex = Array.from(educationItems).indexOf(el);
-            el.style.transitionDelay = `${educationIndex * 0.2}s`;
-            console.log(`🎓 Education item ${educationIndex + 1} will animate with ${educationIndex * 0.2}s delay`);
-        }
-        
-        observer.observe(el);
-    });
-}
-
-// ===== ANIMATIONS =====
-function initAnimations() {
-    // Hero section animations
-    const heroElements = document.querySelectorAll('.hero-title, .hero-description, .hero-stats, .hero-actions');
-    
-    heroElements.forEach((element, index) => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        
-        setTimeout(() => {
-            element.style.transition = 'all 0.8s ease-out';
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        }, index * 200);
-    });
-
-    // Parallax effect for hero background
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const parallax = document.querySelector('#home');
-        if (parallax) {
-            const speed = scrolled * 0.5;
-            parallax.style.transform = `translateY(${speed}px)`;
-        }
-    });
-
-    // Hover animations for cards (contact items have their own hover effects in CSS)
-    document.querySelectorAll('.service-card, .project-card, .stat-card, .education-item').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-}
-
-// ===== CONTACT ANIMATIONS =====
-function initContactAnimations() {
-    console.log('📧 Initializing contact animations');
-    
-    // Check if we're already on contact page
-    const contactSection = document.getElementById('contact');
-    if (contactSection && contactSection.classList.contains('active')) {
-        console.log('🚨 Contact section is already active, triggering animations immediately');
-        setTimeout(() => {
-            triggerContactAnimations();
-        }, 500);
-    } else {
-        // Reset all contact elements to initial state only if not active
-        resetContactAnimations();
+    50% {
+        box-shadow: 0 4px 25px rgba(212, 175, 55, 0.7);
     }
 }
 
-function resetContactAnimations() {
-    const contactInfo = document.querySelector('.contact-info');
-    const contactForm = document.querySelector('.contact-form');
-    const contactItems = document.querySelectorAll('.contact-item');
-    const formGroups = document.querySelectorAll('#contact .form-group');
-    const submitButton = document.querySelector('#contact .btn');
-    
-    // Remove all animation classes and clear inline styles
-    if (contactInfo) {
-        contactInfo.classList.remove('animated', 'preparing-animation');
-        contactInfo.style.opacity = '';
-        contactInfo.style.transform = '';
+
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .home-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
     }
     
-    if (contactForm) {
-        contactForm.classList.remove('animated', 'preparing-animation');
-        contactForm.style.opacity = '';
-        contactForm.style.transform = '';
+    .home-stats {
+        justify-content: center;
     }
     
-    contactItems.forEach(item => {
-        item.classList.remove('animated', 'preparing-animation');
-        item.style.opacity = '';
-        item.style.transform = '';
-        item.style.transitionDelay = '';
-    });
-    
-    formGroups.forEach(group => {
-        group.classList.remove('animated', 'preparing-animation');
-        group.style.opacity = '';
-        group.style.transform = '';
-        group.style.transitionDelay = '';
-    });
-    
-    if (submitButton) {
-        submitButton.classList.remove('animated', 'preparing-animation');
-        submitButton.style.opacity = '';
-        submitButton.style.transform = '';
+    .about-content {
+        gap: 1.5rem;
     }
     
-    console.log('🔄 Contact animations reset - elements now visible by default');
-}
-
-function triggerContactAnimations() {
-    console.log('🎬 Triggering contact section animations');
+    .about-box {
+        max-width: 350px;
+    }
     
-    const contactInfo = document.querySelector('.contact-info');
-    const contactForm = document.querySelector('.contact-form');
-    const contactItems = document.querySelectorAll('.contact-item');
-    const formGroups = document.querySelectorAll('#contact .form-group');
-    const submitButton = document.querySelector('#contact .btn');
+    .education-content {
+        gap: 2rem;
+    }
     
-    // First, prepare all elements for animation (hide them)
-    if (contactInfo) contactInfo.classList.add('preparing-animation');
-    if (contactForm) contactForm.classList.add('preparing-animation');
-    contactItems.forEach(item => item.classList.add('preparing-animation'));
-    formGroups.forEach(group => group.classList.add('preparing-animation'));
-    if (submitButton) submitButton.classList.add('preparing-animation');
+    .education-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+    }
     
-    // Small delay to ensure the prepare state takes effect
-    setTimeout(() => {
-        // Animate main containers (similar to home page)
-        setTimeout(() => {
-            if (contactInfo) {
-                contactInfo.classList.remove('preparing-animation');
-                contactInfo.classList.add('animated');
-                console.log('📧 Contact info sliding in from left');
-            }
-        }, 200);
-        
-        setTimeout(() => {
-            if (contactForm) {
-                contactForm.classList.remove('preparing-animation');
-                contactForm.classList.add('animated');
-                console.log('📝 Contact form sliding in from right');
-            }
-        }, 400);
-        
-        // Staggered animation for contact items
-        contactItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.classList.remove('preparing-animation');
-                item.classList.add('animated');
-                item.style.transitionDelay = `${index * 0.1}s`;
-                console.log(`📞 Contact item ${index + 1} animating in`);
-            }, 600 + (index * 100));
-        });
-        
-        // Staggered animation for form groups
-        formGroups.forEach((group, index) => {
-            setTimeout(() => {
-                group.classList.remove('preparing-animation');
-                group.classList.add('animated');
-                group.style.transitionDelay = `${index * 0.1}s`;
-                console.log(`📝 Form group ${index + 1} animating in`);
-            }, 800 + (index * 100));
-        });
-        
-        // Animate submit button last
-        if (submitButton) {
-            setTimeout(() => {
-                submitButton.classList.remove('preparing-animation');
-                submitButton.classList.add('animated');
-                console.log('📤 Submit button animating in');
-            }, 1200 + (formGroups.length * 100));
-        }
-    }, 50); // Small delay to ensure prepare state renders
-}
 
-// ===== COUNTER ANIMATION =====
-function initCounterAnimation() {
-    const counters = document.querySelectorAll('.stat-number');
-    console.log('🔢 Found counters:', counters.length);
     
-    const animateCounter = (counter) => {
-        const targetText = counter.getAttribute('data-target');
-        const target = parseInt(targetText);
-        const hasPercent = targetText.includes('%');
-        const hasPlus = targetText.includes('+');
-        console.log('🎯 Animating counter to:', target, hasPercent ? 'with %' : '', hasPlus ? 'with +' : '');
-        const duration = 2000; // 2 seconds
-        const step = target / (duration / 16); // 60fps
-        let current = 0;
-        
-        const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            let suffix = '';
-            if (hasPercent) suffix += '%';
-            if (hasPlus) suffix += '+';
-            counter.textContent = Math.floor(current) + suffix;
-        }, 16);
-    };
-
-    // Intersection Observer for counters
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                console.log('👁️ Counter visible, starting animation');
-                animateCounter(entry.target);
-                counterObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    counters.forEach(counter => {
-        console.log('👀 Observing counter:', counter.textContent);
-        counterObserver.observe(counter);
-    });
-}
-
-// ===== CONTACT FORM =====
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Simple validation
-            if (!data.name || !data.email || !data.message) {
-                showNotification('Please fill in all required fields.', 'error');
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.email)) {
-                showNotification('Please enter a valid email address.', 'error');
-                return;
-            }
-            
-            // Simulate form submission
-            showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-            this.reset();
-        });
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 }
 
-// ===== NOTIFICATION SYSTEM =====
-function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notification => notification.remove());
+@media (max-width: 768px) {
+    /* Fix mobile scrolling */
+    html, body {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: auto;
+    }
     
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-            <span>${message}</span>
-        </div>
-    `;
+    .main-content {
+        margin-top: 80px;
+        scroll-behavior: auto;
+        scroll-padding-top: 80px;
+    }
     
-    // Add styles
-    notification.style.cssText = `
+    .nav-menu {
         position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? 'var(--lol-green)' : type === 'error' ? 'var(--lol-red)' : 'var(--lol-blue)'};
-        color: var(--lol-white);
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: var(--shadow-dark);
-        z-index: 10000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-    `;
+        left: -100%;
+        top: 80px;
+        flex-direction: column;
+        background-color: var(--lol-darker);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 2rem 0;
+    }
     
-    // Add to page
-    document.body.appendChild(notification);
+    .nav-menu.active {
+        left: 0;
+    }
     
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
+    .nav-toggle {
+        display: flex;
+    }
     
-    // Remove after 5 seconds
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 5000);
-}
+    .nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-toggle.active .bar:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    
+    .nav-toggle.active .bar:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+    
+    .home-text h3 {
+        font-size: 2rem;
+    }
+    
+    .home-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .home-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* Profile Card Mobile Responsive */
+    .lol-profile-card {
+        min-width: 280px;
+        max-width: 320px;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+        /* Ensure consistent flex behavior across browsers */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+    
+    .portrait-frame {
+        width: 120px;
+        height: 120px;
+        padding: 6px;
+    }
+    
+    .profile-title {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .skill-slots {
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+    }
+    
+    .skill-slot {
+        min-width: 70px;
+        min-height: 70px;
+        padding: 0.75rem;
+        /* Ensure consistent sizing across browsers */
+        box-sizing: border-box;
+        flex-shrink: 0;
+    }
+    
+    .skill-slot i {
+        font-size: 1.25rem;
+    }
+    
+    .skill-slot span {
+        font-size: 0.7rem;
+    }
+    
+    /* Home Content Mobile Layout */
+    .home-content {
+        gap: 2rem;
+        padding: 1rem;
+    }
+    
+    .home-image {
+        order: -1;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .home-text {
+        text-align: center;
+        padding: 0 1rem;
+    }
+    
+    /* About Page Mobile Responsive */
+    .about-content {
+        padding: 1rem;
+        gap: 2rem;
+    }
+    
+    .hobbies-hub {
+        width: 280px;
+        height: 280px;
+        margin: 1rem auto;
+    }
 
-// ===== SCROLL TO TOP =====
-function initScrollToTop() {
-    const scrollTopBtn = document.getElementById('scrollTop');
+    .hub-center {
+        width: 100px;
+        height: 100px;
+    }
+
+    .interests-content {
+        margin-top: 40px;
+    }
     
-    if (scrollTopBtn) {
-        console.log('✅ Scroll-to-top button found and initialized');
-        console.log('📍 Button position:', {
-            bottom: getComputedStyle(scrollTopBtn).bottom,
-            left: getComputedStyle(scrollTopBtn).left,  // Changed from right to left
-            zIndex: getComputedStyle(scrollTopBtn).zIndex
-        });
-        
-        // Enhanced scroll handler that works on all tabs
-        let scrollTimeout;
-        function updateScrollButton() {
-            const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-            const activeSection = document.querySelector('.section.active');
-            const sectionId = activeSection ? activeSection.id : 'none';
-            
-            // Universal logic for all tabs - show button with very low threshold
-            const shouldShowButton = scrollPos > 20 || // Very low threshold for all tabs
-                                   (activeSection && activeSection.scrollHeight > window.innerHeight * 1.2) || // Show if section is tall
-                                   document.querySelectorAll('.interest-section.active').length > 0; // Show if About has active content
-            
-            if (shouldShowButton) {
-                if (!scrollTopBtn.classList.contains('visible')) {
-                    scrollTopBtn.classList.add('visible');
-                    console.log(`🔼 Scroll-to-top button shown (Section: ${sectionId}, ScrollPos: ${scrollPos})`);
-                }
-            } else {
-                if (scrollTopBtn.classList.contains('visible')) {
-                    scrollTopBtn.classList.remove('visible');
-                    console.log(`🔽 Scroll-to-top button hidden (Section: ${sectionId}, ScrollPos: ${scrollPos})`);
-                }
-            }
-        }
-        
-        window.addEventListener('scroll', function() {
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-            }
-            scrollTimeout = setTimeout(updateScrollButton, 10);
-        });
-        
-        // Also update when sections change (for tab navigation)
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                    const target = mutation.target;
-                    if (target.classList.contains('section') && target.classList.contains('active')) {
-                        console.log(`📊 Section changed to: ${target.id}`);
-                        
-                        // Show scroll button immediately for tabs with substantial content
-                        const contentRichTabs = ['about', 'education', 'experience', 'projects', 'contact'];
-                        if (contentRichTabs.includes(target.id)) {
-                            setTimeout(() => {
-                                scrollTopBtn.classList.add('visible');
-                                console.log(`🔼 Scroll-to-top button shown immediately for content-rich tab: ${target.id}`);
-                            }, 200); // Small delay to let tab animation complete
-                        }
-                        
-                        // Also run the normal check
-                        setTimeout(updateScrollButton, 300);
-                    }
-                }
-            });
-        });
-        
-        // Observe all sections for class changes
-        document.querySelectorAll('.section').forEach(section => {
-            observer.observe(section, { attributes: true, attributeFilter: ['class'] });
-        });
-        
-        scrollTopBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('🔼 Scroll-to-top button clicked');
-            
-            // Enhanced scroll to top with multiple fallback methods
-            forceScrollToTopComprehensive();
-            
-            // Add visual feedback
-            this.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-        });
-        
-        // Test button visibility on page load
-        setTimeout(() => {
-            const rect = scrollTopBtn.getBoundingClientRect();
-            console.log('🔍 Button visibility test:', {
-                visible: rect.width > 0 && rect.height > 0,
-                position: `${rect.left}px from left, ${window.innerHeight - rect.bottom}px from bottom`,
-                hasVisibleClass: scrollTopBtn.classList.contains('visible'),
-                computedOpacity: getComputedStyle(scrollTopBtn).opacity
-            });
-            
-            // Temporary test: Force show the button for 5 seconds so user can see it on all tabs
-            console.log('🧪 TEMPORARY TEST: Showing scroll button for 5 seconds on all tabs');
-            scrollTopBtn.classList.add('visible');
-            setTimeout(() => {
-                console.log('🧪 TEMPORARY TEST: Test complete - button will now show based on normal rules');
-                // Don't hide it automatically, let the normal logic take over
-                updateScrollButton();
-            }, 5000);
-        }, 1000);
-        
-    } else {
-        console.log('❌ Scroll-to-top button not found!');
-        console.log('🔍 Available elements with scroll-related IDs:', 
-            Array.from(document.querySelectorAll('[id*="scroll"], [class*="scroll"]'))
-                .map(el => ({ id: el.id, class: el.className }))
-        );
+    .hub-icon {
+        font-size: 1.25rem;
+    }
+    
+    .hub-center h3 {
+        font-size: 0.8rem;
+    }
+    
+    .show-all-btn {
+        margin-top: 2.5rem;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .show-all-button {
+        padding: 0.65rem 1.3rem;
+        font-size: 0.75rem;
+    }
+    
+    .interest-satellite {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .satellite-icon {
+        font-size: 1rem;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .content-card {
+        padding: 1rem;
+    }
+    
+    .interest-section .section-header h4 {
+        font-size: 1.3rem;
+    }
+    
+    .interest-section .section-header i {
+        font-size: 1.6rem;
+        margin-right: 0.6rem;
+    }
+    
+    .satellite-tooltip {
+        display: none;
+    }
+    
+    .interest-satellite {
+        cursor: pointer;
+    }
+    
+    .artist-profile {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .artist-overlay i {
+        font-size: 1.25rem;
+    }
+    
+    .artist-card h5 {
+        font-size: 1rem;
+    }
+    
+    .artist-card p {
+        font-size: 0.8rem;
+    }
+    
+    .card-image {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .education-item {
+        padding: 1.5rem;
+        margin: 0 1rem;
+    }
+    
+    .education-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
     }
 }
 
-// ===== UTILITY FUNCTIONS =====
+@media (max-width: 480px) {
+    /* Fix mobile scrolling */
+    html, body {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: auto;
+    }
+    
+    .main-content {
+        margin-top: 80px;
+        scroll-behavior: auto;
+        scroll-padding-top: 80px;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .home-text h3 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    /* Profile Card Extra Small Screen Responsive */
+    .lol-profile-card {
+        min-width: 250px;
+        max-width: 280px;
+        padding: 1.5rem 1rem;
+        border-radius: 18px;
+        /* Ensure consistent flex behavior across browsers */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+    
+    .portrait-frame {
+        width: 100px;
+        height: 100px;
+        padding: 5px;
+    }
+    
+    .profile-title {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+    }
+    
+    .skill-slots {
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .skill-slot {
+        min-width: 60px;
+        min-height: 60px;
+        padding: 0.5rem;
+        /* Ensure consistent sizing across browsers */
+        box-sizing: border-box;
+        flex-shrink: 0;
+    }
+    
+    .skill-slot i {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .skill-slot span {
+        font-size: 0.6rem;
+    }
+    
+    .profile-image {
+        width: 100%;
+        height: auto;
+        max-width: 200px;
+        max-height: 200px;
+    }
+    
+    /* About Page Extra Small Screen Responsive */
+    .about-content {
+        padding: 0.5rem;
+        gap: 1.5rem;
+    }
+    
+    .hobbies-hub {
+        width: 240px;
+        height: 240px;
+        margin: 0.5rem auto;
+    }
 
-// Debounce function for performance
-function debounce(func, wait, immediate) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            timeout = null;
-            if (!immediate) func(...args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func(...args);
-    };
+    .hub-center {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .hub-icon {
+        font-size: 1rem;
+    }
+    
+    .hub-center h3 {
+        font-size: 0.7rem;
+    }
+    
+    .show-all-btn {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .show-all-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.7rem;
+    }
+    
+    .interest-satellite {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .satellite-icon {
+        font-size: 0.9rem;
+    }
+    
+    .content-grid {
+        gap: 0.75rem;
+        padding: 0 0.5rem;
+    }
+    
+    .content-card {
+        padding: 0.75rem;
+    }
+    
+    .interest-section .section-header h4 {
+        font-size: 1.1rem;
+    }
+    
+    .interest-section .section-header i {
+        font-size: 1.4rem;
+        margin-right: 0.5rem;
+    }
+    
+    .artist-profile {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .artist-overlay i {
+        font-size: 1rem;
+    }
+    
+    .artist-card h5 {
+        font-size: 0.9rem;
+    }
+    
+    .artist-card p {
+        font-size: 0.75rem;
+    }
+    
+    .card-image {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .services-grid {
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .projects-grid {
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .education-item {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+    
+    .education-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
 }
 
-// Throttle function for scroll events
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-// Chat Widget Functionality
-function initChatWidget() {
-    console.log('🤖 Initializing GPT-powered chat widget...');
-    const chatWidget = document.getElementById('chat-widget');
-    const chatMinimize = document.getElementById('chatMinimize');
-    const chatInput = document.getElementById('chatInput');
-    const sendButton = document.getElementById('sendMessage');
-    const chatMessages = document.getElementById('chatMessages');
-
-    console.log('📋 Chat widget elements found:', {
-        chatWidget: !!chatWidget,
-        chatMinimize: !!chatMinimize,
-        chatInput: !!chatInput,
-        sendButton: !!sendButton,
-        chatMessages: !!chatMessages
-    });
-
-    if (!chatWidget) {
-        console.error('❌ Chat widget not found!');
-        return;
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
     }
-
-    console.log('✅ Chat widget initialized successfully');
-
-    // Load environment variables
-    let envConfig = {};
-    console.log('🔍 Starting to load environment config...');
-    try {
-        // Try to load from localStorage (set by user)
-        const storedConfig = localStorage.getItem('envConfig');
-        console.log('📦 Raw localStorage data:', storedConfig ? 'Found' : 'Not found');
-        
-        if (storedConfig) {
-            envConfig = JSON.parse(storedConfig);
-            console.log('✅ Environment config loaded:', { 
-                hasApiKey: !!envConfig.OPENAI_API_KEY,
-                model: envConfig.CHATBOT_MODEL,
-                maxTokens: envConfig.CHATBOT_MAX_TOKENS,
-                apiKeyLength: envConfig.OPENAI_API_KEY ? envConfig.OPENAI_API_KEY.length : 0
-            });
-        } else {
-            console.log('❌ No environment config found in localStorage');
-            console.log('💡 Please go to setup-env.html and save your configuration');
-        }
-    } catch (error) {
-        console.error('❌ Error loading environment config:', error);
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
-
-    // API Configuration
-    const API_CONFIG = {
-        // Load from environment or use defaults
-        OPENAI_API_KEY: envConfig.OPENAI_API_KEY || 'your-openai-api-key-here',
-        PROXY_URL: envConfig.PROXY_URL || 'https://your-proxy-service.com/api/chat',
-        MODEL: envConfig.CHATBOT_MODEL || 'gpt-3.5-turbo',
-        MAX_TOKENS: parseInt(envConfig.CHATBOT_MAX_TOKENS) || 200,
-        TEMPERATURE: parseFloat(envConfig.CHATBOT_TEMPERATURE) || 0.7,
-        // Fallback responses if API fails
-        FALLBACK_RESPONSES: {
-            'hello': 'Hello! How can I help you today?',
-            'hi': 'Hi there! What can I assist you with?',
-            'help': 'I\'m here to help! What would you like to know?',
-            'portfolio': 'This is Timothy\'s portfolio showcasing his data analysis skills and projects.',
-            'contact': 'You can reach Timothy through the contact section above.',
-            'projects': 'Check out the Projects section to see Timothy\'s work!',
-            'experience': 'Timothy has experience in data analysis, SQL, Python, and BI tools.',
-            'about': 'Timothy is a Data Analyst, Storyteller, and People Builder.'
-        }
-    };
-
-    console.log('⚙️ API Configuration loaded:', {
-        hasApiKey: API_CONFIG.OPENAI_API_KEY !== 'your-openai-api-key-here',
-        apiKeyLength: API_CONFIG.OPENAI_API_KEY.length,
-        model: API_CONFIG.MODEL,
-        maxTokens: API_CONFIG.MAX_TOKENS,
-        temperature: API_CONFIG.TEMPERATURE
-    });
-
-    // Minimize chat widget (make it a small circle)
-    chatMinimize.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent the widget click handler from firing
-        chatWidget.classList.add('minimized');
-    });
-
-    // Click anywhere on minimized widget to reopen
-    chatWidget.addEventListener('click', (e) => {
-        if (chatWidget.classList.contains('minimized')) {
-            // Only reopen if clicking on the minimized widget itself, not on child elements
-            if (e.target === chatWidget || e.target.closest('.chat-header')) {
-                chatWidget.classList.remove('minimized');
-            }
-        }
-    });
-
-    // Send message function
-    async function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            // Add user message
-            addMessage(message, 'user');
-            chatInput.value = '';
-
-            // Show typing indicator
-            showTypingIndicator();
-
-            try {
-                console.log('🚀 Starting API call for message:', message);
-                // Try real API call first
-                const response = await callChatGPT(message);
-                console.log('✅ API call successful, response:', response);
-                hideTypingIndicator();
-                addMessage(response, 'bot');
-            } catch (error) {
-                console.error('❌ API call failed with error:', error);
-                console.error('❌ Error message:', error.message);
-                console.error('❌ Error stack:', error.stack);
-                hideTypingIndicator();
-                // Fallback to local responses
-                console.log('🔄 Using fallback response...');
-                const fallbackResponse = generateFallbackResponse(message);
-                console.log('📝 Fallback response:', fallbackResponse);
-                addMessage(fallbackResponse, 'bot');
-            }
-        }
-    }
-
-    // Real ChatGPT API call
-    async function callChatGPT(userMessage) {
-        console.log('🤖 Attempting ChatGPT API call...');
-        console.log('📋 API Config:', {
-            hasApiKey: API_CONFIG.OPENAI_API_KEY !== 'your-openai-api-key-here',
-            apiKeyLength: API_CONFIG.OPENAI_API_KEY.length,
-            model: API_CONFIG.MODEL,
-            maxTokens: API_CONFIG.MAX_TOKENS,
-            temperature: API_CONFIG.TEMPERATURE
-        });
-        
-        // Try multiple approaches to handle CORS issues
-        if (API_CONFIG.OPENAI_API_KEY !== 'your-openai-api-key-here') {
-            try {
-                console.log('🔑 Using direct API call...');
-                
-                const requestBody = {
-                    model: API_CONFIG.MODEL,
-                    messages: [
-                        { 
-                            role: 'system', 
-                            content: 'You are a helpful AI assistant for Timothy\'s portfolio website. You help visitors learn about Timothy\'s skills, experience, and projects. Keep responses concise, friendly, and professional. Focus on data analysis, portfolio information, and Timothy\'s background.' 
-                        },
-                        { role: 'user', content: userMessage }
-                    ],
-                    max_tokens: API_CONFIG.MAX_TOKENS,
-                    temperature: API_CONFIG.TEMPERATURE
-                };
-                
-                // Try direct API call first
-                try {
-                    console.log('📤 Attempting direct API call...');
-                    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${API_CONFIG.OPENAI_API_KEY}`
-                        },
-                        body: JSON.stringify(requestBody)
-                    });
-
-                    console.log('📥 Response status:', response.status);
-
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error('❌ Direct API call failed:', response.status, errorText);
-                        throw new Error(`Direct API failed: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    console.log('✅ Direct API call successful!');
-                    return data.choices[0].message.content;
-                    
-                } catch (directError) {
-                    console.log('🔄 Direct API failed, trying proxy...');
-                    
-                    // Try multiple proxy services as fallback
-                    const proxyUrls = [
-                        'https://api.allorigins.win/raw?url=https://api.openai.com/v1/chat/completions',
-                        'https://thingproxy.freeboard.io/fetch/https://api.openai.com/v1/chat/completions',
-                        'https://cors-anywhere.herokuapp.com/https://api.openai.com/v1/chat/completions',
-                        'https://api.codetabs.com/v1/proxy?quest=https://api.openai.com/v1/chat/completions'
-                    ];
-                    
-                    for (let i = 0; i < proxyUrls.length; i++) {
-                        try {
-                            console.log(`🔄 Trying proxy ${i + 1}: ${proxyUrls[i]}`);
-                            
-                            const proxyResponse = await fetch(proxyUrls[i], {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${API_CONFIG.OPENAI_API_KEY}`,
-                                    'Origin': window.location.origin
-                                },
-                                body: JSON.stringify(requestBody)
-                            });
-
-                            console.log('📥 Proxy response status:', proxyResponse.status);
-
-                            if (!proxyResponse.ok) {
-                                const errorText = await proxyResponse.text();
-                                console.error(`❌ Proxy ${i + 1} failed:`, proxyResponse.status, errorText);
-                                continue; // Try next proxy
-                            }
-
-                            const proxyData = await proxyResponse.json();
-                            console.log(`✅ Proxy ${i + 1} successful!`);
-                            return proxyData.choices[0].message.content;
-                            
-                        } catch (proxyError) {
-                            console.error(`❌ Proxy ${i + 1} error:`, proxyError.message);
-                            if (i === proxyUrls.length - 1) {
-                                throw new Error('All proxies failed');
-                            }
-                        }
-                    }
-                    
-                    throw new Error('All proxy attempts failed');
-                }
-                
-            } catch (error) {
-                console.error('❌ All API attempts failed:', error);
-                throw error;
-            }
-        } else {
-            console.log('❌ No API key configured');
-            throw new Error('API key not configured. Please add your OpenAI API key.');
-        }
-    }
-
-    // Fallback response generator
-    function generateFallbackResponse(userMessage) {
-        const lowerMessage = userMessage.toLowerCase();
-        
-        for (const [key, response] of Object.entries(API_CONFIG.FALLBACK_RESPONSES)) {
-            if (lowerMessage.includes(key)) {
-                return response;
-            }
-        }
-        
-        return 'Thanks for your message! I\'m here to help with any questions about this portfolio.';
-    }
-
-    // Add message to chat
-    function addMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}-message`;
-        
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'message-content';
-        contentDiv.textContent = text;
-        
-        messageDiv.appendChild(contentDiv);
-        chatMessages.appendChild(messageDiv);
-        
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // Typing indicator
-    function showTypingIndicator() {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'message bot-message typing-indicator';
-        typingDiv.id = 'typing-indicator';
-        typingDiv.innerHTML = `
-            <div class="message-content">
-                <span class="typing-dots">
-                    <span></span><span></span><span></span>
-                </span>
-            </div>
-        `;
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function hideTypingIndicator() {
-        const typingIndicator = document.getElementById('typing-indicator');
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
-    }
-
-    // Event listeners
-    sendButton.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
 }
 
-// Missing ping effect for non-interactive clicks
-function createMissingPing(x, y) {
-    // Create ping element with GIF
-    const ping = document.createElement('img');
-    ping.className = 'missing-ping';
-    ping.src = 'Gifs/MISSING.gif'; // Use the GIF from your folder
-    ping.style.left = x + 'px';
-    ping.style.top = y + 'px';
-    document.body.appendChild(ping);
-    
-    // Remove ping after animation
-    setTimeout(() => {
-        if (ping.parentNode) {
-            ping.parentNode.removeChild(ping);
-        }
-    }, 1000);
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-// Global click listener for missing ping
-document.addEventListener('click', function(e) {
-    // Check if clicked element is interactive
-    const isInteractive = e.target.closest('a, button, input, textarea, select, [tabindex], .nav-link, .service-card, .project-card, .contact-item, .chat-widget, .chat-toggle, .chat-minimize, .chat-input, .chat-send');
-    
-    // If not interactive, create missing ping
-    if (!isInteractive) {
-        createMissingPing(e.clientX, e.clientY);
-    }
-});
-
-// ===== ADDITIONAL SCROLL-TO-TOP EVENT LISTENERS =====
-// Force scroll to top on page load
-window.addEventListener('load', function() {
-    forceScrollToTopComprehensive();
-    setTimeout(() => {
-        forceScrollToTopComprehensive();
-    }, 100);
-});
-
-// Force scroll to top on page refresh
-window.addEventListener('beforeunload', function() {
-    forceScrollToTopComprehensive();
-});
-
-// Force scroll to top when navigating back/forward
-window.addEventListener('popstate', function() {
-    forceScrollToTopComprehensive();
-    setTimeout(() => {
-        forceScrollToTopComprehensive();
-    }, 50);
-});
-
-// Force scroll to top when page becomes visible again (tab switching)
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-        forceScrollToTopComprehensive();
-    }
-});
-
-// Force scroll to top when window gets focus
-window.addEventListener('focus', function() {
-    forceScrollToTopComprehensive();
-});
-
-// ===== AUDIO PLAYER =====
-function initAudioPlayer() {
-    console.log('🎵 Initializing audio player for artists');
-    
-    let currentAudio = null;
-    let currentPlayingCard = null;
-    let currentVolume = 0.15; // Store current volume (default 15%)
-    
-    // Get all artist cards with audio
-    const artistCards = document.querySelectorAll('.artist-card[data-audio]');
-    
-    // Get master volume controls (legacy)
-    const musicSection = document.querySelector('.interest-section[data-category="music"]');
-    const volumeSlider = document.querySelector('.volume-slider');
-    const volumePercentage = document.querySelector('.volume-percentage');
-    const volumeIcon = document.querySelector('.volume-icon');
-    
-    // Get music player interface elements
-    const musicPlayer = document.getElementById('musicPlayer');
-    const albumArt = document.querySelector('.album-art');
-    const trackTitle = document.querySelector('.track-title');
-    const trackArtist = document.querySelector('.track-artist');
-    const playPauseBtn = document.querySelector('.play-pause-btn');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const progressBar = document.querySelector('.progress-bar');
-    const progressFill = document.querySelector('.progress-fill');
-    const timeCurrent = document.querySelector('.time-current');
-    const timeTotal = document.querySelector('.time-total');
-    const volumeSliderPlayer = document.querySelector('.volume-slider-player');
-    const volumePercentagePlayer = document.querySelector('.volume-percentage-player');
-    const volumeIconPlayer = document.querySelector('.volume-icon-player');
-    const closePlayerBtn = document.querySelector('.close-player-btn');
-    
-    // Artist data for navigation
-    const artistsData = [
-        { name: 'FKJ', audioSrc: 'Music/FKJ.mp3', imageSrc: 'images/Artists/fkj.jpg' },
-        { name: 'HYBS', audioSrc: 'Music/HYBS.mp3', imageSrc: 'images/Artists/hybs.jpg' },
-        { name: 'SZA', audioSrc: 'Music/SZA.mp3', imageSrc: 'images/Artists/sza.jpg' },
-        { name: 'Kyle Dion', audioSrc: 'Music/Kyle Dion.mp3', imageSrc: 'images/Artists/kyle dion.jpg' },
-        { name: 'BiBi', audioSrc: 'Music/BIBI.mp3', imageSrc: 'images/Artists/bibi.jpg' },
-        { name: 'bbno$', audioSrc: 'Music/bbno$.mp3', imageSrc: 'images/Artists/bbno$.jpg' }
-    ];
-    
-    let currentArtistIndex = -1;
-    
-    // Music Player Interface Functions
-    function showMusicPlayer() {
-        musicPlayer.classList.add('active');
-        console.log('🎵 Music player interface opened');
-    }
-    
-    function hideMusicPlayer() {
-        musicPlayer.classList.remove('active');
-        console.log('🎵 Music player interface closed');
-    }
-    
-    function updatePlayerInfo(artistName, imageSrc) {
-        trackTitle.textContent = artistName;
-        trackArtist.textContent = 'Now Playing';
-        albumArt.src = imageSrc;
-        albumArt.alt = `${artistName} album art`;
-    }
-    
-    function updateProgressBar() {
-        if (currentAudio) {
-            const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
-            progressFill.style.width = progress + '%';
-            
-            timeCurrent.textContent = formatTime(currentAudio.currentTime);
-            timeTotal.textContent = formatTime(currentAudio.duration || 0);
-        }
-    }
-    
-    function formatTime(seconds) {
-        if (isNaN(seconds)) return '0:00';
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
-    
-    function updateVolumeIcon(volume) {
-        const icons = [volumeIcon, volumeIconPlayer];
-        icons.forEach(icon => {
-            if (icon) {
-                if (volume === 0) {
-                    icon.className = icon.className.replace(/fa-volume-[a-z]+/, 'fa-volume-mute');
-                } else if (volume < 0.5) {
-                    icon.className = icon.className.replace(/fa-volume-[a-z]+/, 'fa-volume-down');
-                } else {
-                    icon.className = icon.className.replace(/fa-volume-[a-z]+/, 'fa-volume-up');
-                }
-            }
-        });
-    }
-    
-    // Music Player Controls
-    if (playPauseBtn) {
-        playPauseBtn.addEventListener('click', function() {
-            if (currentAudio) {
-                if (currentAudio.paused) {
-                    currentAudio.play();
-                } else {
-                    currentAudio.pause();
-                }
-            }
-        });
-    }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-            if (currentArtistIndex > 0) {
-                currentArtistIndex--;
-                const prevArtist = artistsData[currentArtistIndex];
-                loadNewTrack(prevArtist.audioSrc, prevArtist.name, prevArtist.imageSrc);
-            }
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-            if (currentArtistIndex < artistsData.length - 1) {
-                currentArtistIndex++;
-                const nextArtist = artistsData[currentArtistIndex];
-                loadNewTrack(nextArtist.audioSrc, nextArtist.name, nextArtist.imageSrc);
-            }
-        });
-    }
-    
-    if (progressBar) {
-        progressBar.addEventListener('click', function(e) {
-            if (currentAudio) {
-                const rect = this.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const percentage = clickX / rect.width;
-                currentAudio.currentTime = percentage * currentAudio.duration;
-            }
-        });
-    }
-    
-    if (volumeSliderPlayer) {
-        volumeSliderPlayer.addEventListener('input', function() {
-            const volume = this.value / 100;
-            currentVolume = volume; // Store the volume preference
-            if (currentAudio) {
-                currentAudio.volume = volume;
-                volumePercentagePlayer.textContent = this.value + '%';
-                if (volumePercentage) volumePercentage.textContent = this.value + '%';
-                if (volumeSlider) volumeSlider.value = this.value;
-                updateVolumeIcon(volume);
-                console.log(`🎛️ Volume set to ${this.value}% (stored for future tracks)`);
-            }
-        });
-    }
-    
-    if (closePlayerBtn) {
-        closePlayerBtn.addEventListener('click', function() {
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-                resetAllCards();
-                hideMusicPlayer();
-                currentAudio = null;
-                currentPlayingCard = null;
-                currentArtistIndex = -1;
-            }
-        });
-    }
-    
-    function loadNewTrack(audioSrc, artistName, imageSrc) {
-        if (currentAudio) {
-            currentAudio.pause();
-            resetAllCards();
-        }
-        
-        currentAudio = new Audio(audioSrc);
-        currentAudio.volume = currentVolume; // Apply stored volume to new track
-        setupAudioEvents();
-        updatePlayerInfo(artistName, imageSrc);
-        
-        // Update volume displays to show current volume
-        if (volumeSliderPlayer) {
-            volumeSliderPlayer.value = Math.round(currentVolume * 100);
-            volumePercentagePlayer.textContent = Math.round(currentVolume * 100) + '%';
-        }
-        if (volumeSlider) {
-            volumeSlider.value = Math.round(currentVolume * 100);
-            if (volumePercentage) volumePercentage.textContent = Math.round(currentVolume * 100) + '%';
-        }
-        updateVolumeIcon(currentVolume);
-        
-        currentAudio.play().catch(error => {
-            console.log(`❌ Playback failed for ${artistName}:`, error);
-        });
-        
-        console.log(`🎵 New track loaded with volume: ${Math.round(currentVolume * 100)}%`);
-    }
-    
-    function resetAllCards() {
-        artistCards.forEach(card => {
-            const icon = card.querySelector('.artist-overlay i');
-            const overlay = card.querySelector('.artist-overlay');
-            if (icon) icon.className = 'fas fa-play';
-            if (overlay) overlay.classList.remove('playing');
-            card.classList.remove('playing');
-        });
-    }
-    
-    // Master volume control event listener (legacy)
-    if (volumeSlider) {
-        volumeSlider.addEventListener('input', function() {
-            const volume = this.value / 100;
-            currentVolume = volume; // Store the volume preference
-            if (currentAudio) {
-                currentAudio.volume = volume;
-                volumePercentage.textContent = this.value + '%';
-                if (volumeSliderPlayer) volumeSliderPlayer.value = this.value;
-                if (volumePercentagePlayer) volumePercentagePlayer.textContent = this.value + '%';
-                updateVolumeIcon(volume);
-                console.log(`🎛️ Master volume set to ${this.value}% (stored for future tracks)`);
-            }
-        });
-    }
-    
-    artistCards.forEach(card => {
-        const audioSrc = card.getAttribute('data-audio');
-        const overlay = card.querySelector('.artist-overlay');
-        const playIcon = overlay.querySelector('i');
-        const artistName = card.querySelector('h5').textContent;
-        
-
-
-        // Find current artist index
-        const currentArtist = artistsData.find(artist => artist.audioSrc === audioSrc);
-        if (currentArtist) {
-            currentArtistIndex = artistsData.indexOf(currentArtist);
-        }
-
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // If there's currently playing audio and it's not this card
-            if (currentAudio && currentPlayingCard !== card) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-                
-                // Reset previous card's visual state
-                const prevIcon = currentPlayingCard.querySelector('.artist-overlay i');
-                const prevOverlay = currentPlayingCard.querySelector('.artist-overlay');
-                prevIcon.className = 'fas fa-play';
-                prevOverlay.classList.remove('playing');
-                currentPlayingCard.classList.remove('playing');
-            }
-            
-            // If clicking the same card that's playing
-            if (currentPlayingCard === card && currentAudio && !currentAudio.paused) {
-                currentAudio.pause();
-                playIcon.className = 'fas fa-play';
-                overlay.classList.remove('playing');
-                card.classList.remove('playing');
-                
-                // Hide master volume control when paused
-                musicSection.classList.remove('has-playing');
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                
-                console.log(`⏸️ Paused: ${artistName}`);
-                return;
-            }
-            
-            // Create new audio or resume existing
-            if (!currentAudio || currentPlayingCard !== card) {
-                currentAudio = new Audio(audioSrc);
-                currentAudio.volume = currentVolume; // Apply stored volume to new track
-                currentPlayingCard = card;
-                
-                // Update player info
-                updatePlayerInfo(artistName, card.querySelector('.artist-image').src);
-                
-                setupAudioEvents();
-                
-                console.log(`🎵 New track created with volume: ${Math.round(currentVolume * 100)}%`);
-            }
-            
-            // Play the audio
-            currentAudio.play().catch(error => {
-                console.log(`❌ Playback failed for ${artistName}:`, error);
-                playIcon.className = 'fas fa-exclamation-triangle';
-                setTimeout(() => {
-                    playIcon.className = 'fas fa-play';
-                }, 2000);
-            });
-        });
-    });
-    
-    function setupAudioEvents() {
-        // Audio event listeners
-        currentAudio.addEventListener('loadstart', () => {
-            const artistName = currentPlayingCard ? currentPlayingCard.querySelector('h5').textContent : 'Unknown';
-            console.log(`📻 Loading: ${artistName}`);
-        });
-        
-        currentAudio.addEventListener('canplay', () => {
-            const artistName = currentPlayingCard ? currentPlayingCard.querySelector('h5').textContent : 'Unknown';
-            console.log(`🎵 Ready to play: ${artistName}`);
-        });
-        
-        currentAudio.addEventListener('play', () => {
-            if (currentPlayingCard) {
-                const playIcon = currentPlayingCard.querySelector('.artist-overlay i');
-                const overlay = currentPlayingCard.querySelector('.artist-overlay');
-                const artistName = currentPlayingCard.querySelector('h5').textContent;
-                
-                playIcon.className = 'fas fa-pause';
-                overlay.classList.add('playing');
-                currentPlayingCard.classList.add('playing');
-                
-                // Show music player interface
-                showMusicPlayer();
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                
-                // Show master volume control and sync with audio
-                musicSection.classList.add('has-playing');
-                if (volumeSlider) {
-                    volumeSlider.value = Math.round(currentVolume * 100);
-                    volumePercentage.textContent = Math.round(currentVolume * 100) + '%';
-                }
-                if (volumeSliderPlayer) {
-                    volumeSliderPlayer.value = Math.round(currentVolume * 100);
-                    volumePercentagePlayer.textContent = Math.round(currentVolume * 100) + '%';
-                }
-                
-                updateVolumeIcon(currentVolume);
-                console.log(`▶️ Playing: ${artistName}`);
-            }
-        });
-        
-        currentAudio.addEventListener('pause', () => {
-            if (currentPlayingCard) {
-                const playIcon = currentPlayingCard.querySelector('.artist-overlay i');
-                const overlay = currentPlayingCard.querySelector('.artist-overlay');
-                
-                playIcon.className = 'fas fa-play';
-                overlay.classList.remove('playing');
-                currentPlayingCard.classList.remove('playing');
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            }
-        });
-        
-        currentAudio.addEventListener('ended', () => {
-            if (currentPlayingCard) {
-                const playIcon = currentPlayingCard.querySelector('.artist-overlay i');
-                const overlay = currentPlayingCard.querySelector('.artist-overlay');
-                const artistName = currentPlayingCard.querySelector('h5').textContent;
-                
-                playIcon.className = 'fas fa-play';
-                overlay.classList.remove('playing');
-                currentPlayingCard.classList.remove('playing');
-                
-                // Auto-play next song if available
-                if (currentArtistIndex < artistsData.length - 1) {
-                    currentArtistIndex++;
-                    const nextArtist = artistsData[currentArtistIndex];
-                    setTimeout(() => {
-                        loadNewTrack(nextArtist.audioSrc, nextArtist.name, nextArtist.imageSrc);
-                    }, 1000);
-                } else {
-                    // Hide interfaces when playlist ends
-                    musicSection.classList.remove('has-playing');
-                    hideMusicPlayer();
-                    currentAudio = null;
-                    currentPlayingCard = null;
-                    currentArtistIndex = -1;
-                }
-                
-                console.log(`🏁 Finished: ${artistName}`);
-            }
-        });
-        
-        currentAudio.addEventListener('timeupdate', updateProgressBar);
-        
-        currentAudio.addEventListener('error', (e) => {
-            if (currentPlayingCard) {
-                const playIcon = currentPlayingCard.querySelector('.artist-overlay i');
-                const artistName = currentPlayingCard.querySelector('h5').textContent;
-                
-                console.log(`❌ Audio error for ${artistName}:`, e);
-                playIcon.className = 'fas fa-exclamation-triangle';
-                setTimeout(() => {
-                    playIcon.className = 'fas fa-play';
-                }, 2000);
-            }
-        });
-    }
-    
-    console.log(`🎶 Audio player initialized for ${artistCards.length} artists`);
+/* Apply animations to elements */
+.home-text {
+    animation: slideInLeft 1s ease-out;
 }
 
-console.log('🎮 League of Legends Portfolio loaded successfully!');
-console.log('✨ Comprehensive scroll-to-top system activated!');
-console.log('🔄 Page will always start at top when switching tabs!');
+.home-image {
+    animation: slideInRight 1s ease-out;
+}
+
+/* Contact Section Animations */
+.contact-info {
+    opacity: 1; /* Default visible, animation will override if needed */
+    transform: translateX(0);
+    transition: all 0.8s ease-out;
+}
+
+.contact-form {
+    opacity: 1; /* Default visible, animation will override if needed */
+    transform: translateX(0);
+    transition: all 0.8s ease-out;
+}
+
+/* Animation states - only applied via JavaScript */
+.contact-info.preparing-animation {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.contact-form.preparing-animation {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.contact-info.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.contact-form.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Individual contact items staggered animation */
+.contact-item {
+    opacity: 1; /* Default visible */
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
+}
+
+.contact-item.preparing-animation {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.contact-item.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Form elements animation */
+.form-group {
+    opacity: 1; /* Default visible */
+    transform: translateY(0);
+    transition: all 0.5s ease-out;
+}
+
+.form-group.preparing-animation {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.form-group.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Submit button animation */
+#contact .btn {
+    opacity: 1; /* Default visible */
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
+}
+
+#contact .btn.preparing-animation {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#contact .btn.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.service-card,
+.project-card,
+.stat-card,
+.education-item {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--lol-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-gold);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-gold-blue);
+}
+
+/* ===== CHAT WIDGET ===== */
+.chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 280px;
+    background: var(--lol-dark);
+    border: 2px solid var(--lol-gold);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    z-index: 1000;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.chat-header {
+    background: var(--gradient-gold);
+    color: var(--lol-dark);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.chat-controls { /* New container for buttons */
+    display: flex;
+    gap: 0.5rem;
+}
+
+.chat-minimize { /* Combined styles for both buttons */
+    background: none;
+    border: none;
+    color: var(--lol-dark);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.25rem; /* Added padding */
+    border-radius: 4px; /* Added border-radius */
+}
+
+.chat-minimize:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.1); /* Added hover background */
+}
+
+.chat-body {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    background: var(--lol-darker);
+}
+
+.message {
+    margin-bottom: 1rem;
+    display: flex;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.bot-message {
+    justify-content: flex-start;
+}
+
+.message-content {
+    max-width: 85%;
+    padding: 0.75rem 1rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.user-message .message-content {
+    background: var(--lol-blue);
+    color: var(--lol-white);
+    border-bottom-right-radius: 5px;
+}
+
+.bot-message .message-content {
+    background: var(--lol-gray);
+    color: var(--lol-text-primary);
+    border-bottom-left-radius: 5px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 1rem;
+    background: var(--lol-dark);
+    border-top: 1px solid var(--lol-gray);
+    gap: 0.5rem;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 0.75rem;
+    background: var(--lol-darker);
+    border: 1px solid var(--lol-gray);
+    border-radius: 8px;
+    color: var(--lol-text-primary);
+    font-family: var(--font-body);
+}
+
+.chat-input input:focus {
+    outline: none;
+    border-color: var(--lol-gold);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.chat-input button {
+    background: var(--gradient-gold);
+    border: none;
+    color: var(--lol-dark);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.chat-input button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+/* Chat widget collapsed state */
+.chat-widget.collapsed .chat-body {
+    display: none;
+}
+
+.chat-widget.collapsed {
+    width: auto;
+    height: auto;
+}
+
+.chat-widget.collapsed .chat-header {
+    padding: 0.75rem 1rem;
+}
+
+/* Chat widget minimized state */
+.chat-widget.minimized {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.chat-widget.minimized .chat-header {
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.chat-widget.minimized .chat-header span {
+    display: none;
+}
+
+.chat-widget.minimized .chat-controls {
+    display: none;
+}
+
+.chat-widget.minimized .chat-header::after {
+    content: '\f075'; /* FontAwesome chat icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--lol-dark);
+}
+
+.chat-widget.minimized .chat-body {
+    display: none;
+}
+
+/* Hover effect for minimized widget */
+.chat-widget.minimized:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+}
+
+/* Typing indicator */
+.typing-indicator .message-content {
+    background: var(--lol-gray);
+    color: var(--lol-text-primary);
+    border-bottom-left-radius: 5px;
+}
+
+.typing-dots {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.typing-dots span {
+    width: 6px;
+    height: 6px;
+    background: var(--lol-text-secondary);
+    border-radius: 50%;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+.typing-dots span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes typing {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Missing Ping Effect */
+.missing-ping {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+}
+
+/* ===== DYNAMIC BACKGROUND ELEMENTS ===== */
+
+/* Animated Background Container */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    /* Prevent interference with scrolling */
+    pointer-events: none;
+}
+
+/* League of Legends Ability Particles */
+.ability-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: abilityFloat 15s infinite linear;
+    pointer-events: none;
+    box-shadow: 0 0 10px var(--lol-gold);
+}
+
+.ability-particle:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 20s; }
+.ability-particle:nth-child(2) { left: 15%; animation-delay: 3s; animation-duration: 25s; }
+.ability-particle:nth-child(3) { left: 25%; animation-delay: 6s; animation-duration: 18s; }
+.ability-particle:nth-child(4) { left: 35%; animation-delay: 9s; animation-duration: 22s; }
+.ability-particle:nth-child(5) { left: 45%; animation-delay: 12s; animation-duration: 28s; }
+.ability-particle:nth-child(6) { left: 55%; animation-delay: 15s; animation-duration: 24s; }
+.ability-particle:nth-child(7) { left: 65%; animation-delay: 18s; animation-duration: 26s; }
+.ability-particle:nth-child(8) { left: 75%; animation-delay: 21s; animation-duration: 19s; }
+.ability-particle:nth-child(9) { left: 85%; animation-delay: 24s; animation-duration: 30s; }
+.ability-particle:nth-child(10) { left: 95%; animation-delay: 27s; animation-duration: 23s; }
+
+/* Blue Ability Particles */
+.ability-particle.blue {
+    background: var(--lol-blue);
+    box-shadow: 0 0 10px var(--lol-blue);
+}
+
+.ability-particle.blue:nth-child(11) { left: 10%; animation-delay: 2s; animation-duration: 21s; }
+.ability-particle.blue:nth-child(12) { left: 20%; animation-delay: 5s; animation-duration: 27s; }
+.ability-particle.blue:nth-child(13) { left: 30%; animation-delay: 8s; animation-duration: 24s; }
+.ability-particle.blue:nth-child(14) { left: 40%; animation-delay: 11s; animation-duration: 29s; }
+.ability-particle.blue:nth-child(15) { left: 50%; animation-delay: 14s; animation-duration: 26s; }
+.ability-particle.blue:nth-child(16) { left: 60%; animation-delay: 17s; animation-duration: 22s; }
+.ability-particle.blue:nth-child(17) { left: 70%; animation-delay: 20s; animation-duration: 25s; }
+.ability-particle.blue:nth-child(18) { left: 80%; animation-delay: 23s; animation-duration: 28s; }
+.ability-particle.blue:nth-child(19) { left: 90%; animation-delay: 26s; animation-duration: 20s; }
+.ability-particle.blue:nth-child(20) { left: 3%; animation-delay: 29s; animation-duration: 31s; }
+
+/* Champion Silhouettes */
+.champion-silhouette {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    background: linear-gradient(180deg, transparent 0%, var(--lol-gold) 50%, transparent 100%);
+    opacity: 0.1;
+    animation: championWalk 40s infinite linear;
+    pointer-events: none;
+}
+
+.champion-silhouette::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, var(--lol-gold) 30%, var(--lol-gold) 70%, transparent 100%);
+    clip-path: polygon(20% 0%, 80% 0%, 60% 100%, 40% 100%);
+}
+
+.champion-silhouette:nth-child(21) { left: -100px; animation-delay: 0s; }
+.champion-silhouette:nth-child(22) { left: -100px; animation-delay: 20s; }
+.champion-silhouette:nth-child(23) { left: -100px; animation-delay: 40s; }
+
+/* Ability Effect Rings */
+.ability-ring {
+    position: absolute;
+    border: 2px solid var(--lol-gold);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: abilityExpand 8s infinite ease-out;
+    pointer-events: none;
+}
+
+.ability-ring:nth-child(24) {
+    width: 100px;
+    height: 100px;
+    left: 20%;
+    top: 30%;
+    animation-delay: 0s;
+}
+
+.ability-ring:nth-child(25) {
+    width: 150px;
+    height: 150px;
+    left: 70%;
+    top: 60%;
+    animation-delay: 4s;
+}
+
+.ability-ring:nth-child(26) {
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    top: 20%;
+    animation-delay: 8s;
+}
+
+/* Blue Ability Rings */
+.ability-ring.blue {
+    border-color: var(--lol-blue);
+}
+
+.ability-ring.blue:nth-child(27) {
+    width: 120px;
+    height: 120px;
+    left: 10%;
+    top: 70%;
+    animation-delay: 2s;
+}
+
+.ability-ring.blue:nth-child(28) {
+    width: 90px;
+    height: 90px;
+    left: 80%;
+    top: 10%;
+    animation-delay: 6s;
+}
+
+/* Summoner's Rift Terrain */
+.terrain-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--lol-gold), transparent);
+    opacity: 0.15;
+    animation: terrainGlow 10s infinite ease-in-out;
+}
+
+.terrain-line.horizontal {
+    width: 100%;
+    height: 2px;
+    top: 0;
+}
+
+.terrain-line.vertical {
+    width: 2px;
+    height: 100%;
+    left: 0;
+}
+
+.terrain-line:nth-child(29) { top: 25%; animation-delay: 0s; }
+.terrain-line:nth-child(30) { top: 50%; animation-delay: 2s; }
+.terrain-line:nth-child(31) { top: 75%; animation-delay: 4s; }
+.terrain-line:nth-child(32) { left: 25%; animation-delay: 1s; }
+.terrain-line:nth-child(33) { left: 50%; animation-delay: 3s; }
+.terrain-line:nth-child(34) { left: 75%; animation-delay: 5s; }
+
+/* Animated Gradient Background */
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(10, 200, 185, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    animation: summonerRift 20s infinite ease-in-out;
+    pointer-events: none;
+}
+
+/* ===== LEAGUE OF LEGENDS ANIMATIONS ===== */
+
+@keyframes abilityFloat {
+    0% {
+        transform: translateY(100vh) translateX(0px) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateY(90vh) translateX(20px) scale(1);
+    }
+    90% {
+        opacity: 0.8;
+        transform: translateY(10vh) translateX(-20px) scale(1);
+    }
+    100% {
+        transform: translateY(-100px) translateX(0px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes championWalk {
+    0% {
+        transform: translateX(-100px) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.1;
+        transform: translateX(0px) scale(1);
+    }
+    90% {
+        opacity: 0.1;
+        transform: translateX(calc(100vw - 100px)) scale(1);
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px)) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes abilityExpand {
+    0% {
+        transform: scale(0);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes terrainGlow {
+    0%, 100% {
+        opacity: 0.15;
+        transform: scaleX(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scaleX(1.1);
+    }
+}
+
+@keyframes summonerRift {
+    0%, 100% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+}
+
+/* ===== RESPONSIVE BACKGROUND ===== */
+@media (max-width: 768px) {
+    .ability-particle {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .champion-silhouette {
+        width: 60px;
+        height: 90px;
+    }
+    
+    .ability-ring {
+        transform: scale(0.7);
+    }
+}
+
+@media (max-width: 480px) {
+    .ability-particle {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .champion-silhouette {
+        width: 40px;
+        height: 60px;
+    }
+    
+    .ability-ring {
+        transform: scale(0.5);
+    }
+}
+
+/* ===== UNIVERSITY LOGO STYLING ===== */
+.university-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+    background: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.education-icon {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Hide gold background when university logo is present */
+.education-icon:has(.university-logo) {
+    background: none !important;
+}
+
+/* Specific targeting for all education logo containers */
+.education-item:nth-child(1) .education-icon,
+.education-item:nth-child(2) .education-icon,
+.education-item:nth-child(3) .education-icon {
+    background: transparent !important;
+}
+
+/* Keep font icon styling for any remaining font icons */
+.education-icon i {
+    font-size: 1.5rem;
+    color: var(--lol-dark);
+    position: relative;
+    z-index: 2;
+}
