@@ -119,11 +119,16 @@ body {
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     height: 100%;
     /* Fix mobile scrolling */
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
+    /* Ensure scroll position starts at top */
+    scroll-snap-type: none;
+    /* Remove any scroll padding that might offset the position */
+    scroll-padding: 0;
+    scroll-margin: 0;
 }
 
 body {
@@ -304,8 +309,12 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== MAIN CONTENT ===== */
 .main-content {
     margin-top: 80px;
-    scroll-behavior: smooth;
-    scroll-padding-top: 0;
+    scroll-behavior: auto;
+    /* Remove scroll padding that might interfere with absolute positioning */
+    scroll-padding: 0;
+    scroll-margin: 0;
+    /* Ensure content has proper background */
+    position: relative;
 }
 
 .section {
@@ -318,6 +327,9 @@ h1, h2, h3, h4, h5, h6 {
     /* Ensure proper scrolling */
     position: relative;
     overflow: visible;
+    /* Force scroll position reset */
+    scroll-padding: 0;
+    scroll-margin: 0;
 }
 
 .section.active {
@@ -680,7 +692,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-title {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: var(--lol-gold);
+    color: var(--lol-white);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     font-weight: 600;
     letter-spacing: 1px;
@@ -755,6 +767,440 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2rem;
     color: var(--lol-white);
     margin-bottom: 0.5rem;
+}
+
+/* Red heart for My Interests hub */
+.hub-icon .fa-heart {
+    color: #e74c3c; /* Red heart */
+}
+
+/* ===== AUDIO PLAYER STYLES ===== */
+.artist-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.artist-card.playing {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(233, 30, 99, 0.4);
+}
+
+.artist-profile {
+    position: relative;
+    overflow: hidden;
+}
+
+.artist-image {
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.artist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.artist-card:hover .artist-overlay {
+    opacity: 1;
+}
+
+.artist-overlay.playing {
+    opacity: 1;
+    background: rgba(233, 30, 99, 0.8);
+}
+
+.artist-overlay i {
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.artist-overlay.playing i {
+    animation: pulse 1.5s infinite;
+    color: #fff;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Spinning artist image when playing */
+.artist-card.playing .artist-image {
+    animation: spin 3s linear infinite;
+    transform-origin: center;
+}
+
+/* ===== MASTER VOLUME CONTROL ===== */
+.master-volume-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 16px;
+    border-radius: 25px;
+    border: 1px solid rgba(233, 30, 99, 0.3);
+}
+
+/* Show volume control when any music is playing */
+.interest-section[data-category="music"].has-playing .master-volume-control {
+    opacity: 1;
+    visibility: visible;
+}
+
+.volume-icon {
+    color: var(--lol-white);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.volume-slider {
+    width: 120px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    background: var(--lol-gold-light);
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-moz-range-thumb:hover {
+    background: var(--lol-gold-light);
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.volume-percentage {
+    color: var(--lol-white);
+    font-size: 0.85rem;
+    font-weight: 500;
+    min-width: 35px;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ===== SPOTIFY-STYLE MUSIC PLAYER ===== */
+.music-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-top: 2px solid var(--lol-gold);
+    z-index: 10000;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.music-player.active {
+    transform: translateY(0);
+}
+
+.music-player-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Track Info */
+.track-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.track-image {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.album-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.track-details {
+    min-width: 0;
+    flex: 1;
+}
+
+.track-title {
+    color: var(--lol-white);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    color: #b3b3b3;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Player Controls */
+.player-controls {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-width: 500px;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--lol-white);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    color: var(--lol-gold);
+    transform: scale(1.1);
+}
+
+.prev-btn, .next-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+}
+
+.play-pause-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+    background: var(--lol-white);
+    color: var(--lol-dark);
+}
+
+.play-pause-btn:hover {
+    background: var(--lol-gold);
+    transform: scale(1.05);
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.time-current,
+.time-total {
+    color: #b3b3b3;
+    font-size: 0.75rem;
+    min-width: 40px;
+    text-align: center;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #404040;
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--lol-gold);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+.progress-bar:hover .progress-fill {
+    background: var(--lol-gold-light);
+}
+
+/* Volume Controls */
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.volume-icon-player {
+    color: var(--lol-white);
+    font-size: 0.9rem;
+    min-width: 16px;
+}
+
+.volume-slider-player {
+    width: 100px;
+    height: 4px;
+    background: #404040;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.volume-slider-player::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--lol-gold);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.volume-slider-player::-webkit-slider-thumb:hover {
+    background: var(--lol-gold-light);
+    transform: scale(1.2);
+}
+
+.volume-percentage-player {
+    color: #b3b3b3;
+    font-size: 0.75rem;
+    min-width: 35px;
+    text-align: center;
+}
+
+.close-player-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    margin-left: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .music-player-content {
+        padding: 0 12px;
+    }
+    
+    .track-info {
+        flex: 0 0 auto;
+        max-width: 120px;
+    }
+    
+    .track-details {
+        display: none;
+    }
+    
+    .volume-container {
+        flex: 0 0 auto;
+    }
+    
+    .volume-slider-player {
+        width: 60px;
+    }
+    
+    .volume-percentage-player {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .music-player {
+        height: 80px;
+    }
+    
+    .track-image {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .control-buttons {
+        gap: 12px;
+    }
+    
+    .play-pause-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .prev-btn, .next-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
 }
 
 .hub-center h3 {
@@ -845,6 +1291,14 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
 }
 
+.interest-satellite:hover {
+    transform: scale(1.02);
+}
+
+.interest-satellite:active {
+    transform: scale(0.98);
+}
+
 .interests-orbit.expanded .interest-satellite {
     opacity: 1;
     transform: scale(1) translateX(-50%);
@@ -896,29 +1350,78 @@ h1, h2, h3, h4, h5, h6 {
     transform: scale(1) translateX(-50%);
 }
 
+.interests-orbit.expanded .interest-satellite:nth-child(1):hover {
+    transform: scale(1.02) translateX(-50%);
+}
+
 .interests-orbit.expanded .interest-satellite:nth-child(2) {
     transform: scale(1) translateX(50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(2):hover {
+    transform: scale(1.02) translateX(50%);
 }
 
 .interests-orbit.expanded .interest-satellite:nth-child(3) {
     transform: scale(1) translateX(50%);
 }
 
+.interests-orbit.expanded .interest-satellite:nth-child(3):hover {
+    transform: scale(1.02) translateX(50%);
+}
+
 .interests-orbit.expanded .interest-satellite:nth-child(4) {
     transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(4):hover {
+    transform: scale(1.02) translateX(-50%);
 }
 
 .interests-orbit.expanded .interest-satellite:nth-child(5) {
     transform: scale(1) translateX(-50%);
 }
 
+.interests-orbit.expanded .interest-satellite:nth-child(5):hover {
+    transform: scale(1.02) translateX(-50%);
+}
+
 .interests-orbit.expanded .interest-satellite:nth-child(6) {
     transform: scale(1) translateX(-50%);
+}
+
+.interests-orbit.expanded .interest-satellite:nth-child(6):hover {
+    transform: scale(1.02) translateX(-50%);
 }
 
 .satellite-icon {
     font-size: 1.5rem;
     color: var(--lol-white);
+}
+
+/* Satellite-specific colors to match section headers */
+.interest-satellite[data-category="tv"] .satellite-icon i {
+    color: #4a90e2; /* Blue for TV */
+}
+
+.interest-satellite[data-category="travel"] .satellite-icon i {
+    color: #27ae60; /* Green for Travel */
+}
+
+.interest-satellite[data-category="games"] .satellite-icon i {
+    color: #9b59b6; /* Purple for Gaming */
+}
+
+.interest-satellite[data-category="sports"] .satellite-icon i {
+    color: #27ae60; /* Green for Sports */
+}
+
+.interest-satellite[data-category="anime"] .satellite-icon i {
+    color: #f39c12; /* Orange for Anime */
+}
+
+.interest-satellite[data-category="music"] .satellite-icon i {
+    color: #e91e63; /* Pink for Music */
 }
 
 .satellite-tooltip {
@@ -1013,10 +1516,20 @@ h1, h2, h3, h4, h5, h6 {
 .interest-section .section-header {
     text-align: center;
     margin-bottom: 2rem;
+    scroll-margin-top: 100px;
+    padding-top: 1rem;
+}
+
+.interest-section .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    position: relative;
 }
 
 .interest-section .section-header h4 {
-    color: var(--lol-gold);
+    color: var(--lol-white);
     font-size: 2rem;
     margin: 0;
     display: flex;
@@ -1026,7 +1539,85 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .interest-section .section-header i {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    color: var(--lol-gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    transform-origin: center;
+}
+
+.interest-section .section-header:hover i {
+    transform: scale(1.2) rotate(10deg);
+    color: var(--lol-gold-light);
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+}
+
+/* Category-specific icon styling */
+.interest-section[data-category="tv"] .section-header i {
+    color: #4a90e2; /* Blue for TV */
+}
+
+.interest-section[data-category="travel"] .section-header i {
+    color: #27ae60; /* Green for Travel */
+}
+
+.interest-section[data-category="games"] .section-header i {
+    color: #9b59b6; /* Purple for Gaming */
+}
+
+.interest-section[data-category="sports"] .section-header i {
+    color: #27ae60; /* Green for Sports */
+}
+
+.interest-section[data-category="anime"] .section-header i {
+    color: #f39c12; /* Orange for Anime dragon */
+}
+
+.interest-section[data-category="music"] .section-header i {
+    color: #e91e63; /* Pink for Music */
+}
+
+/* Specific volleyball icon styling */
+.fa-volleyball-ball {
+    color: #f1c40f !important; /* Yellow for volleyball */
+}
+
+.fa-volleyball-ball:hover {
+    color: #f7dc6f !important; /* Lighter yellow on hover */
+    text-shadow: 0 0 15px rgba(241, 196, 15, 0.8) !important;
+}
+
+/* Enhanced hover effects for each category */
+.interest-section[data-category="tv"] .section-header:hover i {
+    color: #5ba3f5;
+    text-shadow: 0 0 15px rgba(74, 144, 226, 0.8);
+}
+
+.interest-section[data-category="travel"] .section-header:hover i {
+    color: #36c26e;
+    text-shadow: 0 0 15px rgba(39, 174, 96, 0.8);
+}
+
+.interest-section[data-category="games"] .section-header:hover i {
+    color: #b569d1;
+    text-shadow: 0 0 15px rgba(155, 89, 182, 0.8);
+}
+
+.interest-section[data-category="sports"] .section-header:hover i {
+    color: #36c26e;
+    text-shadow: 0 0 15px rgba(39, 174, 96, 0.8);
+}
+
+.interest-section[data-category="anime"] .section-header:hover i {
+    color: #ffb84d;
+    text-shadow: 0 0 15px rgba(243, 156, 18, 0.8);
+}
+
+.interest-section[data-category="music"] .section-header:hover i {
+    color: #ff4081;
+    text-shadow: 0 0 15px rgba(233, 30, 99, 0.8);
 }
 
 .content-grid {
@@ -1041,9 +1632,19 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: none; /* Start with no transition */
     position: relative;
     overflow: hidden;
+    /* Start in normal visible state for Show All */
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+    will-change: opacity, transform;
+}
+
+.content-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    border-color: var(--lol-gold);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
 }
 
 .content-card::before {
@@ -1277,6 +1878,11 @@ h1, h2, h3, h4, h5, h6 {
     
     .interest-section .section-header h4 {
         font-size: 1.5rem;
+    }
+    
+    .interest-section .section-header i {
+        font-size: 1.8rem;
+        margin-right: 0.8rem;
     }
     
     .satellite-tooltip {
@@ -1791,29 +2397,45 @@ h1, h2, h3, h4, h5, h6 {
 .scroll-top {
     position: fixed;
     bottom: 2rem;
-    left: 2rem;
-    width: 50px;
-    height: 50px;
+    left: 2rem;  /* Changed from right to left */
+    width: 60px;
+    height: 60px;
     background: var(--gradient-gold);
-    border: none;
+    border: 2px solid var(--lol-gold-light);
     border-radius: 50%;
     color: var(--lol-dark);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     cursor: pointer;
     transition: all 0.3s ease;
     opacity: 0;
     visibility: hidden;
-    z-index: 1000;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
 }
 
 .scroll-top.visible {
     opacity: 1;
     visibility: visible;
+    animation: scrollTopPulse 2s infinite;  /* Added pulse animation to draw attention */
 }
 
 .scroll-top:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-gold);
+    transform: translateY(-5px) scale(1.1);  /* Enhanced hover effect */
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.8);
+    background: var(--lol-gold-light);
+}
+
+/* Pulse animation for scroll to top button */
+@keyframes scrollTopPulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(212, 175, 55, 0.7);
+    }
 }
 
 
@@ -1860,12 +2482,12 @@ h1, h2, h3, h4, h5, h6 {
     /* Fix mobile scrolling */
     html, body {
         -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
     }
     
     .main-content {
         margin-top: 80px;
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
         scroll-padding-top: 80px;
     }
     
@@ -2044,6 +2666,11 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.3rem;
     }
     
+    .interest-section .section-header i {
+        font-size: 1.6rem;
+        margin-right: 0.6rem;
+    }
+    
     .satellite-tooltip {
         display: none;
     }
@@ -2108,12 +2735,12 @@ h1, h2, h3, h4, h5, h6 {
     /* Fix mobile scrolling */
     html, body {
         -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
     }
     
     .main-content {
         margin-top: 80px;
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
         scroll-padding-top: 80px;
     }
     
@@ -2243,6 +2870,11 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.1rem;
     }
     
+    .interest-section .section-header i {
+        font-size: 1.4rem;
+        margin-right: 0.5rem;
+    }
+    
     .artist-profile {
         width: 70px;
         height: 70px;
@@ -2330,9 +2962,95 @@ h1, h2, h3, h4, h5, h6 {
     animation: slideInRight 1s ease-out;
 }
 
+/* Contact Section Animations */
+.contact-info {
+    opacity: 1; /* Default visible, animation will override if needed */
+    transform: translateX(0);
+    transition: all 0.8s ease-out;
+}
+
+.contact-form {
+    opacity: 1; /* Default visible, animation will override if needed */
+    transform: translateX(0);
+    transition: all 0.8s ease-out;
+}
+
+/* Animation states - only applied via JavaScript */
+.contact-info.preparing-animation {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.contact-form.preparing-animation {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.contact-info.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.contact-form.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Individual contact items staggered animation */
+.contact-item {
+    opacity: 1; /* Default visible */
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
+}
+
+.contact-item.preparing-animation {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.contact-item.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Form elements animation */
+.form-group {
+    opacity: 1; /* Default visible */
+    transform: translateY(0);
+    transition: all 0.5s ease-out;
+}
+
+.form-group.preparing-animation {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.form-group.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Submit button animation */
+#contact .btn {
+    opacity: 1; /* Default visible */
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
+}
+
+#contact .btn.preparing-animation {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#contact .btn.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .service-card,
 .project-card,
-.stat-card {
+.stat-card,
+.education-item {
     animation: fadeInUp 0.6s ease-out;
 }
 
@@ -2883,4 +3601,45 @@ h1, h2, h3, h4, h5, h6 {
     .ability-ring {
         transform: scale(0.5);
     }
+}
+
+/* ===== UNIVERSITY LOGO STYLING ===== */
+.university-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+    background: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.education-icon {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Hide gold background when university logo is present */
+.education-icon:has(.university-logo) {
+    background: none !important;
+}
+
+/* Specific targeting for all education logo containers */
+.education-item:nth-child(1) .education-icon,
+.education-item:nth-child(2) .education-icon,
+.education-item:nth-child(3) .education-icon {
+    background: transparent !important;
+}
+
+/* Keep font icon styling for any remaining font icons */
+.education-icon i {
+    font-size: 1.5rem;
+    color: var(--lol-dark);
+    position: relative;
+    z-index: 2;
 }
