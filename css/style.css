@@ -3309,6 +3309,9 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 15000;
     transform: translate(-50%, -50%);
     object-fit: contain;
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
 /* ===== DYNAMIC BACKGROUND ELEMENTS ===== */
