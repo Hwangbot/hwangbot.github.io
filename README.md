@@ -2,7 +2,7 @@
 
 A modern, responsive personal portfolio website showcasing professional experience, projects, and skills.
 
-## 🚀 Features
+## Features
 
 ### Responsive Design
 
@@ -25,7 +25,7 @@ A modern, responsive personal portfolio website showcasing professional experien
 - **Form Validation**: Client-side validation for contact form
 - **Cross-Browser**: Compatible with all modern browsers
 
-## 📱 Mobile Improvements
+## Mobile Improvements
 
 ### Navigation
 
@@ -48,7 +48,7 @@ A modern, responsive personal portfolio website showcasing professional experien
 - Better form input handling
 - Enhanced hover states
 
-## 🛠 Technical Improvements
+## Technical Improvements
 
 ### CSS Enhancements
 
@@ -76,7 +76,7 @@ A modern, responsive personal portfolio website showcasing professional experien
 - Smooth scrolling behavior
 - Reduced layout shifts
 
-## 📁 File Structure
+## File Structure
 
 ```
 hwangbot.github.io/
@@ -91,7 +91,7 @@ hwangbot.github.io/
 └── README.md             # This file
 ```
 
-## 🎨 Design System
+## Design System
 
 ### Colors
 
@@ -107,21 +107,21 @@ hwangbot.github.io/
 - **Body**: Noto Sans (sans-serif)
 - **Responsive sizing** for all screen sizes
 
-## 📱 Responsive Breakpoints
+## Responsive Breakpoints
 
 - **Desktop**: 1200px and above
 - **Tablet**: 768px - 1199px
 - **Mobile**: 480px - 767px
 - **Small Mobile**: Below 480px
 
-## 🚀 Getting Started
+## Getting Started
 
 1. Clone or download the repository
 2. Open `index.html` in a web browser
 3. Test on different devices and screen sizes
 4. Customize content and styling as needed
 
-## 🔧 Customization
+## Customization
 
 ### Adding New Sections
 
@@ -151,22 +151,22 @@ Use the existing animation classes or create new ones:
 }
 ```
 
-## 🌟 Recent Updates
+## Recent Updates
 
-- ✅ Enhanced mobile responsiveness
-- ✅ Improved navigation system
-- ✅ Better touch interactions
-- ✅ Enhanced visual effects
-- ✅ Accessibility improvements
-- ✅ Performance optimizations
-- ✅ Cross-browser compatibility
-- ✅ Form validation
-- ✅ Smooth animations
+- Enhanced mobile responsiveness
+- Improved navigation system
+- Better touch interactions
+- Enhanced visual effects
+- Accessibility improvements
+- Performance optimizations
+- Cross-browser compatibility
+- Form validation
+- Smooth animations
 
-## 📞 Contact
+## Contact
 
 For questions or suggestions about the website, please reach out through the contact form on the website or directly via email.
 
 ---
 
-_Built with modern web technologies and optimized for the best user experience across all devices._
+Built with modern web technologies and optimized for the best user experience across all devices.
