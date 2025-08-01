@@ -2396,7 +2396,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== SCROLL TO TOP ===== */
 .scroll-top {
     position: fixed;
-    bottom: 2rem;
+    bottom: 20px;
     left: 2rem;  /* Changed from right to left */
     width: 60px;
     height: 60px;
@@ -2409,7 +2409,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.3s ease;
     opacity: 0;
     visibility: hidden;
-    z-index: 10000;
+    z-index: 15000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3082,7 +3082,7 @@ h1, h2, h3, h4, h5, h6 {
     border: 2px solid var(--lol-gold);
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-    z-index: 1000;
+    z-index: 15000;
     overflow: hidden;
     transition: all 0.3s ease;
 }
@@ -3306,7 +3306,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100px;
     height: 100px;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 15000;
     transform: translate(-50%, -50%);
     object-fit: contain;
 }

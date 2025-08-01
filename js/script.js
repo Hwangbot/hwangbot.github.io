@@ -1524,7 +1524,7 @@ function initAudioPlayer() {
     
     let currentAudio = null;
     let currentPlayingCard = null;
-    let currentVolume = 0.15; // Store current volume (default 15%)
+    let currentVolume = 0.10; // Store current volume (default 10%)
     
     // Get all artist cards with audio
     const artistCards = document.querySelectorAll('.artist-card[data-audio]');
