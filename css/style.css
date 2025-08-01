@@ -2414,6 +2414,13 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+    /* Mobile touch improvements */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .scroll-top.visible {
@@ -2489,6 +2496,18 @@ h1, h2, h3, h4, h5, h6 {
         margin-top: 80px;
         scroll-behavior: auto;
         scroll-padding-top: 80px;
+    }
+    
+    /* Mobile scroll-to-top button improvements */
+    .scroll-top {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        bottom: 15px;
+        left: 15px;
+        /* Ensure it's always clickable on mobile */
+        min-width: 44px;
+        min-height: 44px;
     }
     
     .nav-menu {
@@ -2742,6 +2761,15 @@ h1, h2, h3, h4, h5, h6 {
         margin-top: 80px;
         scroll-behavior: auto;
         scroll-padding-top: 80px;
+    }
+    
+    /* Small mobile scroll-to-top button */
+    .scroll-top {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+        bottom: 10px;
+        left: 10px;
     }
     
     .container {

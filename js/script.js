@@ -9,7 +9,7 @@ function forceScrollToTopComprehensive() {
     // Method 2: window.scrollTo with different approaches
     window.scrollTo(0, 0);
     
-    // Method 3: Try with options
+    // Method 3: Try with options (mobile-friendly)
     try {
         window.scrollTo({
             top: 0,
@@ -40,6 +40,25 @@ function forceScrollToTopComprehensive() {
             container.scrollTop = 0;
         }
     });
+    
+    // Method 6: Mobile-specific scrolling (iOS Safari)
+    if ('scrollTo' in window) {
+        try {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'auto'
+            });
+        } catch (e) {
+            // Silent fallback
+        }
+    }
+    
+    // Method 7: Force scroll after a brief delay for mobile
+    setTimeout(() => {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    }, 50);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1083,10 +1102,11 @@ function initScrollToTop() {
             observer.observe(section, { attributes: true, attributeFilter: ['class'] });
         });
         
-        scrollTopBtn.addEventListener('click', function(e) {
+        // Enhanced event handling for both desktop and mobile
+        function handleScrollToTop(e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('🔼 Scroll-to-top button clicked');
+            console.log('🔼 Scroll-to-top button activated');
             
             // Enhanced scroll to top with multiple fallback methods
             forceScrollToTopComprehensive();
@@ -1096,6 +1116,13 @@ function initScrollToTop() {
             setTimeout(() => {
                 this.style.transform = '';
             }, 150);
+        }
+        
+        // Add multiple event listeners for better mobile compatibility
+        scrollTopBtn.addEventListener('click', handleScrollToTop);
+        scrollTopBtn.addEventListener('touchend', handleScrollToTop);
+        scrollTopBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Prevent default touch behavior
         });
         
         // Test button visibility on page load
