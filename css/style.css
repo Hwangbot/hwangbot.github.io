@@ -3308,7 +3308,7 @@ h1, h2, h3, h4, h5, h6 {
     pointer-events: none;
     z-index: 15000;
     transform: translate(-50%, -50%);
-    object-fit: contain;
+    object-fit: cover;
     border: none;
     outline: none;
     box-shadow: none;
