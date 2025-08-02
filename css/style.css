@@ -749,7 +749,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: translate(-50%, -50%);
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
     border-radius: 50%;
     display: flex;
     flex-direction: column;
@@ -1287,7 +1287,7 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--lol-blue), var(--lol-dark-blue));
+    background: linear-gradient(135deg, var(--lol-blue), var(--lol-blue-dark));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1679,7 +1679,7 @@ h1, h2, h3, h4, h5, h6 {
 .card-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
     border-radius: 50%;
     display: flex;
     align-items: center;
