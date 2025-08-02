@@ -364,7 +364,7 @@ h1, h2, h3, h4, h5, h6 {
 .home-text h3 {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    color: var(--lol-gold);
+    color: var(--lol-white);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     font-weight: 600;
     letter-spacing: 1px;
@@ -415,303 +415,7 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
-/* ===== LOL PROFILE CARD ===== */
-.lol-profile-card {
-    background: linear-gradient(135deg, #1e2328, #0f1419);
-    background: -webkit-linear-gradient(135deg, #1e2328, #0f1419);
-    background: -moz-linear-gradient(135deg, #1e2328, #0f1419);
-    border: 3px solid var(--lol-gold);
-    border-radius: 25px;
-    -webkit-border-radius: 25px;
-    -moz-border-radius: 25px;
-    padding: 3rem 2rem;
-    text-align: center;
-    position: relative;
-    box-shadow: 
-        0 0 20px rgba(212, 175, 55, 0.3),
-        0 0 40px rgba(212, 175, 55, 0.1),
-        inset 0 0 20px rgba(212, 175, 55, 0.05);
-    -webkit-box-shadow: 
-        0 0 20px rgba(212, 175, 55, 0.3),
-        0 0 40px rgba(212, 175, 55, 0.1),
-        inset 0 0 20px rgba(212, 175, 55, 0.05);
-    -moz-box-shadow: 
-        0 0 20px rgba(212, 175, 55, 0.3),
-        0 0 40px rgba(212, 175, 55, 0.1),
-        inset 0 0 20px rgba(212, 175, 55, 0.05);
-    min-width: 300px;
-    max-width: 400px;
-    overflow: hidden;
-    /* Ensure consistent flex behavior */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.2rem; /* Reduced gap to bring Level 25 closer to Hwangbot */
-    /* Browser compatibility fixes */
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
 
-.lol-profile-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        var(--lol-gold) 20%, 
-        var(--lol-gold-light) 50%, 
-        var(--lol-gold) 80%, 
-        transparent 100%);
-    background: -webkit-linear-gradient(90deg, 
-        transparent 0%, 
-        var(--lol-gold) 20%, 
-        var(--lol-gold-light) 50%, 
-        var(--lol-gold) 80%, 
-        transparent 100%);
-    background: -moz-linear-gradient(90deg, 
-        transparent 0%, 
-        var(--lol-gold) 20%, 
-        var(--lol-gold-light) 50%, 
-        var(--lol-gold) 80%, 
-        transparent 100%);
-    border-radius: 25px 25px 0 0;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-    -webkit-box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-    -moz-box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-}
-
-.lol-profile-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 25px;
-    pointer-events: none;
-    background: linear-gradient(45deg, 
-        transparent 0%, 
-        rgba(212, 175, 55, 0.02) 25%, 
-        transparent 50%, 
-        rgba(212, 175, 55, 0.02) 75%, 
-        transparent 100%);
-    background: -webkit-linear-gradient(45deg, 
-        transparent 0%, 
-        rgba(212, 175, 55, 0.02) 25%, 
-        transparent 50%, 
-        rgba(212, 175, 55, 0.02) 75%, 
-        transparent 100%);
-    background: -moz-linear-gradient(45deg, 
-        transparent 0%, 
-        rgba(212, 175, 55, 0.02) 25%, 
-        transparent 50%, 
-        rgba(212, 175, 55, 0.02) 75%, 
-        transparent 100%);
-}
-
-.profile-portrait {
-    position: relative;
-    margin-bottom: 0.3rem; /* Reduced from 1.5rem to bring text closer to headshot */
-    /* Ensure consistent sizing */
-    width: 150px;
-    height: 150px;
-    margin-left: auto;
-    margin-right: auto;
-    /* Browser compatibility fixes */
-    background: transparent;
-    background-color: transparent;
-    background-image: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border: none;
-    outline: none;
-}
-
-.portrait-frame {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 0 auto;
-    border-radius: 50%;
-    padding: 10px;
-    background: transparent !important;
-    /* Browser compatibility fixes */
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    /* Ensure no inherited backgrounds */
-    background-color: transparent !important;
-    background-image: none !important;
-    /* Remove any potential box-shadows */
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    /* Ensure no borders */
-    border: none;
-    outline: none;
-    /* Force transparency in all browsers, especially Firefox */
-    -webkit-background-clip: border-box;
-    -moz-background-clip: border-box;
-    background-clip: border-box;
-    -webkit-background-origin: border-box;
-    -moz-background-origin: border-box;
-    background-origin: border-box;
-    -webkit-background-size: auto;
-    -moz-background-size: auto;
-    background-size: auto;
-}
-
-/* Additional browser compatibility fixes for portrait elements */
-.portrait-frame *,
-.profile-portrait *,
-.profile-image {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    -webkit-box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    -ms-box-shadow: none !important;
-    -o-box-shadow: none !important;
-    box-shadow: none !important;
-}
-
-/* Universal browser compatibility override */
-.lol-profile-card,
-.lol-profile-card *,
-.portrait-frame,
-.portrait-frame *,
-.profile-portrait,
-.profile-portrait *,
-.profile-image {
-    /* Force consistent rendering across all browsers */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    /* Ensure consistent box model */
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.profile-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid var(--lol-dark);
-    transition: transform 0.3s ease;
-    display: block;
-    background: transparent;
-    background-color: transparent;
-    background-image: none;
-    box-shadow: none;
-    outline: none;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    /* Remove redundant repeated rules */
-}
-
-.profile-title {
-    font-family: 'Beaufort for LOL', 'Times New Roman', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--lol-white);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 0.1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.5);
-    position: relative;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-
-
-
-
-
-
-.skill-slots {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-    /* Ensure consistent flex behavior */
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.skill-slot {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
-    background: var(--lol-darker);
-    border: 1px solid var(--lol-gray);
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    min-width: 80px;
-    min-height: 80px;
-    justify-content: center;
-    /* Ensure consistent sizing */
-    box-sizing: border-box;
-    flex-shrink: 0;
-}
-
-.skill-slot:hover {
-    border-color: var(--lol-gold);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-    -webkit-box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-    -moz-box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-    transform: translateY(-3px);
-    -webkit-transform: translateY(-3px);
-    -moz-transform: translateY(-3px);
-}
-
-.skill-slot i {
-    font-size: 1.5rem;
-    color: var(--lol-gold);
-    margin-bottom: 0.5rem;
-    /* Ensure consistent icon rendering */
-    display: block;
-    text-align: center;
-}
-
-.skill-slot span {
-    font-family: var(--font-secondary);
-    font-size: 0.8rem;
-    color: var(--lol-text-secondary);
-    text-transform: uppercase;
-    /* Ensure consistent text rendering */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    display: block;
-    transition: color 0.3s ease;
-}
-
-.skill-slot:hover span {
-    color: var(--lol-white);
-    text-shadow: 0 0 10px rgba(240, 230, 210, 0.8), 0 0 20px rgba(240, 230, 210, 0.4);
-}
 
 /* ===== BUTTONS ===== */
 .btn {
@@ -832,13 +536,13 @@ h1, h2, h3, h4, h5, h6 {
     transform: translate(-50%, -50%);
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-gold);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
@@ -846,7 +550,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hub-center:hover {
     transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
 }
 
 .hub-center.expanded {
@@ -1370,12 +1074,12 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--lol-blue), var(--lol-blue-dark));
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-blue);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     opacity: 0;
     transform: scale(0) translateX(-50%);
@@ -2667,211 +2371,70 @@ h1, h2, h3, h4, h5, h6 {
         align-items: center;
     }
     
-    /* Profile Card Mobile Responsive */
-    .lol-profile-card {
-        min-width: 280px;
-        max-width: 320px;
-        padding: 2rem 1.5rem;
-        border-radius: 20px;
-        /* Ensure consistent flex behavior across browsers */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-    }
-    
-    .portrait-frame {
-        width: 140px;
-        height: 140px;
-        padding: 8px;
-        background: transparent !important;
-        background-color: transparent !important;
-        background-image: none !important;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        border: none;
-        outline: none;
-    }
-    
-    .profile-title {
-        font-size: 1rem;
-        margin-bottom: 0.2rem;
-    }
-    
 
-    
-    .skill-slots {
-        gap: 0.75rem;
-        margin-top: 0.75rem;
-    }
-    
-    .skill-slot {
-        min-width: 70px;
-        min-height: 70px;
-        padding: 0.75rem;
-        /* Ensure consistent sizing across browsers */
-        box-sizing: border-box;
-        flex-shrink: 0;
-    }
-    
-    .skill-slot i {
-        font-size: 1.25rem;
-    }
-    
-    .skill-slot span {
-        font-size: 0.7rem;
-    }
     
     /* Home Content Mobile Layout */
     .home-content {
-        gap: 2rem;
-        padding: 1rem;
-    }
-    
-    .home-image {
-        order: -1;
-        margin-bottom: 1rem;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .home-text {
+        flex-direction: column;
         text-align: center;
-        padding: 0 1rem;
-    }
-    
-    /* About Page Mobile Responsive */
-    .about-content {
-        padding: 1rem;
         gap: 2rem;
     }
-    
-    .hobbies-hub {
-        width: 280px;
-        height: 280px;
-        margin: 1rem auto;
+
+    .home-text {
+        order: 1;
     }
 
-    .hub-center {
-        width: 100px;
-        height: 100px;
-    }
-
-    .interests-content {
-        margin-top: 40px;
-    }
-    
-    .hub-icon {
-        font-size: 1.25rem;
-    }
-    
-    .hub-center h3 {
-        font-size: 0.8rem;
-    }
-    
-    .show-all-btn {
-        margin-top: 2.5rem;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .show-all-button {
-        padding: 0.65rem 1.3rem;
-        font-size: 0.75rem;
-    }
-    
-    .interest-satellite {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .satellite-icon {
-        font-size: 1rem;
-    }
-    
-    .content-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 0 1rem;
-    }
-    
-    .content-card {
-        padding: 1rem;
-    }
-    
-    .interest-section .section-header h4 {
-        font-size: 1.3rem;
-    }
-    
-    .interest-section .section-header i {
-        font-size: 1.6rem;
-        margin-right: 0.6rem;
-    }
-    
-    .satellite-tooltip {
-        display: none;
-    }
-    
-    .interest-satellite {
-        cursor: pointer;
-    }
-    
-    .artist-profile {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .artist-overlay i {
-        font-size: 1.25rem;
-    }
-    
-    .artist-card h5 {
-        font-size: 1rem;
-    }
-    
-    .artist-card p {
-        font-size: 0.8rem;
-    }
-    
-    .card-image {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 0 1rem;
-    }
-    
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 0 1rem;
-    }
-    
-    .education-item {
-        padding: 1.5rem;
-        margin: 0 1rem;
-    }
-    
-    .education-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.25rem;
-    }
-    
-    .footer-content {
+    .home-buttons {
+        order: 2;
         flex-direction: column;
         gap: 1rem;
-        text-align: center;
     }
-    
-    /* Hide chat widget on mobile */
-    .chat-widget {
-        display: none !important;
+
+    /* Player Card Mobile Responsive */
+    .player-card-container {
+        order: 3;
+        margin-top: 1.5rem;
+        padding: 0 0.5rem;
+    }
+
+    .player-card {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        min-height: 400px;
+    }
+
+    .avatar-image {
+        width: 140px;
+        height: 140px;
+        border: 4px solid rgba(200, 190, 170, 0.4);
+        box-shadow: 0 0 20px rgba(200, 190, 170, 0.2);
+    }
+
+    .player-name {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .player-citizenship {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .player-skills {
+        gap: 1rem;
+    }
+
+    .skill-item {
+        min-width: 70px;
+        padding: 0.75rem;
+    }
+
+    .skill-item i {
+        font-size: 1.25rem;
+    }
+
+    .skill-item span {
+        font-size: 0.7rem;
     }
 }
 
@@ -2909,71 +2472,7 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 2rem;
     }
     
-    /* Profile Card Extra Small Screen Responsive */
-    .lol-profile-card {
-        min-width: 250px;
-        max-width: 280px;
-        padding: 1.5rem 1rem;
-        border-radius: 18px;
-        /* Ensure consistent flex behavior across browsers */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-    }
-    
-    .portrait-frame {
-        width: 120px;
-        height: 120px;
-        padding: 6px;
-        background: transparent !important;
-        background-color: transparent !important;
-        background-image: none !important;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        border: none;
-        outline: none;
-    }
-    
-    .profile-title {
-        font-size: 0.9rem;
-        margin-bottom: 0.2rem;
-        letter-spacing: 1px;
-    }
-    
 
-    
-    .skill-slots {
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-    }
-    
-    .skill-slot {
-        min-width: 60px;
-        min-height: 60px;
-        padding: 0.5rem;
-        /* Ensure consistent sizing across browsers */
-        box-sizing: border-box;
-        flex-shrink: 0;
-    }
-    
-    .skill-slot i {
-        font-size: 1rem;
-        margin-bottom: 0.25rem;
-    }
-    
-    .skill-slot span {
-        font-size: 0.6rem;
-    }
-    
-    .profile-image {
-        width: 100%;
-        height: auto;
-        max-width: 200px;
-        max-height: 200px;
-    }
     
     /* About Page Extra Small Screen Responsive */
     .about-content {
@@ -3614,47 +3113,7 @@ h1, h2, h3, h4, h5, h6 {
     animation-delay: 6s;
 }
 
-/* Summoner's Rift Terrain */
-.terrain-line {
-    position: absolute;
-    background: linear-gradient(90deg, transparent, var(--lol-gold), transparent);
-    opacity: 0.15;
-    animation: terrainGlow 10s infinite ease-in-out;
-}
 
-.terrain-line.horizontal {
-    width: 100%;
-    height: 2px;
-    top: 0;
-}
-
-.terrain-line.vertical {
-    width: 2px;
-    height: 100%;
-    left: 0;
-}
-
-.terrain-line:nth-child(29) { top: 25%; animation-delay: 0s; }
-.terrain-line:nth-child(30) { top: 50%; animation-delay: 2s; }
-.terrain-line:nth-child(31) { top: 75%; animation-delay: 4s; }
-.terrain-line:nth-child(32) { left: 25%; animation-delay: 1s; }
-.terrain-line:nth-child(33) { left: 50%; animation-delay: 3s; }
-.terrain-line:nth-child(34) { left: 75%; animation-delay: 5s; }
-
-/* Animated Gradient Background */
-.gradient-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 70% 80%, rgba(10, 200, 185, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
-    animation: summonerRift 20s infinite ease-in-out;
-    pointer-events: none;
-}
 
 /* ===== LEAGUE OF LEGENDS ANIMATIONS ===== */
 
@@ -3710,16 +3169,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-@keyframes terrainGlow {
-    0%, 100% {
-        opacity: 0.15;
-        transform: scaleX(1);
-    }
-    50% {
-        opacity: 0.3;
-        transform: scaleX(1.1);
-    }
-}
+
 
 @keyframes summonerRift {
     0%, 100% {
@@ -3735,6 +3185,19 @@ h1, h2, h3, h4, h5, h6 {
         background-position: 0% 100%;
     }
 }
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.02);
+    }
+}
+
+
 
 /* ===== RESPONSIVE BACKGROUND ===== */
 @media (max-width: 768px) {
@@ -3832,54 +3295,204 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 2;
 }
 
-/* Additional universal overrides for Firefox */
-.portrait-frame {
-    /* Force transparency in all browsers, especially Firefox */
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    -webkit-background-clip: border-box;
-    -moz-background-clip: border-box;
-    background-clip: border-box;
-    -webkit-background-origin: border-box;
-    -moz-background-origin: border-box;
-    background-origin: border-box;
-    -webkit-background-size: auto;
-    -moz-background-size: auto;
-    background-size: auto;
-    /* Remove any potential box-shadows */
-    -webkit-box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    box-shadow: none !important;
-    /* Ensure no borders or outlines */
-    border: none !important;
-    outline: none !important;
-    /* Force box-sizing */
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+/* ===== NEW PLAYER CARD ===== */
+.player-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 0 1rem;
 }
 
-/* Ensure all child elements also have transparent backgrounds */
-.portrait-frame *,
-.profile-portrait *,
-.profile-image {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    -webkit-box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    outline: none !important;
-    /* Force transparency in all browsers */
-    -webkit-background-clip: border-box;
-    -moz-background-clip: border-box;
-    background-clip: border-box;
-    -webkit-background-origin: border-box;
-    -moz-background-origin: border-box;
-    background-origin: border-box;
-    -webkit-background-size: auto;
-    -moz-background-size: auto;
-    background-size: auto;
+.player-card {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.1),
+        0 0 40px rgba(0, 212, 255, 0.3),
+        0 0 60px rgba(0, 212, 255, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    min-height: 450px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.player-card::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.1), rgba(0, 212, 255, 0.1));
+    border-radius: 22px;
+    z-index: -1;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+.player-avatar {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.avatar-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(200, 190, 170, 0.4);
+    box-shadow: 0 0 20px rgba(200, 190, 170, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(200, 190, 170, 0.3);
+}
+
+.player-name {
+    font-family: 'Beaufort for LOL', 'Times New Roman', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.player-citizenship {
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    color: var(--lol-text-secondary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: 400;
+}
+
+.player-skills {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    min-width: 80px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.skill-item:hover {
+    background: rgba(255, 215, 0, 0.15);
+    border-color: #ffd700;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.skill-item i {
+    font-size: 1.5rem;
+    color: #ffd700;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.skill-item span {
+    font-family: var(--font-secondary);
+    font-size: 0.8rem;
+    color: #cccccc;
+    text-transform: lowercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.skill-item:hover span {
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.skill-item:hover i {
+    color: #ffd700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    transform: scale(1.1);
+}
+
+/* ===== BUTTONS ===== */
+
+/* Extra Small Screen Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .section-header p {
+        font-size: 0.9rem;
+    }
+
+    /* Player Card Extra Small Screen Responsive */
+    .player-card-container {
+        margin-top: 1rem;
+        padding: 0 0.25rem;
+    }
+
+    .player-card {
+        padding: 1.5rem 1rem;
+        border-radius: 12px;
+        min-height: 350px;
+    }
+
+    .avatar-image {
+        width: 120px;
+        height: 120px;
+        border: 4px solid rgba(200, 190, 170, 0.4);
+        box-shadow: 0 0 20px rgba(200, 190, 170, 0.2);
+    }
+
+    .player-name {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .player-citizenship {
+        font-size: 0.7rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .player-skills {
+        gap: 0.75rem;
+    }
+
+    .skill-item {
+        min-width: 60px;
+        padding: 0.5rem;
+    }
+
+    .skill-item i {
+        font-size: 1rem;
+    }
+
+    .skill-item span {
+        font-size: 0.6rem;
+    }
+}
+
