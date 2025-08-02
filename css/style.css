@@ -507,19 +507,19 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     margin-bottom: 1.5rem;
     /* Ensure consistent sizing */
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .portrait-frame {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     margin: 0 auto;
     border-radius: 50%;
-    padding: 12px;
+    padding: 8px;
     background: linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
     background: -webkit-linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
     background: -moz-linear-gradient(45deg, var(--lol-gold), var(--lol-gold-dark));
@@ -551,8 +551,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--lol-white);
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 1.5rem;
-    margin-top: 1rem;
+    margin-bottom: 2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.5);
     position: relative;
     /* Ensure consistent text rendering */
@@ -749,7 +748,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: translate(-50%, -50%);
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
     border-radius: 50%;
     display: flex;
     flex-direction: column;
@@ -1287,7 +1286,7 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--lol-blue), var(--lol-blue-dark));
+    background: linear-gradient(135deg, var(--lol-blue), var(--lol-dark-blue));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1679,7 +1678,7 @@ h1, h2, h3, h4, h5, h6 {
 .card-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--lol-gold), var(--lol-gold-dark));
+    background: linear-gradient(135deg, var(--lol-gold), var(--lol-dark-gold));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -2599,15 +2598,14 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .portrait-frame {
-        width: 160px;
-        height: 160px;
-        padding: 8px;
+        width: 120px;
+        height: 120px;
+        padding: 6px;
     }
     
     .profile-title {
         font-size: 1rem;
-        margin-bottom: 1.5rem;
-        margin-top: 0.75rem;
+        margin-bottom: 1.75rem;
     }
     
     .skill-slots {
@@ -2832,15 +2830,14 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .portrait-frame {
-        width: 140px;
-        height: 140px;
-        padding: 7px;
+        width: 100px;
+        height: 100px;
+        padding: 5px;
     }
     
     .profile-title {
         font-size: 0.9rem;
-        margin-bottom: 1.25rem;
-        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
         letter-spacing: 1px;
     }
     
