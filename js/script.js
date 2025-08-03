@@ -86,6 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initAboutInteractions(); // Initialize About section interactions
     initContactAnimations(); // Initialize Contact section animations
     initAudioPlayer(); // Initialize audio player for artists
+    initExperienceSection(); // Initialize experience section interactions
+    initDynamicHeading(); // Initialize dynamic heading functionality
+    initContactModal(); // Initialize contact modal functionality
+    initResumeModal(); // Initialize resume modal functionality
 });
 
 // ===== ABOUT SECTION INTERACTIONS =====
@@ -570,6 +574,7 @@ function restoreOriginalSectionOrder() {
 function initNavigation() {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
+    const navContact = document.querySelector('.nav-contact');
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.section');
 
@@ -578,6 +583,9 @@ function initNavigation() {
         navToggle.addEventListener('click', function() {
             navToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
+            if (navContact) {
+                navContact.classList.toggle('active');
+            }
         });
     }
 
@@ -585,6 +593,11 @@ function initNavigation() {
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            
+            // Skip navigation handling for contact link - let modal handle it
+            if (this.getAttribute('data-section') === 'contact') {
+                return;
+            }
             
             // Remove active class from all links
             navLinks.forEach(l => l.classList.remove('active'));
@@ -595,6 +608,63 @@ function initNavigation() {
             // Get target section
             const targetId = this.getAttribute('data-section');
             const targetSection = document.getElementById(targetId);
+            
+            // Special handling for Timothy Hwangbo logo - reset to headshot prompt
+            if (this.classList.contains('logo-link')) {
+                // Reset dynamic content to headshot's prompt
+                const dynamicHeading = document.getElementById('dynamic-heading');
+                const dynamicDescription = document.getElementById('dynamic-description');
+                const clickableElements = document.querySelectorAll('.clickable-profile');
+                const skillItems = document.querySelectorAll('.skill-item');
+                
+                if (dynamicHeading && dynamicDescription && clickableElements.length > 0) {
+                            // Set content to "Hello, I'm Tim Hwangbo." (first variation)
+        dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                    dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                    
+                    // Remove glow from all clickable elements and skill items
+                    clickableElements.forEach(element => {
+                        element.classList.remove('selected-glow');
+                    });
+                    skillItems.forEach(element => {
+                        element.classList.remove('selected-glow');
+                    });
+                    
+                    // Apply glow to the headshot (first clickable profile element)
+                    if (clickableElements[0]) {
+                        clickableElements[0].classList.add('selected-glow');
+                    }
+                }
+            }
+            
+            // Special handling for Home tab - apply glow to headshot
+            if (targetId === 'home') {
+                const clickableElements = document.querySelectorAll('.clickable-profile');
+                const skillItems = document.querySelectorAll('.skill-item');
+                const dynamicHeading = document.getElementById('dynamic-heading');
+                const dynamicDescription = document.getElementById('dynamic-description');
+                
+                if (clickableElements.length > 0 && dynamicHeading && dynamicDescription) {
+                    // Remove glow from all clickable elements and skill items
+                    clickableElements.forEach(element => {
+                        element.classList.remove('selected-glow');
+                    });
+                    skillItems.forEach(element => {
+                        element.classList.remove('selected-glow');
+                    });
+                    
+                    // Apply glow to the headshot (first clickable profile element)
+                    if (clickableElements[0]) {
+                        clickableElements[0].classList.add('selected-glow');
+                    }
+                    
+                            // Reset content to "Hello, I'm Tim Hwangbo." if not already set
+        if (dynamicHeading.textContent !== "Hello, I'm Tim Hwangbo.") {
+            dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                        dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                    }
+                }
+            }
             
             // Hide all sections and reset contact animations if leaving contact
             const currentActiveSection = document.querySelector('.section.active');
@@ -1503,7 +1573,7 @@ function createMissingPing(x, y) {
 // Global click listener for missing ping
 document.addEventListener('click', function(e) {
     // Check if clicked element is interactive
-    const isInteractive = e.target.closest('a, button, input, textarea, select, [tabindex], .nav-link, .service-card, .project-card, .contact-item, .chat-widget, .chat-toggle, .chat-minimize, .chat-input, .chat-send');
+    const isInteractive = e.target.closest('a, button, input, textarea, select, [tabindex], .nav-link, .service-card, .project-card, .contact-item, .chat-widget, .chat-toggle, .chat-minimize, .chat-input, .chat-send, .clickable-profile, .skill-item, .player-card, .player-avatar, .player-info, .player-name, .player-skills');
     
     // If not interactive, create missing ping
     if (!isInteractive) {
@@ -1942,6 +2012,548 @@ function initAudioPlayer() {
     console.log(`🎶 Audio player initialized for ${artistCards.length} artists`);
 }
 
+// ===== EXPERIENCE SECTION FUNCTIONALITY =====
+function initExperienceSection() {
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const headerButtons = document.querySelectorAll('.header-btn');
+    const experienceContainer = document.querySelector('.experience-container');
+    const experienceHeader = document.getElementById('experience-header');
+    const readMoreButtons = document.querySelectorAll('.read-more-btn');
+    
+    if (!experienceContainer) {
+        console.log('ℹ️ Experience section not found on this page');
+        return;
+    }
+    
+    // Initialize condensed view - hide all details by default
+    experienceContainer.classList.add('condensed');
+    
+    // Check if expanded view is active and show all content accordingly
+    const activeViewBtn = document.querySelector('.view-btn.active');
+    if (activeViewBtn && activeViewBtn.getAttribute('data-view') === 'expanded') {
+        experienceContainer.classList.remove('condensed');
+        // Show all additional content and hide read more buttons in expanded view
+        readMoreButtons.forEach(btn => {
+            const additionalContent = btn.nextElementSibling;
+            if (additionalContent && additionalContent.classList.contains('additional-content')) {
+                additionalContent.classList.add('expanded');
+                btn.style.display = 'none'; // Hide read more buttons in expanded view
+            }
+        });
+        
+        // Force all additional content to be visible in expanded view
+        const allAdditionalContent = document.querySelectorAll('.additional-content');
+        allAdditionalContent.forEach(content => {
+            content.classList.add('expanded');
+        });
+    }
+    
+    // Handle toggle between Expanded and Condensed views
+    viewButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            viewButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            const view = button.getAttribute('data-view');
+            
+            if (view === 'condensed') {
+                experienceContainer.classList.add('condensed');
+                // Reset all read more states when switching to condensed
+                readMoreButtons.forEach(btn => {
+                    const additionalContent = btn.nextElementSibling;
+                    if (additionalContent && additionalContent.classList.contains('additional-content')) {
+                        additionalContent.classList.remove('expanded');
+                        btn.textContent = 'Read more ↓';
+                        btn.style.display = 'block'; // Show read more buttons in condensed view
+                    }
+                });
+            } else {
+                experienceContainer.classList.remove('condensed');
+                // In expanded view, show all additional content and hide read more buttons
+                readMoreButtons.forEach(btn => {
+                    const additionalContent = btn.nextElementSibling;
+                    if (additionalContent && additionalContent.classList.contains('additional-content')) {
+                        additionalContent.classList.add('expanded');
+                        btn.style.display = 'none'; // Hide read more buttons in expanded view
+                    }
+                });
+                
+                // Force all additional content to be visible in expanded view
+                const allAdditionalContent = document.querySelectorAll('.additional-content');
+                allAdditionalContent.forEach(content => {
+                    content.classList.add('expanded');
+                });
+            }
+            
+            console.log(`📋 Experience view changed to: ${view}`);
+        });
+    });
+    
+    // Handle header toggle buttons
+    headerButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all header buttons
+            headerButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            const headerType = button.getAttribute('data-header');
+            
+            // Update the header text
+            if (headerType === 'experience') {
+                experienceHeader.textContent = 'Experience';
+                experienceContainer.classList.remove('show-work', 'show-education');
+                experienceContainer.classList.add('show-experience');
+            } else if (headerType === 'work') {
+                experienceHeader.textContent = 'Work';
+                experienceContainer.classList.remove('show-experience', 'show-education');
+                experienceContainer.classList.add('show-work');
+            } else if (headerType === 'education') {
+                experienceHeader.textContent = 'Education';
+                experienceContainer.classList.remove('show-experience', 'show-work');
+                experienceContainer.classList.add('show-education');
+            }
+            
+            console.log(`📋 Header changed to: ${headerType}`);
+        });
+    });
+    
+    // Handle read more buttons (only in condensed view)
+    readMoreButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Only allow read more functionality in condensed view
+            if (experienceContainer.classList.contains('condensed')) {
+                const additionalContent = button.nextElementSibling;
+                if (additionalContent && additionalContent.classList.contains('additional-content')) {
+                    const isExpanded = additionalContent.classList.contains('expanded');
+                    
+                    if (isExpanded) {
+                        additionalContent.classList.remove('expanded');
+                        button.textContent = 'Read more ↓';
+                    } else {
+                        additionalContent.classList.add('expanded');
+                        button.textContent = 'Read less ↑';
+                    }
+                    
+                    console.log(`📖 Read more toggled: ${isExpanded ? 'collapsed' : 'expanded'}`);
+                }
+            }
+        });
+    });
+    
+    console.log(`💼 Experience section initialized with ${viewButtons.length} view buttons, ${headerButtons.length} header buttons, and ${readMoreButtons.length} read more buttons`);
+}
+
+
 console.log('🎮 League of Legends Portfolio loaded successfully!');
 console.log('✨ Comprehensive scroll-to-top system activated!');
 console.log('🔄 Page will always start at top when switching tabs!');
+
+// ===== DYNAMIC HEADING FUNCTIONALITY =====
+function initDynamicHeading() {
+    const clickableElements = document.querySelectorAll('.clickable-profile');
+    const skillItems = document.querySelectorAll('.skill-item');
+    const dynamicHeading = document.getElementById('dynamic-heading');
+    const dynamicDescription = document.getElementById('dynamic-description');
+    
+    // Array of different heading and description combinations
+    const contentVariations = [
+        {
+            heading: "Hello, I'm Tim Hwangbo.",
+            description: "A data janitor turning dirty data into clean dashboards, one sheet at a time."
+        },
+        {
+            heading: "Data-Driven Decision Maker",
+            description: "Leveraging analytics and insights to guide strategic business decisions. Turning complex data into actionable intelligence."
+        },
+        {
+            heading: "Business Intelligence Specialist",
+            description: "Creating powerful dashboards and reports that illuminate key business metrics. Making data accessible and actionable for stakeholders."
+        },
+        {
+            heading: "Automation & Efficiency Expert",
+            description: "Streamlining processes through intelligent automation. Building systems that work smarter, not harder."
+        },
+        {
+            heading: "Strategic Data Analyst",
+            description: "Connecting the dots between data and business outcomes. Helping organizations make informed, data-backed decisions."
+        },
+        {
+            heading: "People-First Data Professional",
+            description: "Understanding that behind every dataset are real people and real business challenges. Bridging technical expertise with human insight."
+        }
+    ];
+    
+    // Skill-specific content variations
+    const skillContentVariations = {
+                                'Python': [
+                            {
+                                heading: "Automation & Scripts",
+                                description: "Automating the mundane so you can focus on the meaningful."
+                            },
+            {
+                heading: "Data Science Specialist",
+                description: "Leveraging Python for advanced analytics, machine learning, and data processing workflows."
+            },
+            {
+                heading: "Automation Engineer",
+                description: "Creating intelligent automation solutions with Python to streamline business processes and workflows."
+            }
+        ],
+                                'SQL': [
+                            {
+                                heading: "Database Management",
+                                description: "Extracting facts, transforming logic, loading impact."
+                            },
+            {
+                heading: "Data Architecture Specialist",
+                description: "Building robust data foundations and complex queries that support scalable business intelligence."
+            },
+            {
+                heading: "Database Management Professional",
+                description: "Transforming complex business requirements into efficient database designs and SQL solutions."
+            }
+        ],
+        'BI': [
+                                    {
+                                                    heading: "Data Visualization",
+                        description: "Making your data look good and your insights even better."
+                        },
+            {
+                heading: "Data Visualization Expert",
+                description: "Designing interactive dashboards and visualizations that make complex data accessible to all stakeholders."
+            },
+            {
+                heading: "Analytics Professional",
+                description: "Transforming raw data into actionable insights through compelling business intelligence solutions."
+            }
+        ]
+    };
+    
+    let currentIndex = 0; // For profile clicks
+    
+    // New state variables to track what's currently displayed
+    let activeContentType = 'profile'; // Can be 'profile' or 'skill'
+    let activeSkillDisplayed = null; // Stores the name of the skill whose content is currently displayed
+    let currentlySelectedElement = null; // Track the currently selected element
+    
+    // Debouncing mechanism to prevent rapid clicking
+    let isUpdating = false;
+    let updateTimeout = null;
+    
+    // Function to remove glow from all elements
+    function removeGlowFromAll() {
+        // Remove glow from all profile elements
+        clickableElements.forEach(element => {
+            element.classList.remove('selected-glow');
+        });
+        
+        // Remove glow from all skill elements
+        skillItems.forEach(element => {
+            element.classList.remove('selected-glow');
+        });
+    }
+    
+    // Function to apply glow to a specific element
+    function applyGlowToElement(element) {
+        removeGlowFromAll();
+        element.classList.add('selected-glow');
+        currentlySelectedElement = element;
+    }
+    
+    function updateContent() { // For profile clicks
+        // Prevent multiple rapid updates
+        if (isUpdating) {
+            return;
+        }
+        
+        // If profile content is already active, do nothing
+        if (activeContentType === 'profile') {
+            return;
+        }
+        
+        // If we are currently displaying skill content, switch to profile content
+        if (activeContentType === 'skill') {
+            activeContentType = 'profile';
+            activeSkillDisplayed = null; // Clear active skill
+        }
+        
+        isUpdating = true;
+        
+        // Always show the first variation for profile clicks
+        const variation = contentVariations[0]; // Always pick the first one
+        
+        // Clear any existing timeout
+        if (updateTimeout) {
+            clearTimeout(updateTimeout);
+        }
+        
+        // Start typography animation
+        typographyAnimation(dynamicHeading, variation.heading, () => {
+            // Heading animation complete
+        });
+        
+        typographyAnimation(dynamicDescription, variation.description, () => {
+            // Description animation complete
+            // Set profile as active content type
+            activeContentType = 'profile';
+            
+            // Allow updates again after animation completes
+            setTimeout(() => {
+                isUpdating = false;
+            }, 200);
+        });
+    }
+    
+    // Typography animation function
+    function typographyAnimation(element, finalText, onComplete) {
+        const originalText = element.textContent;
+        const originalOpacity = element.style.opacity || '1';
+        
+        // Store original dimensions
+        const originalHeight = element.offsetHeight;
+        
+        // Fade out current text
+        element.style.transition = 'opacity 0.3s ease-out';
+        element.style.opacity = '0';
+        
+        setTimeout(() => {
+            // Change text content
+            element.textContent = finalText;
+            
+            // Get the new content's natural height
+            const newHeight = element.scrollHeight;
+            
+            // Set up smooth height transition
+            element.style.transition = 'opacity 0.4s ease-in, height 0.5s ease-out';
+            element.style.height = originalHeight + 'px';
+            element.style.overflow = 'hidden';
+            
+            // Force a reflow to ensure the height is applied
+            element.offsetHeight;
+            
+            // Fade in new text and transition height
+            element.style.opacity = '1';
+            element.style.height = newHeight + 'px';
+            
+            // Add a subtle scale effect
+            element.style.transform = 'scale(1.01)';
+            
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+                
+                // Clean up after transition completes
+                setTimeout(() => {
+                    element.style.height = '';
+                    element.style.overflow = '';
+                    element.style.transition = '';
+                    element.style.opacity = originalOpacity;
+                    element.style.transform = '';
+                    
+                    if (onComplete) onComplete();
+                }, 100);
+            }, 250);
+        }, 300);
+    }
+
+    function updateSkillContent(skillName) { // For skill tag clicks
+        // Prevent multiple rapid updates
+        if (isUpdating) {
+            return;
+        }
+        
+        // If this skill's content is already active, do nothing
+        if (activeContentType === 'skill' && activeSkillDisplayed === skillName) {
+            return;
+        }
+        
+        const variations = skillContentVariations[skillName];
+        
+        if (!variations || variations.length === 0) return; // Ensure variations exist
+        
+        // Set this skill as the active content source
+        activeContentType = 'skill';
+        activeSkillDisplayed = skillName;
+        
+        isUpdating = true;
+        
+        // Always show the first variation for the clicked skill
+        const variation = variations[0]; // This is the key change: always pick the first one
+        
+        // Clear any existing timeout
+        if (updateTimeout) {
+            clearTimeout(updateTimeout);
+        }
+        
+        // Start typography animation
+        typographyAnimation(dynamicHeading, variation.heading, () => {
+            // Heading animation complete
+        });
+        
+        typographyAnimation(dynamicDescription, variation.description, () => {
+            // Description animation complete
+            // Allow updates again after animation completes
+            setTimeout(() => {
+                isUpdating = false;
+            }, 200);
+        });
+    }
+    
+    // Add click event listeners to all clickable profile elements
+    clickableElements.forEach(element => {
+        element.addEventListener('click', (e) => {
+            e.preventDefault();
+            updateContent();
+            
+            // Apply glow to this element
+            applyGlowToElement(element);
+            
+            // Add a subtle animation effect
+            element.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 150);
+        });
+    });
+    
+    // Add click event listeners to skill items
+    skillItems.forEach(element => {
+        element.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Get the skill name from the span element
+            const skillSpan = element.querySelector('span');
+            const skillName = skillSpan ? skillSpan.textContent : '';
+            
+            if (skillName && skillContentVariations[skillName]) {
+                updateSkillContent(skillName);
+                
+                // Apply glow to this element
+                applyGlowToElement(element);
+                
+                // Add a subtle animation effect
+                element.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                }, 150);
+            }
+        });
+    });
+    
+    // Add smooth transition styles
+    dynamicHeading.style.transition = 'opacity 0.2s ease-in-out';
+    dynamicDescription.style.transition = 'opacity 0.2s ease-in-out';
+    
+            // Set "Hello, I'm Tim Hwangbo." as the default content immediately
+    if (clickableElements.length > 0) {
+        // Set the default content
+        dynamicHeading.textContent = contentVariations[0].heading;
+        dynamicDescription.textContent = contentVariations[0].description;
+        
+        // Apply glow to the first profile element (headshot)
+        const firstProfileElement = clickableElements[0];
+        applyGlowToElement(firstProfileElement);
+        
+        // Set profile as the active content type
+        activeContentType = 'profile';
+    }
+}
+
+// ===== CONTACT MODAL FUNCTIONALITY =====
+function initContactModal() {
+    const contactModal = document.getElementById('contact-modal');
+    const contactModalClose = document.getElementById('contact-modal-close');
+    const contactNavLink = document.querySelector('a[href="#contact"]');
+    
+    if (!contactModal || !contactModalClose || !contactNavLink) {
+        console.warn('Contact modal elements not found');
+        return;
+    }
+    
+    // Open modal when Contact nav link is clicked
+    contactNavLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        openContactModal();
+    });
+    
+    // Close modal when X button is clicked
+    contactModalClose.addEventListener('click', () => {
+        closeContactModal();
+    });
+    
+    // Close modal when clicking outside the modal content
+    contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) {
+            closeContactModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+            closeContactModal();
+        }
+    });
+    
+    function openContactModal() {
+        contactModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+    
+    function closeContactModal() {
+        contactModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
+// ===== RESUME MODAL FUNCTIONALITY =====
+function initResumeModal() {
+    const resumeModal = document.getElementById('resume-modal');
+    const resumeModalClose = document.getElementById('resume-modal-close');
+    const resumeBtn = document.getElementById('resume-btn');
+    
+    if (!resumeModal || !resumeModalClose || !resumeBtn) {
+        console.warn('Resume modal elements not found');
+        return;
+    }
+    
+    // Open modal when Resume button is clicked
+    resumeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openResumeModal();
+    });
+    
+    // Close modal when X button is clicked
+    resumeModalClose.addEventListener('click', () => {
+        closeResumeModal();
+    });
+    
+    // Close modal when clicking outside the modal content
+    resumeModal.addEventListener('click', (e) => {
+        if (e.target === resumeModal) {
+            closeResumeModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && resumeModal.classList.contains('active')) {
+            closeResumeModal();
+        }
+    });
+    
+    function openResumeModal() {
+        resumeModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+    
+    function closeResumeModal() {
+        resumeModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
