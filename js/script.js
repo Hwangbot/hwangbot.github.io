@@ -61,6 +61,8 @@ function forceScrollToTopComprehensive() {
     }, 50);
 }
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Ensure page starts at top immediately using comprehensive method
     forceScrollToTopComprehensive();
@@ -74,6 +76,14 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         forceScrollToTopComprehensive();
     }, 300);
+    
+    // Initialize homepage-active class on page load for desktop
+    if (window.innerWidth > 768) {
+        const homeSection = document.getElementById('home');
+        if (homeSection && homeSection.classList.contains('active')) {
+            document.body.classList.add('homepage-active');
+        }
+    }
     
     // Initialize all functionality
     initNavigation();
@@ -99,10 +109,56 @@ function initAboutInteractions() {
     initInterestSections();
 }
 
+// Function to reset hub state to closed position
+function resetHubState() {
+    const interestsOrbit = document.querySelector('.interests-orbit');
+    const hubCenter = document.querySelector('.hub-center');
+    const hobbiesHub = document.querySelector('.hobbies-hub');
+    
+    if (interestsOrbit) {
+        interestsOrbit.classList.remove('expanded');
+    }
+    if (hubCenter) {
+        hubCenter.classList.remove('expanded');
+    }
+    if (hobbiesHub) {
+        hobbiesHub.classList.remove('expanded');
+    }
+}
+
+// Function to reset satellite sections to closed position
+function resetSatelliteSections() {
+    const sections = document.querySelectorAll('.interest-section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+        
+        // Reset animation states for content cards
+        const contentCards = section.querySelectorAll('.content-card');
+        contentCards.forEach(card => {
+            card.style.opacity = '';
+            card.style.transform = '';
+            card.style.transition = '';
+        });
+        
+        section.style.transform = '';
+        section.style.transition = '';
+    });
+    
+    // Hide scroll-to-top button when sections are closed
+    const scrollTopBtn = document.getElementById('scrollTop');
+    if (scrollTopBtn) {
+        scrollTopBtn.classList.remove('visible');
+    }
+}
+
 function initHobbiesHub() {
     const interestSatellites = document.querySelectorAll('.interest-satellite');
     const hubCenter = document.querySelector('.hub-center');
     const interestsOrbit = document.querySelector('.interests-orbit');
+    
+    // Ensure hub starts in closed position
+    resetHubState();
+    resetSatelliteSections(); // Reset satellite sections to closed position
     
     // Initialize hub center click functionality
     if (hubCenter && interestsOrbit) {
@@ -682,9 +738,26 @@ function initNavigation() {
             if (targetSection) {
                 targetSection.classList.add('active');
                 
+                // Desktop homepage scroll prevention
+                if (targetId === 'home' && window.innerWidth > 768) {
+                    document.body.classList.add('homepage-active');
+                } else {
+                    document.body.classList.remove('homepage-active');
+                }
+                
+                // Re-apply music player padding if active
+                if (typeof musicPlayer !== 'undefined' && musicPlayer.classList.contains('active')) {
+                    showMusicPlayer();
+                }
                 // Trigger specific animations for contact section
                 if (targetId === 'contact') {
                     triggerContactAnimations();
+                }
+                
+                // Reset hub state when About section becomes active
+                if (targetId === 'about') {
+                    resetHubState();
+                    resetSatelliteSections(); // Reset satellite sections to closed position
                 }
             }
             
@@ -819,8 +892,10 @@ function initMobileNavigation() {
                 const skillItems = document.querySelectorAll('.skill-item');
                 const dynamicHeading = document.getElementById('dynamic-heading');
                 const dynamicDescription = document.getElementById('dynamic-description');
+                const mobileHeading = document.querySelector('.mobile-heading');
+                const mobileDescription = document.querySelector('.mobile-description');
                 
-                if (clickableElements.length > 0 && dynamicHeading && dynamicDescription) {
+                if (clickableElements.length > 0) {
                     // Remove glow from all clickable elements and skill items
                     clickableElements.forEach(element => {
                         element.classList.remove('selected-glow');
@@ -834,10 +909,16 @@ function initMobileNavigation() {
                         clickableElements[0].classList.add('selected-glow');
                     }
                     
-                    // Reset content to "Hello, I'm Tim Hwangbo." if not already set
-                    if (dynamicHeading.textContent !== "Hello, I'm Tim Hwangbo.") {
+                    // Always reset content to "Hello, I'm Tim Hwangbo." for desktop
+                    if (dynamicHeading && dynamicDescription) {
                         dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
                         dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                    }
+                    
+                    // Always reset content to "Hello, I'm Tim Hwangbo." for mobile
+                    if (mobileHeading && mobileDescription) {
+                        mobileHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                        mobileDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
                     }
                 }
             }
@@ -851,14 +932,175 @@ function initMobileNavigation() {
             if (targetSection) {
                 targetSection.classList.add('active');
                 
-                // Scroll to top smoothly
+                // Desktop homepage scroll prevention (also applies to mobile for consistency)
+                if (targetId === 'home' && window.innerWidth > 768) {
+                    document.body.classList.add('homepage-active');
+                } else {
+                    document.body.classList.remove('homepage-active');
+                }
+                
+                // Reset hub state when About section becomes active
+                if (targetId === 'about') {
+                    resetHubState();
+                    resetSatelliteSections(); // Reset satellite sections to closed position
+                }
+                
+                // AGGRESSIVE scroll to top for mobile - override any other scroll behavior
+                console.log('🔄 Mobile tab navigation clicked, forcing scroll to top');
+                
+                // Method 1: Direct property setting
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                
+                // Method 2: Window scroll
+                window.scrollTo(0, 0);
                 window.scrollTo({
                     top: 0,
-                    behavior: 'smooth'
+                    left: 0,
+                    behavior: 'instant'
                 });
+                
+                // Method 3: Force with timing to override any other scrolls
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile tab navigation: Force scroll attempt 1');
+                }, 10);
+                
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile tab navigation: Force scroll attempt 2');
+                }, 50);
+                
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile tab navigation: Force scroll attempt 3');
+                }, 100);
+                
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile tab navigation: Final force scroll');
+                }, 200);
             }
         });
     });
+
+    // Handle mobile logo link click (same functionality as Home navigation)
+    const mobileLogoLink = document.querySelector('.mobile-logo-link');
+    if (mobileLogoLink) {
+        mobileLogoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Close mobile menu if open
+            mobileNavToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.classList.remove('mobile-nav-open');
+            
+            // Apply glow to headshot (same as Home tab)
+            const clickableElements = document.querySelectorAll('.clickable-profile');
+            const skillItems = document.querySelectorAll('.skill-item');
+            const dynamicHeading = document.getElementById('dynamic-heading');
+            const dynamicDescription = document.getElementById('dynamic-description');
+            const mobileHeading = document.querySelector('.mobile-heading');
+            const mobileDescription = document.querySelector('.mobile-description');
+            
+            if (clickableElements.length > 0) {
+                // Remove glow from all clickable elements and skill items
+                clickableElements.forEach(element => {
+                    element.classList.remove('selected-glow');
+                });
+                skillItems.forEach(element => {
+                    element.classList.remove('selected-glow');
+                });
+                
+                // Apply glow to the headshot (first clickable profile element)
+                if (clickableElements[0]) {
+                    clickableElements[0].classList.add('selected-glow');
+                }
+                
+                // Always reset content to "Hello, I'm Tim Hwangbo." for desktop
+                if (dynamicHeading && dynamicDescription) {
+                    dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                    dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                }
+                
+                // Always reset content to "Hello, I'm Tim Hwangbo." for mobile
+                if (mobileHeading && mobileDescription) {
+                    mobileHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                    mobileDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                }
+            }
+            
+            // Hide all sections and show home section
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            const homeSection = document.getElementById('home');
+            if (homeSection) {
+                homeSection.classList.add('active');
+                
+                // Desktop homepage scroll prevention (also applies to mobile for consistency)
+                if (window.innerWidth > 768) {
+                    document.body.classList.add('homepage-active');
+                } else {
+                    document.body.classList.remove('homepage-active');
+                }
+                
+                // AGGRESSIVE scroll to top for mobile - override any other scroll behavior
+                console.log('🔄 Mobile logo link clicked, forcing scroll to top');
+                
+                // Method 1: Direct property setting
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                
+                // Method 2: Window scroll
+                window.scrollTo(0, 0);
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'instant'
+                });
+                
+                // Method 3: Force with timing to override any other scrolls
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile logo link: Force scroll attempt 1');
+                }, 10);
+                
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile logo link: Force scroll attempt 2');
+                }, 50);
+                
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile logo link: Force scroll attempt 3');
+                }, 100);
+                
+                setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    console.log('🔄 Mobile logo link: Final force scroll');
+                }, 200);
+            }
+        });
+    }
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(e) {
@@ -1791,12 +2033,21 @@ function initAudioPlayer() {
     // Music Player Interface Functions
     function showMusicPlayer() {
         musicPlayer.classList.add('active');
-        console.log('🎵 Music player interface opened');
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            const musicPlayerHeight = 90; // Height of music player
+            const extraSpacing = window.innerWidth <= 480 ? 40 : window.innerWidth <= 768 ? 30 : 20;
+            const totalPadding = musicPlayerHeight + extraSpacing;
+            mainContent.style.paddingBottom = `${totalPadding}px`;
+        }
     }
     
     function hideMusicPlayer() {
         musicPlayer.classList.remove('active');
-        console.log('🎵 Music player interface closed');
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.style.paddingBottom = '';
+        }
     }
     
     function updatePlayerInfo(artistName, imageSrc) {

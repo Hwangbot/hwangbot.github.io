@@ -151,6 +151,16 @@ body {
     min-height: 100vh;
 }
 
+/* Special rule for desktop homepage - no scroll option */
+@media (min-width: 769px) {
+    body.homepage-active {
+        overflow: hidden !important;
+        position: fixed !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
 /* Typography */
 h1,
 h2,
@@ -270,7 +280,7 @@ h6 {
 }
 
 .logo-text {
-    font-family: 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif;
+    font-family: 'BeaufortforLOL', 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif;
     font-size: 1rem;
     font-weight: 400;
     color: #E0E0E0;
@@ -283,6 +293,17 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+/* Force Timothy Hwangbo to use LoL Beaufort font */
+.logo-text {
+    font-family: 'Beaufort for LOL', 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif !important;
+}
+
+/* Alternative approach - target by parent context */
+.nav-logo .logo-text,
+.nav-container .logo-text {
+    font-family: 'Beaufort for LOL', 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif !important;
 }
 
 /* Add glow effect to logo text on hover */
@@ -416,6 +437,22 @@ h6 {
     scroll-margin: 0;
 }
 
+/* Mobile section adjustments */
+@media (max-width: 768px) {
+    .section {
+        min-height: auto;
+        padding-top: 0;
+        transform: none !important;
+    }
+    
+    /* Ensure home section starts at the same level as other sections */
+    #home {
+        padding-top: 0;
+        margin-top: 0;
+        transform: none !important;
+    }
+}
+
 .section.active {
     display: block;
     opacity: 1;
@@ -456,12 +493,26 @@ h6 {
     /* Mobile layout for home content */
     @media (max-width: 768px) {
         .home-content {
-            display: flex;
-            flex-direction: column;
+            display: flex !important;
+            flex-direction: column !important;
             gap: 2rem;
-            padding: 2rem 1rem;
+            padding: 0 1rem 2rem 1rem;
+            margin-top: -2.5rem !important;
+            min-height: auto !important;
+            justify-content: flex-start !important;
+            align-items: center;
+            /* Override any grid properties */
+            grid-template-columns: none !important;
+            grid-template-rows: none !important;
+            /* Override desktop centering behavior */
+            position: static !important;
+            transform: none !important;
+        }
+        
+        /* Add proper section header spacing for mobile */
+        .mobile-text {
             margin-top: 0;
-            min-height: auto;
+            margin-bottom: 2rem;
         }
         
         /* Hide desktop content on mobile */
@@ -985,6 +1036,8 @@ h6 {
 .music-player.active {
     transform: translateY(0);
 }
+
+
 
 .music-player-content {
     display: flex;
@@ -3087,25 +3140,39 @@ h6 {
 
     /* Player Card Mobile Responsive */
     .player-card-container {
-        order: 3;
-        margin-top: 1.5rem;
+        order: 2;
+        margin-top: -2.5rem !important;
         padding: 0 0.5rem;
         justify-content: center; /* Center on mobile */
     }
 
     .player-card {
-        padding: 2rem 1.5rem;
+        padding: 2.5rem 2rem;
         border-radius: 16px;
-        min-height: 400px;
-        max-width: 400px; /* Smaller max-width on mobile */
-        background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(45, 45, 45, 0.8));
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        min-height: 450px;
+        max-width: 450px; /* Bigger max-width on mobile */
+        background: transparent !important;
+        position: relative;
+    }
+    
+    .player-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(10, 200, 185, 0.03), rgba(26, 26, 26, 0.05));
+        border-radius: 16px;
+        z-index: -1;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(10, 200, 185, 0.2) !important;
     }
 
     .avatar-image {
-        width: 140px;
-        height: 140px;
+        width: 160px;
+        height: 160px;
         border: 4px solid rgba(200, 190, 170, 0.4);
         box-shadow: 0 0 20px rgba(200, 190, 170, 0.2);
     }
@@ -3447,6 +3514,13 @@ h6 {
     z-index: 15000;
     overflow: hidden;
     transition: all 0.3s ease;
+}
+
+/* Hide chat widget on mobile devices */
+@media (max-width: 768px) {
+    .chat-widget {
+        display: none !important;
+    }
 }
 
 .chat-header {
@@ -5976,9 +6050,23 @@ h6 {
         align-items: center;
     }
     
+    /* Mobile Navigation Logo Link */
+    .mobile-logo-link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-logo-link:hover {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    
     /* Mobile Navigation Logo Text */
     .mobile-logo-text {
-        font-family: 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif;
+        font-family: 'BeaufortforLOL', 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif;
         font-size: 1rem;
         font-weight: 400;
         color: #E0E0E0;
@@ -5991,6 +6079,17 @@ h6 {
         display: flex;
         align-items: center;
         justify-content: flex-start;
+    }
+    
+    /* Force Timothy Hwangbo to use LoL Beaufort font on mobile */
+    .mobile-logo-text {
+        font-family: 'Beaufort for LOL', 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif !important;
+    }
+    
+    /* Alternative approach for mobile - target by parent context */
+    .mobile-nav-logo .mobile-logo-text,
+    .mobile-nav-header .mobile-logo-text {
+        font-family: 'Beaufort for LOL', 'Inter', 'Roboto', 'Open Sans', 'Montserrat', 'Lato', sans-serif !important;
     }
     
     /* Mobile Toggle Button */
