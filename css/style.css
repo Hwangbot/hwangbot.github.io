@@ -3393,6 +3393,38 @@ h6 {
         gap: 1rem;
         padding: 0 0.5rem;
     }
+    
+    /* Remove hover and click effects on service cards for mobile */
+    .service-card {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .service-card:hover {
+        transform: none !important;
+        border-color: var(--lol-gray) !important;
+        box-shadow: none !important;
+    }
+    
+    .service-card:hover .service-icon {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .service-card:hover p {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
+    }
+    
+    .service-card:hover .service-features li {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
+    }
+    
+    .service-icon a:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
 
     .projects-grid {
         gap: 1rem;
