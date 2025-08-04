@@ -3425,10 +3425,126 @@ h6 {
         transform: none !important;
         box-shadow: none !important;
     }
+    
+    /* Remove hover and click effects on project cards for mobile */
+    .project-card {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .project-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .project-card:hover .project-image img {
+        transform: none !important;
+    }
+    
+    .project-card:hover .project-overlay {
+        opacity: 0 !important;
+    }
+    
+    .project-card:hover .mockup-device {
+        transform: none !important;
+    }
+    
+    .project-card:hover .project-content p {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
+    }
+    
+    /* Remove hover and click effects on experience items for mobile */
+    .experience-item {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .experience-item:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .experience-item:hover::before {
+        opacity: 0 !important;
+    }
+    
+    .experience-item:hover .company-logo-section {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .experience-item:hover .company-name {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
+    }
+    
+    .experience-item:hover .role-description {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
+    }
 
     .projects-grid {
         gap: 1rem;
         padding: 0 0.5rem;
+    }
+    
+    /* Remove hover and click effects on project cards for small mobile */
+    .project-card {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .project-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .project-card:hover .project-image img {
+        transform: none !important;
+    }
+    
+    .project-card:hover .project-overlay {
+        opacity: 0 !important;
+    }
+    
+    .project-card:hover .mockup-device {
+        transform: none !important;
+    }
+    
+    .project-card:hover .project-content p {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
+    }
+    
+    /* Remove hover and click effects on experience items for small mobile */
+    .experience-item {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .experience-item:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .experience-item:hover::before {
+        opacity: 0 !important;
+    }
+    
+    .experience-item:hover .company-logo-section {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .experience-item:hover .company-name {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
+    }
+    
+    .experience-item:hover .role-description {
+        color: var(--lol-text-secondary) !important;
+        text-shadow: none !important;
     }
 
 
