@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize all functionality
     initNavigation();
+    initMobileNavigation(); // Initialize mobile navigation functionality
     initScrollEffects();
     initAnimations();
     initContactForm();
@@ -751,6 +752,132 @@ function initNavigation() {
                 });
             }
         });
+    });
+}
+
+// ===== MOBILE NAVIGATION =====
+function initMobileNavigation() {
+    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    const mobileNavClose = document.getElementById('mobile-nav-close');
+    const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+
+    // Mobile menu toggle
+    if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', function() {
+            mobileNavToggle.classList.toggle('active');
+            mobileNavOverlay.classList.toggle('active');
+            document.body.classList.toggle('mobile-nav-open');
+        });
+    }
+
+    // Mobile menu close button
+    if (mobileNavClose) {
+        mobileNavClose.addEventListener('click', function() {
+            mobileNavToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.classList.remove('mobile-nav-open');
+        });
+    }
+
+    // Close mobile menu when clicking on navigation items
+    mobileNavItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Handle contact link - open modal and close mobile menu
+            if (this.getAttribute('data-section') === 'contact') {
+                e.preventDefault();
+                
+                // Close mobile menu
+                mobileNavToggle.classList.remove('active');
+                mobileNavOverlay.classList.remove('active');
+                document.body.classList.remove('mobile-nav-open');
+                
+                // Open contact modal
+                const contactModal = document.getElementById('contact-modal');
+                if (contactModal) {
+                    contactModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+                return;
+            }
+            
+            // Close mobile menu
+            mobileNavToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.classList.remove('mobile-nav-open');
+            
+            // Handle navigation (similar to desktop navigation)
+            e.preventDefault();
+            
+            // Get target section
+            const targetId = this.getAttribute('data-section');
+            const targetSection = document.getElementById(targetId);
+            
+            // Special handling for Home tab - apply glow to headshot
+            if (targetId === 'home') {
+                const clickableElements = document.querySelectorAll('.clickable-profile');
+                const skillItems = document.querySelectorAll('.skill-item');
+                const dynamicHeading = document.getElementById('dynamic-heading');
+                const dynamicDescription = document.getElementById('dynamic-description');
+                
+                if (clickableElements.length > 0 && dynamicHeading && dynamicDescription) {
+                    // Remove glow from all clickable elements and skill items
+                    clickableElements.forEach(element => {
+                        element.classList.remove('selected-glow');
+                    });
+                    skillItems.forEach(element => {
+                        element.classList.remove('selected-glow');
+                    });
+                    
+                    // Apply glow to the headshot (first clickable profile element)
+                    if (clickableElements[0]) {
+                        clickableElements[0].classList.add('selected-glow');
+                    }
+                    
+                    // Reset content to "Hello, I'm Tim Hwangbo." if not already set
+                    if (dynamicHeading.textContent !== "Hello, I'm Tim Hwangbo.") {
+                        dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                        dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                    }
+                }
+            }
+            
+            // Hide all sections and show target section
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Scroll to top smoothly
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (mobileNavOverlay && mobileNavOverlay.classList.contains('active')) {
+            if (!mobileNavOverlay.contains(e.target) && !mobileNavToggle.contains(e.target)) {
+                mobileNavToggle.classList.remove('active');
+                mobileNavOverlay.classList.remove('active');
+                document.body.classList.remove('mobile-nav-open');
+            }
+        }
+    });
+
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileNavOverlay && mobileNavOverlay.classList.contains('active')) {
+            mobileNavToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.classList.remove('mobile-nav-open');
+        }
     });
 }
 
@@ -1573,7 +1700,7 @@ function createMissingPing(x, y) {
 // Global click listener for missing ping
 document.addEventListener('click', function(e) {
     // Check if clicked element is interactive
-    const isInteractive = e.target.closest('a, button, input, textarea, select, [tabindex], .nav-link, .service-card, .project-card, .contact-item, .chat-widget, .chat-toggle, .chat-minimize, .chat-input, .chat-send, .clickable-profile, .skill-item, .player-card, .player-avatar, .player-info, .player-name, .player-skills');
+    const isInteractive = e.target.closest('a, button, input, textarea, select, [tabindex], .nav-link, .service-card, .project-card, .contact-item, .chat-widget, .chat-toggle, .chat-minimize, .chat-input, .chat-send, .clickable-profile, .skill-item, .player-card, .player-avatar, .player-info, .player-name, .player-skills, .interest-satellite, .hub-center, .mobile-nav-close');
     
     // If not interactive, create missing ping
     if (!isInteractive) {
@@ -2159,6 +2286,8 @@ function initDynamicHeading() {
     const skillItems = document.querySelectorAll('.skill-item');
     const dynamicHeading = document.getElementById('dynamic-heading');
     const dynamicDescription = document.getElementById('dynamic-description');
+    const mobileHeading = document.querySelector('.mobile-heading');
+    const mobileDescription = document.querySelector('.mobile-description');
     
     // Array of different heading and description combinations
     const contentVariations = [
@@ -2292,21 +2421,47 @@ function initDynamicHeading() {
             clearTimeout(updateTimeout);
         }
         
-        // Start typography animation
-        typographyAnimation(dynamicHeading, variation.heading, () => {
-            // Heading animation complete
-        });
-        
-        typographyAnimation(dynamicDescription, variation.description, () => {
-            // Description animation complete
-            // Set profile as active content type
-            activeContentType = 'profile';
+        // Start typography animation for desktop
+        if (dynamicHeading && dynamicDescription) {
+            typographyAnimation(dynamicHeading, variation.heading, () => {
+                // Heading animation complete
+            });
             
-            // Allow updates again after animation completes
-            setTimeout(() => {
-                isUpdating = false;
-            }, 200);
-        });
+            typographyAnimation(dynamicDescription, variation.description, () => {
+                // Description animation complete
+            });
+        }
+        
+        // Start typography animation for mobile
+        if (mobileHeading && mobileDescription) {
+            typographyAnimation(mobileHeading, variation.heading, () => {
+                // Mobile heading animation complete
+            });
+            
+            typographyAnimation(mobileDescription, variation.description, () => {
+                // Mobile description animation complete
+                // Set profile as active content type
+                activeContentType = 'profile';
+                
+                // Allow updates again after animation completes
+                setTimeout(() => {
+                    isUpdating = false;
+                }, 200);
+            });
+        } else {
+            // If no mobile elements, use desktop elements for completion
+            if (dynamicHeading && dynamicDescription) {
+                typographyAnimation(dynamicDescription, variation.description, () => {
+                    // Set profile as active content type
+                    activeContentType = 'profile';
+                    
+                    // Allow updates again after animation completes
+                    setTimeout(() => {
+                        isUpdating = false;
+                    }, 200);
+                });
+            }
+        }
     }
     
     // Typography animation function
@@ -2389,18 +2544,41 @@ function initDynamicHeading() {
             clearTimeout(updateTimeout);
         }
         
-        // Start typography animation
-        typographyAnimation(dynamicHeading, variation.heading, () => {
-            // Heading animation complete
-        });
+        // Start typography animation for desktop
+        if (dynamicHeading && dynamicDescription) {
+            typographyAnimation(dynamicHeading, variation.heading, () => {
+                // Heading animation complete
+            });
+            
+            typographyAnimation(dynamicDescription, variation.description, () => {
+                // Description animation complete
+            });
+        }
         
-        typographyAnimation(dynamicDescription, variation.description, () => {
-            // Description animation complete
-            // Allow updates again after animation completes
-            setTimeout(() => {
-                isUpdating = false;
-            }, 200);
-        });
+        // Start typography animation for mobile
+        if (mobileHeading && mobileDescription) {
+            typographyAnimation(mobileHeading, variation.heading, () => {
+                // Mobile heading animation complete
+            });
+            
+            typographyAnimation(mobileDescription, variation.description, () => {
+                // Mobile description animation complete
+                // Allow updates again after animation completes
+                setTimeout(() => {
+                    isUpdating = false;
+                }, 200);
+            });
+        } else {
+            // If no mobile elements, use desktop elements for completion
+            if (dynamicHeading && dynamicDescription) {
+                typographyAnimation(dynamicDescription, variation.description, () => {
+                    // Allow updates again after animation completes
+                    setTimeout(() => {
+                        isUpdating = false;
+                    }, 200);
+                });
+            }
+        }
     }
     
     // Add click event listeners to all clickable profile elements
@@ -2450,9 +2628,17 @@ function initDynamicHeading() {
     
             // Set "Hello, I'm Tim Hwangbo." as the default content immediately
     if (clickableElements.length > 0) {
-        // Set the default content
-        dynamicHeading.textContent = contentVariations[0].heading;
-        dynamicDescription.textContent = contentVariations[0].description;
+        // Set the default content for desktop
+        if (dynamicHeading && dynamicDescription) {
+            dynamicHeading.textContent = contentVariations[0].heading;
+            dynamicDescription.textContent = contentVariations[0].description;
+        }
+        
+        // Set the default content for mobile
+        if (mobileHeading && mobileDescription) {
+            mobileHeading.textContent = contentVariations[0].heading;
+            mobileDescription.textContent = contentVariations[0].description;
+        }
         
         // Apply glow to the first profile element (headshot)
         const firstProfileElement = clickableElements[0];
@@ -2515,17 +2701,26 @@ function initResumeModal() {
     const resumeModal = document.getElementById('resume-modal');
     const resumeModalClose = document.getElementById('resume-modal-close');
     const resumeBtn = document.getElementById('resume-btn');
+    const mobileResumeBtn = document.getElementById('mobile-resume-btn');
     
     if (!resumeModal || !resumeModalClose || !resumeBtn) {
         console.warn('Resume modal elements not found');
         return;
     }
     
-    // Open modal when Resume button is clicked
+    // Open modal when Resume button is clicked (desktop)
     resumeBtn.addEventListener('click', (e) => {
         e.preventDefault();
         openResumeModal();
     });
+    
+    // Open modal when Mobile Resume button is clicked
+    if (mobileResumeBtn) {
+        mobileResumeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openResumeModal();
+        });
+    }
     
     // Close modal when X button is clicked
     resumeModalClose.addEventListener('click', () => {
@@ -2556,4 +2751,3 @@ function initResumeModal() {
         document.body.style.overflow = ''; // Restore scrolling
     }
 }
-
