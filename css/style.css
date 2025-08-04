@@ -6406,3 +6406,40 @@ h6 {
 .mobile-nav-overlay.active .mobile-nav-item {
     animation: mobileNavItemFadeIn 0.3s ease forwards;
 }
+
+/* Mobile Navigation Scroll Prevention */
+body.mobile-nav-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ensure proper scrolling restoration on mobile */
+@media (max-width: 768px) {
+    body:not(.mobile-nav-open):not(.homepage-active) {
+        overflow: auto !important;
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+    }
+    
+    /* Force scrolling to work on mobile */
+    html, body {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: auto;
+        overflow-x: hidden;
+    }
+    
+    /* Ensure main content is scrollable */
+    .main-content {
+        overflow: visible !important;
+        position: relative !important;
+    }
+    
+    /* Remove any fixed positioning that might interfere */
+    .section {
+        position: relative !important;
+        overflow: visible !important;
+    }
+}

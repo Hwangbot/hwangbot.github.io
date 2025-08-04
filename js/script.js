@@ -85,9 +85,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Ensure mobile scroll restoration on page load
+    ensureMobileScrollRestoration();
+    
     // Initialize all functionality
     initNavigation();
-    initMobileNavigation(); // Initialize mobile navigation functionality
+    initMobileNavigation();
+    
+    // Add resize listener for mobile scroll restoration
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768) {
+            // Small delay to ensure resize is complete
+            setTimeout(() => {
+                ensureMobileScrollRestoration();
+            }, 100);
+        }
+    });
     initScrollEffects();
     initAnimations();
     initContactForm();
@@ -948,6 +961,9 @@ function initMobileNavigation() {
                 // AGGRESSIVE scroll to top for mobile - override any other scroll behavior
                 console.log('🔄 Mobile tab navigation clicked, forcing scroll to top');
                 
+                // Ensure mobile scroll restoration
+                ensureMobileScrollRestoration();
+                
                 // Method 1: Direct property setting
                 document.documentElement.scrollTop = 0;
                 document.body.scrollTop = 0;
@@ -1055,20 +1071,23 @@ function initMobileNavigation() {
                     document.body.classList.remove('homepage-active');
                 }
                 
-                // AGGRESSIVE scroll to top for mobile - override any other scroll behavior
-                console.log('🔄 Mobile logo link clicked, forcing scroll to top');
-                
-                // Method 1: Direct property setting
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                
-                // Method 2: Window scroll
-                window.scrollTo(0, 0);
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'instant'
-                });
+                                    // AGGRESSIVE scroll to top for mobile - override any other scroll behavior
+                    console.log('🔄 Mobile logo link clicked, forcing scroll to top');
+                    
+                    // Ensure mobile scroll restoration
+                    ensureMobileScrollRestoration();
+                    
+                    // Method 1: Direct property setting
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    
+                    // Method 2: Window scroll
+                    window.scrollTo(0, 0);
+                    window.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: 'instant'
+                    });
                 
                 // Method 3: Force with timing to override any other scrolls
                 setTimeout(() => {
@@ -3002,3 +3021,26 @@ function initResumeModal() {
         document.body.style.overflow = ''; // Restore scrolling
     }
 }
+
+// ===== MOBILE SCROLL RESTORATION =====
+function ensureMobileScrollRestoration() {
+    // Only apply on mobile devices
+    if (window.innerWidth <= 768) {
+        // Remove any problematic classes that might prevent scrolling
+        document.body.classList.remove('mobile-nav-open');
+        document.body.classList.remove('homepage-active');
+        
+        // Ensure body overflow is restored
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.height = '';
+        
+        // Force a reflow to ensure changes take effect
+        document.body.offsetHeight;
+        
+        console.log('🔄 Mobile scroll restoration applied');
+    }
+}
+
+// ===== MOBILE NAVIGATION FUNCTIONALITY =====
