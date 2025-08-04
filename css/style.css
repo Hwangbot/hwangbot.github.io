@@ -497,7 +497,7 @@ h6 {
             flex-direction: column !important;
             gap: 2rem;
             padding: 0 1rem 2rem 1rem;
-            margin-top: -2.5rem !important;
+            margin-top: 1rem !important;
             min-height: auto !important;
             justify-content: flex-start !important;
             align-items: center;
@@ -511,7 +511,7 @@ h6 {
         
         /* Add proper section header spacing for mobile */
         .mobile-text {
-            margin-top: 0;
+            margin-top: 2rem;
             margin-bottom: 2rem;
         }
         
@@ -538,7 +538,7 @@ h6 {
         }
         
         .mobile-heading {
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin-bottom: 0;
             color: var(--lol-white);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
@@ -2170,11 +2170,21 @@ h6 {
 }
 
 /* ===== PROJECTS SECTION ===== */
+#projects {
+    /* Ensure proper scrolling for projects section */
+    overflow: visible;
+    position: relative;
+    min-height: auto;
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     padding: 2rem 0;
+    /* Ensure proper scrolling */
+    overflow: visible;
+    position: relative;
 }
 
 .project-card {
@@ -2183,13 +2193,16 @@ h6 {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--lol-gray);
     border-radius: 20px;
-    overflow: hidden;
+    overflow: visible;
     transition: all 0.3s ease;
     position: relative;
     padding: 2rem;
     min-height: 400px;
     display: flex;
     flex-direction: column;
+    /* Ensure proper scrolling */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .project-card:hover {
@@ -3147,10 +3160,10 @@ h6 {
     }
 
     .player-card {
-        padding: 2.5rem 2rem;
+        padding: 3rem 2.5rem;
         border-radius: 16px;
-        min-height: 450px;
-        max-width: 450px; /* Bigger max-width on mobile */
+        min-height: 500px;
+        max-width: 500px; /* Bigger max-width on mobile */
         background: transparent !important;
         position: relative;
     }
@@ -3168,8 +3181,8 @@ h6 {
     }
 
     .avatar-image {
-        width: 160px;
-        height: 160px;
+        width: 180px;
+        height: 180px;
         border: 4px solid rgba(200, 190, 170, 0.4);
         box-shadow: 0 0 20px rgba(200, 190, 170, 0.2);
     }
@@ -4403,17 +4416,17 @@ h6 {
     }
 
     .player-card {
-        padding: 1.5rem 1rem;
+        padding: 2rem 1.5rem;
         border-radius: 12px;
-        min-height: 350px;
+        min-height: 400px;
         background: linear-gradient(135deg, rgba(26, 26, 26, 0.85), rgba(45, 45, 45, 0.85));
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
     }
 
     .avatar-image {
-        width: 120px;
-        height: 120px;
+        width: 140px;
+        height: 140px;
         border: 4px solid rgba(200, 190, 170, 0.4);
         box-shadow: 0 0 20px rgba(200, 190, 170, 0.2);
     }
@@ -5160,11 +5173,18 @@ h6 {
     .projects-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.5rem;
+        /* Ensure proper mobile scrolling */
+        overflow: visible;
+        position: relative;
     }
     
     .project-card {
         min-height: 350px;
         padding: 1.5rem;
+        /* Ensure proper mobile scrolling */
+        overflow: visible;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .mockup-device {
@@ -5224,11 +5244,18 @@ h6 {
     .projects-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        /* Ensure proper mobile scrolling */
+        overflow: visible;
+        position: relative;
     }
     
     .project-card {
         min-height: 320px;
         padding: 1rem;
+        /* Ensure proper mobile scrolling */
+        overflow: visible;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .project-content h3 {
