@@ -675,8 +675,8 @@ function initNavigation() {
                 const skillItems = document.querySelectorAll('.skill-item');
                 
                 if (dynamicHeading && dynamicDescription && clickableElements.length > 0) {
-                            // Set content to "Hello, I'm Tim Hwangbo." (first variation)
-        dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                            // Set content to "Hey, I'm Tim!" (first variation)
+        dynamicHeading.textContent = "Hey, I'm Tim!";
                     dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
                     
                     // Remove glow from all clickable elements and skill items
@@ -715,9 +715,9 @@ function initNavigation() {
                         clickableElements[0].classList.add('selected-glow');
                     }
                     
-                            // Reset content to "Hello, I'm Tim Hwangbo." if not already set
-        if (dynamicHeading.textContent !== "Hello, I'm Tim Hwangbo.") {
-            dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                            // Reset content to "Hey, I'm Tim!" if not already set
+        if (dynamicHeading.textContent !== "Hey, I'm Tim!") {
+            dynamicHeading.textContent = "Hey, I'm Tim!";
                         dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
                     }
                 }
@@ -909,17 +909,17 @@ function initMobileNavigation() {
                         clickableElements[0].classList.add('selected-glow');
                     }
                     
-                    // Always reset content to "Hello, I'm Tim Hwangbo." for desktop
-                    if (dynamicHeading && dynamicDescription) {
-                        dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
-                        dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
-                    }
-                    
-                    // Always reset content to "Hello, I'm Tim Hwangbo." for mobile
-                    if (mobileHeading && mobileDescription) {
-                        mobileHeading.textContent = "Hello, I'm Tim Hwangbo.";
-                        mobileDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
-                    }
+                                    // Always reset content to "Hey, I'm Tim!" for desktop
+                if (dynamicHeading && dynamicDescription) {
+                    dynamicHeading.textContent = "Hey, I'm Tim!";
+                    dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                }
+                
+                // Always reset content to "Hey, I'm Tim!" for mobile
+                if (mobileHeading && mobileDescription) {
+                    mobileHeading.textContent = "Hey, I'm Tim!";
+                    mobileDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
+                }
                 }
             }
             
@@ -1025,15 +1025,15 @@ function initMobileNavigation() {
                     clickableElements[0].classList.add('selected-glow');
                 }
                 
-                // Always reset content to "Hello, I'm Tim Hwangbo." for desktop
+                // Always reset content to "Hey, I'm Tim!" for desktop
                 if (dynamicHeading && dynamicDescription) {
-                    dynamicHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                    dynamicHeading.textContent = "Hey, I'm Tim!";
                     dynamicDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
                 }
                 
-                // Always reset content to "Hello, I'm Tim Hwangbo." for mobile
+                // Always reset content to "Hey, I'm Tim!" for mobile
                 if (mobileHeading && mobileDescription) {
-                    mobileHeading.textContent = "Hello, I'm Tim Hwangbo.";
+                    mobileHeading.textContent = "Hey, I'm Tim!";
                     mobileDescription.textContent = "A data janitor turning dirty data into clean dashboards, one sheet at a time.";
                 }
             }
@@ -2543,7 +2543,7 @@ function initDynamicHeading() {
     // Array of different heading and description combinations
     const contentVariations = [
         {
-            heading: "Hello, I'm Tim Hwangbo.",
+            heading: "Hey, I'm Tim!",
             description: "A data janitor turning dirty data into clean dashboards, one sheet at a time."
         },
         {
@@ -2877,7 +2877,7 @@ function initDynamicHeading() {
     dynamicHeading.style.transition = 'opacity 0.2s ease-in-out';
     dynamicDescription.style.transition = 'opacity 0.2s ease-in-out';
     
-            // Set "Hello, I'm Tim Hwangbo." as the default content immediately
+            // Set "Hey, I'm Tim!" as the default content immediately
     if (clickableElements.length > 0) {
         // Set the default content for desktop
         if (dynamicHeading && dynamicDescription) {

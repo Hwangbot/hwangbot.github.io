@@ -3162,12 +3162,9 @@ h6 {
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(10, 200, 185, 0.03), rgba(26, 26, 26, 0.05));
+        background: rgba(26, 26, 26, 0.1);
         border-radius: 16px;
         z-index: -1;
-        backdrop-filter: blur(15px) !important;
-        -webkit-backdrop-filter: blur(15px) !important;
-        border: 1px solid rgba(10, 200, 185, 0.2) !important;
     }
 
     .avatar-image {
