@@ -3220,7 +3220,7 @@ h6 {
 
 @media (max-width: 480px) {
 
-    /* Fix mobile scrolling */
+    /* Comprehensive scroll fixes for small mobile devices */
     html,
     body {
         -webkit-overflow-scrolling: touch;
@@ -3228,6 +3228,51 @@ h6 {
         /* Fix for mobile scroll requiring tap */
         touch-action: pan-y;
         overscroll-behavior: auto;
+    }
+    
+    .section {
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow: visible !important;
+        position: relative !important;
+        transform: none !important;
+        will-change: auto !important;
+    }
+    
+    #projects, #experience {
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow: visible !important;
+        position: relative !important;
+        transform: none !important;
+        will-change: auto !important;
+    }
+    
+    .projects-grid, .experience-container {
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow: visible !important;
+        transform: none !important;
+        will-change: auto !important;
+    }
+    
+    .container, .content, .main-content {
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow: visible !important;
+        position: relative !important;
+        transform: none !important;
+        will-change: auto !important;
+    }
+    
+    /* Fix for any potential scroll blockers */
+    * {
+        touch-action: pan-y !important;
+    }
+    
+    /* Exception for navigation elements */
+    .navbar, .mobile-nav, .nav-menu, .mobile-nav-overlay {
+        touch-action: manipulation !important;
     }
 
     .main-content {
@@ -6491,11 +6536,49 @@ body.mobile-nav-open {
             -webkit-overflow-scrolling: touch !important;
             overflow: visible !important;
             position: relative !important;
+            /* Ensure no scroll interference */
+            transform: none !important;
+            will-change: auto !important;
         }
         
         .projects-grid, .experience-container {
             touch-action: pan-y !important;
             -webkit-overflow-scrolling: touch !important;
             overflow: visible !important;
+            /* Ensure no scroll interference */
+            transform: none !important;
+            will-change: auto !important;
+        }
+        
+        /* Additional comprehensive scroll fixes for all content */
+        .section {
+            touch-action: pan-y !important;
+            -webkit-overflow-scrolling: touch !important;
+            overflow: visible !important;
+            position: relative !important;
+            /* Ensure no scroll interference */
+            transform: none !important;
+            will-change: auto !important;
+        }
+        
+        /* Ensure all content containers allow scrolling */
+        .container, .content, .main-content {
+            touch-action: pan-y !important;
+            -webkit-overflow-scrolling: touch !important;
+            overflow: visible !important;
+            position: relative !important;
+            /* Ensure no scroll interference */
+            transform: none !important;
+            will-change: auto !important;
+        }
+        
+        /* Fix for any potential scroll blockers */
+        * {
+            touch-action: pan-y !important;
+        }
+        
+        /* Exception for navigation elements */
+        .navbar, .mobile-nav, .nav-menu, .mobile-nav-overlay {
+            touch-action: manipulation !important;
         }
     }
